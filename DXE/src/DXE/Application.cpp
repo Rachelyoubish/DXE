@@ -1,3 +1,4 @@
+#include "dxepch.h"
 #include "Application.h"
 
 #include "DXE/Events/ApplicationEvent.h"

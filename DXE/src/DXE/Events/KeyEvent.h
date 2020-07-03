@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
-
 namespace DXE {
 
 	class DXE_API KeyEvent : public Event

@@ -18,6 +18,9 @@ project "DXE"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "dxepch.h"
+	pchsource "DXE/src/dxepch.cpp"
+
 	files
 	{
 		"%{prj.name}/src/**.h",

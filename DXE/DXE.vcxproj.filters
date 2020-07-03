@@ -9,6 +9,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\DXE.h" />
     <ClInclude Include="src\DXE\Application.h">
       <Filter>DXE</Filter>
     </ClInclude>
@@ -18,16 +19,10 @@
     <ClInclude Include="src\DXE\EntryPoint.h">
       <Filter>DXE</Filter>
     </ClInclude>
-    <ClInclude Include="src\DXE\Events\Event.h">
-      <Filter>DXE\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DXE\Log.h">
-      <Filter>DXE</Filter>
-    </ClInclude>
     <ClInclude Include="src\DXE\Events\ApplicationEvent.h">
       <Filter>DXE\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\DXE.h">
+    <ClInclude Include="src\DXE\Events\Event.h">
       <Filter>DXE\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\DXE\Events\KeyEvent.h">
@@ -36,6 +31,10 @@
     <ClInclude Include="src\DXE\Events\MouseEvent.h">
       <Filter>DXE\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\DXE\Log.h">
+      <Filter>DXE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dxepch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DXE\Application.cpp">
@@ -44,5 +43,6 @@
     <ClCompile Include="src\DXE\Log.cpp">
       <Filter>DXE</Filter>
     </ClCompile>
+    <ClCompile Include="src\dxepch.cpp" />
   </ItemGroup>
 </Project>

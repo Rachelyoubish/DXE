@@ -1,9 +1,7 @@
 #pragma once
 
+#include "dxepch.h"
 #include "DXE/Core.h"
-
-#include <string>
-#include <functional>
 
 namespace DXE {
 
