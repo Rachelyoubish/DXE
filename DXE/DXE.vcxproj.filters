@@ -4,9 +4,11 @@
     <Filter Include="DXE">
       <UniqueIdentifier>{C6DF870B-32E9-877C-BB64-9E7C276D937C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DXE\Events">
+      <UniqueIdentifier>{EA5077CC-D608-B919-3F10-92752BE7530A}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\DXE.h" />
     <ClInclude Include="src\DXE\Application.h">
       <Filter>DXE</Filter>
     </ClInclude>
@@ -16,8 +18,23 @@
     <ClInclude Include="src\DXE\EntryPoint.h">
       <Filter>DXE</Filter>
     </ClInclude>
+    <ClInclude Include="src\DXE\Events\Event.h">
+      <Filter>DXE\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\DXE\Log.h">
       <Filter>DXE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DXE\Events\ApplicationEvent.h">
+      <Filter>DXE\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DXE.h">
+      <Filter>DXE\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DXE\Events\KeyEvent.h">
+      <Filter>DXE\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DXE\Events\MouseEvent.h">
+      <Filter>DXE\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
