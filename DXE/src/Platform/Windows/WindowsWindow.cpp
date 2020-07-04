@@ -114,11 +114,12 @@ namespace DXE {
 	{
 		LRESULT result = NULL;
 
+		WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
+
 		switch (msg)
 		{
 			case WM_SIZING:
 			{
-				WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
 				RECT rect = *((PRECT)lParam);
 
 				WindowResizeEvent event( (unsigned int)(rect.right - rect.left), (unsigned int)(rect.bottom - rect.top) );
@@ -128,16 +129,12 @@ namespace DXE {
 			case WM_CLOSE:
 			case WM_DESTROY:
 			{
-				WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
-
 				WindowCloseEvent event;
 				data.EventCallback( event );
 				break;
 			}
 			case WM_KEYDOWN:
 			{
-				WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
-
 				int repeatCount = (lParam & 0xffff);
 
 				KeyPressedEvent event( static_cast<int>(wParam), repeatCount );
@@ -146,72 +143,54 @@ namespace DXE {
 			}
 			case WM_KEYUP:
 			{
-				WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
-
 				KeyReleasedEvent event( static_cast<int>(wParam) );
 				data.EventCallback( event );
 				break;
 			}
 			case WM_MOUSEMOVE:
 			{
-				WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
-
 				MouseMovedEvent event( (float)GET_X_LPARAM( lParam ), (float)GET_Y_LPARAM( lParam ) );
 				data.EventCallback( event );
 				break;
 			}
 			case WM_MOUSEWHEEL:
 			{
-				WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
-
 				MouseScrolledEvent event( GET_WHEEL_DELTA_WPARAM( wParam ) );
 				data.EventCallback( event );
 				break;
 			}
 			case WM_LBUTTONDOWN:
 			{
-				WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
-
 				MouseButtonPressedEvent event( VK_LBUTTON );
 				data.EventCallback( event );
 				break;
 			}
 			case WM_LBUTTONUP:
 			{
-				WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
-
 				MouseButtonReleasedEvent event( VK_LBUTTON );
 				data.EventCallback( event );
 				break;
 			}
 			case WM_MBUTTONDOWN:
 			{
-				WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
-
 				MouseButtonPressedEvent event( VK_MBUTTON );
 				data.EventCallback( event );
 				break;
 			}
 			case WM_MBUTTONUP:
 			{
-				WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
-
 				MouseButtonReleasedEvent event( VK_MBUTTON );
 				data.EventCallback( event );
 				break;
 			}
 			case WM_RBUTTONDOWN:
 			{
-				WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
-
 				MouseButtonPressedEvent event( VK_RBUTTON );
 				data.EventCallback( event );
 				break;
 			}
 			case WM_RBUTTONUP:
 			{
-				WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
-
 				MouseButtonReleasedEvent event( VK_RBUTTON );
 				data.EventCallback( event );
 				break;
