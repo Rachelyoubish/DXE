@@ -44,22 +44,29 @@ namespace DXE {
 		wc.style = CS_OWNDC;
 		wc.lpfnWndProc = WindowProc;
 		wc.cbClsExtra = 0;
-		wc.cbWndExtra = sizeof(WindowData*);
+		wc.cbWndExtra = sizeof( WindowData* );
 		wc.hInstance = hInstance;
 		wc.hIcon = nullptr;
-		wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
-		wc.hbrBackground = nullptr;
+		wc.hCursor = LoadCursor( nullptr, IDC_ARROW );
+		wc.hbrBackground = (HBRUSH)GetStockObject( GRAY_BRUSH );
 		wc.lpszMenuName = nullptr;
 		wc.lpszClassName = pClassName;
 		wc.hIconSm = nullptr;
 
 		RegisterClassEx( &wc );
 
+		RECT wr;
+		wr.left = 100;
+		wr.right = props.Width + wr.left;
+		wr.top = 100;
+		wr.bottom = props.Height + wr.top;
+		AdjustWindowRect( &wr, WS_OVERLAPPEDWINDOW, FALSE );
+
 		m_Window = CreateWindowEx(
 			0, pClassName,
 			props.Title.c_str(),
 			WS_OVERLAPPEDWINDOW,
-			CW_USEDEFAULT, CW_USEDEFAULT, (int)props.Width, (int)props.Height,
+			CW_USEDEFAULT, CW_USEDEFAULT, wr.right - wr.left, wr.bottom - wr.top,
 			nullptr, nullptr, hInstance, nullptr
 		);
 
