@@ -14,6 +14,7 @@ project "DXE"
 	location "DXE"
 	kind "SharedLib"
 	language "C++"
+	characterset "MBCS"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")

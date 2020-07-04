@@ -8,6 +8,7 @@ namespace DXE {
 
 	Application::Application()
 	{
+		m_Window = std::unique_ptr<Window>( Window::Create() );
 	}
 
 	Application::~Application()
@@ -16,16 +17,9 @@ namespace DXE {
 
 	void Application::Run()
 	{
-		WindowResizeEvent e( 1280, 720 );
-		if (e.IsInCategory( EventCategoryApplication ))
+		while (m_Running)
 		{
-			DXE_TRACE( e );
+			m_Window->OnUpdate();
 		}
-		if (e.IsInCategory( EventCategoryInput ))
-		{
-			DXE_TRACE( e );
-		}
-
-		while (true);
 	}
 }

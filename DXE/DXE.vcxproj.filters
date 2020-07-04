@@ -35,6 +35,8 @@
       <Filter>DXE</Filter>
     </ClInclude>
     <ClInclude Include="src\dxepch.h" />
+    <ClInclude Include="src\DXE\Window.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DXE\Application.cpp">
@@ -44,5 +46,6 @@
       <Filter>DXE</Filter>
     </ClCompile>
     <ClCompile Include="src\dxepch.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
   </ItemGroup>
 </Project>
