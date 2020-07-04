@@ -7,6 +7,12 @@
     <Filter Include="DXE\Events">
       <UniqueIdentifier>{EA5077CC-D608-B919-3F10-92752BE7530A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{08386e38-b9b1-4621-bb05-bdc0d91ff8b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{598fab97-959f-4590-bd48-aa93610680a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DXE.h" />
@@ -35,8 +41,12 @@
       <Filter>DXE</Filter>
     </ClInclude>
     <ClInclude Include="src\dxepch.h" />
-    <ClInclude Include="src\DXE\Window.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DXE\Window.h">
+      <Filter>DXE</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DXE\Application.cpp">
@@ -46,6 +56,8 @@
       <Filter>DXE</Filter>
     </ClCompile>
     <ClCompile Include="src\dxepch.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
