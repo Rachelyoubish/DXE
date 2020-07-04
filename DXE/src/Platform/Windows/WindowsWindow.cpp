@@ -127,7 +127,7 @@ namespace DXE {
 				break;
 			}
 			case WM_CLOSE:
-			case WM_DESTROY:
+			//case WM_DESTROY:
 			{
 				WindowCloseEvent event;
 				data.EventCallback( event );

@@ -8,10 +8,10 @@
       <UniqueIdentifier>{EA5077CC-D608-B919-3F10-92752BE7530A}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platform">
-      <UniqueIdentifier>{08386e38-b9b1-4621-bb05-bdc0d91ff8b4}</UniqueIdentifier>
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platform\Windows">
-      <UniqueIdentifier>{598fab97-959f-4590-bd48-aa93610680a0}</UniqueIdentifier>
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -37,27 +37,39 @@
     <ClInclude Include="src\DXE\Events\MouseEvent.h">
       <Filter>DXE\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\DXE\Log.h">
+    <ClInclude Include="src\DXE\Layer.h">
       <Filter>DXE</Filter>
     </ClInclude>
-    <ClInclude Include="src\dxepch.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
-      <Filter>Platform\Windows</Filter>
+    <ClInclude Include="src\DXE\LayerStack.h">
+      <Filter>DXE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DXE\Log.h">
+      <Filter>DXE</Filter>
     </ClInclude>
     <ClInclude Include="src\DXE\Window.h">
       <Filter>DXE</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dxepch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DXE\Application.cpp">
       <Filter>DXE</Filter>
     </ClCompile>
+    <ClCompile Include="src\DXE\Layer.cpp">
+      <Filter>DXE</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DXE\LayerStack.cpp">
+      <Filter>DXE</Filter>
+    </ClCompile>
     <ClCompile Include="src\DXE\Log.cpp">
       <Filter>DXE</Filter>
     </ClCompile>
-    <ClCompile Include="src\dxepch.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="src\dxepch.cpp" />
   </ItemGroup>
 </Project>

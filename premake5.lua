@@ -52,14 +52,17 @@ project "DXE"
 
 	filter "configurations:Debug"
 		defines "DXE_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 		filter "configurations:Release"
 		defines "DXE_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 		filter "configurations:Dist"
 		defines "DXE_DIST"
+		buildoptions "/MD"
 		optimize "On"
 
 project "Sandbox"
@@ -99,12 +102,15 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "DXE_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 		filter "configurations:Release"
 		defines "DXE_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 		filter "configurations:Dist"
 		defines "DXE_DIST"
+		buildoptions "/MD"
 		optimize "On"
