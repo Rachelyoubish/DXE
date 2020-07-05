@@ -10,6 +10,12 @@ workspace "DXE"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+-- Include directories relative to root folder (solution directory)
+IncludeDir = {}
+IncludeDir["ImGui"] = "DXE/vendor/imgui"
+
+include "DXE/vendor/imgui"
+
 project "DXE"
 	location "DXE"
 	kind "SharedLib"
@@ -31,7 +37,14 @@ project "DXE"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.ImGui}"
+	}
+
+	links
+	{
+		"ImGui",
+		"d3d11.lib"
 	}
 
 	filter "system:windows"

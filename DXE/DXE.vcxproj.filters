@@ -7,8 +7,14 @@
     <Filter Include="DXE\Events">
       <UniqueIdentifier>{EA5077CC-D608-B919-3F10-92752BE7530A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DXE\ImGui">
+      <UniqueIdentifier>{7091464C-DCFB-FAC2-253A-AC6891E3D817}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\DirectX">
+      <UniqueIdentifier>{EC338E64-D82C-ADB6-015F-923BEDB68CC2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platform\Windows">
       <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
@@ -37,6 +43,9 @@
     <ClInclude Include="src\DXE\Events\MouseEvent.h">
       <Filter>DXE\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\DXE\ImGui\ImGuiLayer.h">
+      <Filter>DXE\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\DXE\Layer.h">
       <Filter>DXE</Filter>
     </ClInclude>
@@ -49,6 +58,9 @@
     <ClInclude Include="src\DXE\Window.h">
       <Filter>DXE</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\DirectX\ImGuiDirectXRenderer.h">
+      <Filter>Platform\DirectX</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
@@ -58,6 +70,9 @@
     <ClCompile Include="src\DXE\Application.cpp">
       <Filter>DXE</Filter>
     </ClCompile>
+    <ClCompile Include="src\DXE\ImGui\ImGuiLayer.cpp">
+      <Filter>DXE\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="src\DXE\Layer.cpp">
       <Filter>DXE</Filter>
     </ClCompile>
@@ -66,6 +81,9 @@
     </ClCompile>
     <ClCompile Include="src\DXE\Log.cpp">
       <Filter>DXE</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\DirectX\ImGuiDirectXRenderer.cpp">
+      <Filter>Platform\DirectX</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>

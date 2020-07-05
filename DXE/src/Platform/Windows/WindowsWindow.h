@@ -20,6 +20,8 @@ namespace DXE {
 		void SetVSync( bool enabled ) override;
 		bool IsVSync() const override;
 
+		inline HWND GetWindowHandle() const override { return m_Window; }
+
 		static LRESULT CALLBACK WindowProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
 	private:
 		virtual void Init( const WindowProps& props );

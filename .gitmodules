@@ -1,3 +1,6 @@
 [submodule "DXE/vendor/spdlog"]
 	path = DXE/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "DXE/vendor/imgui"]
+	path = DXE/vendor/imgui
+	url = https://github.com/Rachelyoubish/imgui
