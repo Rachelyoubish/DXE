@@ -24,6 +24,11 @@ namespace DXE {
 		pBackBuffer->Release();
 	}
 
+	void CleanupRenderTarget()
+	{
+		if (g_mainRenderTargetView) { g_mainRenderTargetView->Release(); g_mainRenderTargetView = NULL; }
+	}
+
 	HRESULT CreateDeviceD3D( HWND hWnd )
 	{
 		// Setup swap chain
@@ -138,7 +143,108 @@ namespace DXE {
 		#endif 
 	}
 
-	void ImGuiLayer::OnEvent( Event& e )
+	void ImGuiLayer::OnEvent( Event& event )
 	{
+		EventDispatcher dispatcher( event );
+		dispatcher.Dispatch<MouseButtonPressedEvent>( DXE_BIND_EVENT_FN( ImGuiLayer::OnMouseButtonPressedEvent ) );
+		dispatcher.Dispatch<MouseButtonReleasedEvent>( DXE_BIND_EVENT_FN( ImGuiLayer::OnMouseButtonReleasedEvent ) );
+		dispatcher.Dispatch<MouseMovedEvent>( DXE_BIND_EVENT_FN( ImGuiLayer::OnMouseMovedEvent ) );
+		dispatcher.Dispatch<MouseScrolledEvent>( DXE_BIND_EVENT_FN( ImGuiLayer::OnMouseScrolledEvent ) );
+		dispatcher.Dispatch<KeyPressedEvent>( DXE_BIND_EVENT_FN( ImGuiLayer::OnKeyPressedEvent ) );
+		dispatcher.Dispatch<KeyTypedEvent>( DXE_BIND_EVENT_FN( ImGuiLayer::OnKeyTypedEvent ) );
+		dispatcher.Dispatch<KeyReleasedEvent>( DXE_BIND_EVENT_FN( ImGuiLayer::OnKeyReleasedEvent ) );
+		dispatcher.Dispatch<WindowResizeEvent>( DXE_BIND_EVENT_FN( ImGuiLayer::OnWindowResizeEvent ) );
+	}
+
+	bool ImGuiLayer::OnMouseButtonPressedEvent( MouseButtonPressedEvent& e )
+	{
+		int button{};
+
+		// Due to Win32 we need to remap the button for ImGui
+		if (e.GetMouseButton() == 1) { button = 0; }
+		if (e.GetMouseButton() == 2) { button = 1; }
+		if (e.GetMouseButton() == 4) { button = 2; }
+
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[button] = true;
+
+		return false;
+	}
+
+	bool ImGuiLayer::OnMouseButtonReleasedEvent( MouseButtonReleasedEvent& e )
+	{
+		int button{};
+
+		// Due to Win32 we need to remap the button for ImGui
+		if (e.GetMouseButton() == 1) { button = 0; }
+		if (e.GetMouseButton() == 2) { button = 1; }
+		if (e.GetMouseButton() == 4) { button = 2; }
+
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[button] = false;
+
+		return false;
+	}
+
+	bool ImGuiLayer::OnMouseMovedEvent( MouseMovedEvent& e )
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MousePos = ImVec2( e.GetX(), e.GetY() );
+
+		return false;
+	}
+
+	bool ImGuiLayer::OnMouseScrolledEvent( MouseScrolledEvent& e )
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseWheel += e.GetDelta() / (float)WHEEL_DELTA;
+
+		return false;
+	}
+
+	bool ImGuiLayer::OnKeyPressedEvent( KeyPressedEvent& e )
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.KeysDown[e.GetKeyCode()] = true;
+
+		io.KeyCtrl = (::GetKeyState( VK_CONTROL ) & 0x8000) != 0;
+		io.KeyShift = (::GetKeyState( VK_SHIFT ) & 0x8000) != 0;
+		io.KeyAlt = (::GetKeyState( VK_MENU ) & 0x8000) != 0;
+		io.KeySuper = false;
+
+		return false;
+	}
+
+	bool ImGuiLayer::OnKeyReleasedEvent( KeyReleasedEvent& e )
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.KeysDown[e.GetKeyCode()] = false;
+
+		return false;
+	}
+
+	bool ImGuiLayer::OnKeyTypedEvent( KeyTypedEvent& e )
+	{
+		ImGuiIO& io = ImGui::GetIO();
+
+		int keycode = e.GetKeyCode();
+
+		if (keycode > 0 && keycode < 0x10000)
+			io.AddInputCharacter( (unsigned short)keycode );
+
+		return false;
+	}
+
+	bool ImGuiLayer::OnWindowResizeEvent( WindowResizeEvent& e )
+	{
+		CleanupRenderTarget();
+		g_pSwapChain->ResizeBuffers( 0, (UINT)(e.GetWidth()), (UINT)(e.GetHeight()), DXGI_FORMAT_UNKNOWN, 0 );
+		CreateRenderTarget();
+
+		ImGuiIO& io = ImGui::GetIO();
+		io.DisplaySize = ImVec2( e.GetWidth(), e.GetHeight() );
+		io.DisplayFramebufferScale = ImVec2( 1.0f, 1.0f );
+
+		return false;
 	}
 }

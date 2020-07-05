@@ -17,4 +17,5 @@
 #ifdef DXE_PLATFORM_WINDOWS
 	#include <Windows.h>
 	#include <windowsx.h>
+	#include <d3d11.h>
 #endif

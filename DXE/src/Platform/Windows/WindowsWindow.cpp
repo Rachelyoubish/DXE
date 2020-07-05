@@ -133,6 +133,12 @@ namespace DXE {
 				data.EventCallback( event );
 				break;
 			}
+			case WM_CHAR:
+			{
+				KeyTypedEvent event( static_cast<int>(wParam) );
+				data.EventCallback( event );
+				break;
+			}
 			case WM_KEYDOWN:
 			{
 				int repeatCount = (lParam & 0xffff);
