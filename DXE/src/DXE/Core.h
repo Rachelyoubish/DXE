@@ -10,6 +10,10 @@
 	#error DXE only supports Windows!
 #endif
 
+#ifdef DXE_DEBUG
+	#define DXE_ENABLE_ASSERTS
+#endif
+
 #ifdef DXE_ENABLE_ASSERTS
 	#define DXE_ASSERT(x, ...) { if(!(x)) { DXE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 	#define DXE_CORE_ASSERT(x, ...) { if(!(x)) { DXE_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }

@@ -72,7 +72,7 @@ namespace DXE {
 
 		if (!s_Win32Initialized)
 		{
-			DXE_CORE_ASSERT( (m_Window == nullptr), "Could not initialize Win32!" );
+			DXE_CORE_ASSERT( m_Window, "Could not initialize Win32!" );
 
 			s_Win32Initialized = true;
 		}

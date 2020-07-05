@@ -25,6 +25,7 @@ project "DXE"
 	kind "SharedLib"
 	language "C++"
 	characterset "MBCS"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -53,7 +54,6 @@ project "DXE"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines
@@ -69,23 +69,24 @@ project "DXE"
 
 	filter "configurations:Debug"
 		defines "DXE_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 
 		filter "configurations:Release"
 		defines "DXE_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 		filter "configurations:Dist"
 		defines "DXE_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -109,7 +110,6 @@ project "Sandbox"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines
@@ -119,15 +119,15 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "DXE_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 
 		filter "configurations:Release"
 		defines "DXE_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 		filter "configurations:Dist"
 		defines "DXE_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
