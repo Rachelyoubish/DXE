@@ -15,7 +15,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["ImGui"] = "DXE/vendor/imgui"
 
-include "DXE/vendor/imgui"
+group "Dependencies"
+	include "DXE/vendor/imgui"
+
+group ""
 
 project "DXE"
 	location "DXE"
