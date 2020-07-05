@@ -122,6 +122,9 @@ namespace DXE {
 			{
 				RECT rect = *((PRECT)lParam);
 
+				data.Width = (unsigned int)(rect.right - rect.left);
+				data.Height = (unsigned int)(rect.bottom - rect.top);
+
 				WindowResizeEvent event( (unsigned int)(rect.right - rect.left), (unsigned int)(rect.bottom - rect.top) );
 				data.EventCallback( event );
 				break;
