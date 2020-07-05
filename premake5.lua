@@ -1,5 +1,6 @@
 workspace "DXE"
 	architecture "x64"
+	startproject "Sandbox"
 
 	configurations
 	{
