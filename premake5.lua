@@ -84,7 +84,7 @@ project "DXE"
 
 project "Sandbox"
 	location "Sandbox"
-	kind "ConsoleApp"
+	kind "WindowedApp"
 	language "C++"
 	staticruntime "off"
 
