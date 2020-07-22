@@ -159,9 +159,11 @@
     <ClInclude Include="src\DXE\Events\MouseEvent.h" />
     <ClInclude Include="src\DXE\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\DXE\Input.h" />
+    <ClInclude Include="src\DXE\KeyCodes.h" />
     <ClInclude Include="src\DXE\Layer.h" />
     <ClInclude Include="src\DXE\LayerStack.h" />
     <ClInclude Include="src\DXE\Log.h" />
+    <ClInclude Include="src\DXE\MouseButtonCodes.h" />
     <ClInclude Include="src\DXE\Window.h" />
     <ClInclude Include="src\Platform\DirectX\ImGuiDirectXRenderer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />

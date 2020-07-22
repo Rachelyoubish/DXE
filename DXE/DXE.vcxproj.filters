@@ -65,8 +65,18 @@
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\dxepch.h" />
-    <ClInclude Include="src\DXE\Input.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DXE\Input.h">
+      <Filter>DXE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DXE\KeyCodes.h">
+      <Filter>DXE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DXE\MouseButtonCodes.h">
+      <Filter>DXE</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DXE\Application.cpp">
@@ -91,6 +101,8 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\dxepch.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

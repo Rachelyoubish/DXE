@@ -5,6 +5,7 @@
 #include "Platform/DirectX/ImGuiDirectXRenderer.h"
 
 #include "DXE/Application.h"
+#include "DXE/KeyCodes.h"
 
 namespace DXE {
 
@@ -84,28 +85,27 @@ namespace DXE {
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
-		// Temporary, will use DXE key codes
-		io.KeyMap[ImGuiKey_Tab] = VK_TAB;
-		io.KeyMap[ImGuiKey_LeftArrow] = VK_LEFT;
-		io.KeyMap[ImGuiKey_RightArrow] = VK_RIGHT;
-		io.KeyMap[ImGuiKey_UpArrow] = VK_UP;
-		io.KeyMap[ImGuiKey_DownArrow] = VK_DOWN;
-		io.KeyMap[ImGuiKey_PageUp] = VK_PRIOR;
-		io.KeyMap[ImGuiKey_PageDown] = VK_NEXT;
-		io.KeyMap[ImGuiKey_Home] = VK_HOME;
-		io.KeyMap[ImGuiKey_End] = VK_END;
-		io.KeyMap[ImGuiKey_Insert] = VK_INSERT;
-		io.KeyMap[ImGuiKey_Delete] = VK_DELETE;
-		io.KeyMap[ImGuiKey_Backspace] = VK_BACK;
-		io.KeyMap[ImGuiKey_Space] = VK_SPACE;
-		io.KeyMap[ImGuiKey_Enter] = VK_RETURN;
-		io.KeyMap[ImGuiKey_Escape] = VK_ESCAPE;
-		io.KeyMap[ImGuiKey_A] = 'A';
-		io.KeyMap[ImGuiKey_C] = 'C';
-		io.KeyMap[ImGuiKey_V] = 'V';
-		io.KeyMap[ImGuiKey_X] = 'X';
-		io.KeyMap[ImGuiKey_Y] = 'Y';
-		io.KeyMap[ImGuiKey_Z] = 'Z';
+		io.KeyMap[ImGuiKey_Tab] = DXE_KEY_TAB;
+		io.KeyMap[ImGuiKey_LeftArrow] = DXE_KEY_LEFT;
+		io.KeyMap[ImGuiKey_RightArrow] = DXE_KEY_RIGHT;
+		io.KeyMap[ImGuiKey_UpArrow] = DXE_KEY_UP;
+		io.KeyMap[ImGuiKey_DownArrow] = DXE_KEY_DOWN;
+		io.KeyMap[ImGuiKey_PageUp] = DXE_KEY_PRIOR;
+		io.KeyMap[ImGuiKey_PageDown] = DXE_KEY_NEXT;
+		io.KeyMap[ImGuiKey_Home] = DXE_KEY_HOME;
+		io.KeyMap[ImGuiKey_End] = DXE_KEY_END;
+		io.KeyMap[ImGuiKey_Insert] = DXE_KEY_INSERT;
+		io.KeyMap[ImGuiKey_Delete] = DXE_KEY_DELETE;
+		io.KeyMap[ImGuiKey_Backspace] = DXE_KEY_BACK;
+		io.KeyMap[ImGuiKey_Space] = DXE_KEY_SPACE;
+		io.KeyMap[ImGuiKey_Enter] = DXE_KEY_RETURN;
+		io.KeyMap[ImGuiKey_Escape] = DXE_KEY_ESCAPE;
+		io.KeyMap[ImGuiKey_A] = DXE_KEY_A;
+		io.KeyMap[ImGuiKey_C] = DXE_KEY_C;
+		io.KeyMap[ImGuiKey_V] = DXE_KEY_V;
+		io.KeyMap[ImGuiKey_X] = DXE_KEY_X;
+		io.KeyMap[ImGuiKey_Y] = DXE_KEY_Y;
+		io.KeyMap[ImGuiKey_Z] = DXE_KEY_Z;
 
 		ImGui_ImplDX11_Init( g_pd3dDevice, g_pd3dDeviceContext );
 	}
@@ -159,7 +159,7 @@ namespace DXE {
 
 	bool ImGuiLayer::OnMouseButtonPressedEvent( MouseButtonPressedEvent& e )
 	{
-		int button{};
+		int button = { 0 };
 
 		// Due to Win32 we need to remap the button for ImGui
 		if (e.GetMouseButton() == 1) { button = 0; }
@@ -174,7 +174,7 @@ namespace DXE {
 
 	bool ImGuiLayer::OnMouseButtonReleasedEvent( MouseButtonReleasedEvent& e )
 	{
-		int button{};
+		int button = { 0 };
 
 		// Due to Win32 we need to remap the button for ImGui
 		if (e.GetMouseButton() == 1) { button = 0; }
@@ -208,9 +208,9 @@ namespace DXE {
 		ImGuiIO& io = ImGui::GetIO();
 		io.KeysDown[e.GetKeyCode()] = true;
 
-		io.KeyCtrl = (::GetKeyState( VK_CONTROL ) & 0x8000) != 0;
-		io.KeyShift = (::GetKeyState( VK_SHIFT ) & 0x8000) != 0;
-		io.KeyAlt = (::GetKeyState( VK_MENU ) & 0x8000) != 0;
+		io.KeyCtrl = (::GetKeyState( DXE_KEY_CONTROL ) & 0x8000) != 0;
+		io.KeyShift = (::GetKeyState( DXE_KEY_SHIFT ) & 0x8000) != 0;
+		io.KeyAlt = (::GetKeyState( DXE_KEY_MENU ) & 0x8000) != 0;
 		io.KeySuper = false;
 
 		return false;

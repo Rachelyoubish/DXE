@@ -6,6 +6,10 @@
 #include "DXE/Layer.h"
 #include "DXE/Log.h"
 
+#include "DXE/Input.h"
+#include "DXE/KeyCodes.h"
+#include "DXE/MouseButtonCodes.h"
+
 #include "DXE/ImGui/ImGuiLayer.h"
 
 // ---Entry Point-------------
