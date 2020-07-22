@@ -14,8 +14,8 @@ namespace DXE {
 		unsigned int Height;
 
 		WindowProps(const std::string& title = "DXE Engine",
-					unsigned int width = 640,
-					unsigned int height = 480)
+					unsigned int width = 1280,
+					unsigned int height = 720)
 			: Title(title), Width(width), Height(height)
 		{}
 	};

@@ -5,6 +5,9 @@
 #include "DXE/Events/MouseEvent.h"
 #include "DXE/Events/KeyEvent.h"
 
+#include "imgui.h"
+IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
+
 namespace DXE {
 
 	static bool s_Win32Initialized = false;
@@ -113,6 +116,9 @@ namespace DXE {
 	LRESULT CALLBACK WindowsWindow::WindowProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 	{
 		LRESULT result = NULL;
+
+		if ( ImGui_ImplWin32_WndProcHandler( hWnd, msg, wParam, lParam ) )
+			return true;
 
 		WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
 

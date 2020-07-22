@@ -45,7 +45,6 @@ public:
 	Sandbox()
 	{
 		PushLayer( new ExampleLayer() );
-		PushOverlay( new DXE::ImGuiLayer() );
 	}
 
 	~Sandbox()

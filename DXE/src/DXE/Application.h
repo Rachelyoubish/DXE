@@ -8,6 +8,8 @@
 #include "Events/Event.h"
 #include "DXE/Events/ApplicationEvent.h"
 
+#include "DXE/ImGui/ImGuiLayer.h"
+
 namespace DXE {
 
 	class DXE_API Application
@@ -29,6 +31,7 @@ namespace DXE {
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 	private:

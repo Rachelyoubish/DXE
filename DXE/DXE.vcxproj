@@ -165,18 +165,17 @@
     <ClInclude Include="src\DXE\Log.h" />
     <ClInclude Include="src\DXE\MouseButtonCodes.h" />
     <ClInclude Include="src\DXE\Window.h" />
-    <ClInclude Include="src\Platform\DirectX\ImGuiDirectXRenderer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\dxepch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DXE\Application.cpp" />
+    <ClCompile Include="src\DXE\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\DXE\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\DXE\Layer.cpp" />
     <ClCompile Include="src\DXE\LayerStack.cpp" />
     <ClCompile Include="src\DXE\Log.cpp" />
-    <ClCompile Include="src\Platform\DirectX\ImGuiDirectXRenderer.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\dxepch.cpp">

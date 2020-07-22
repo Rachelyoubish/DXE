@@ -46,6 +46,12 @@
     <ClInclude Include="src\DXE\ImGui\ImGuiLayer.h">
       <Filter>DXE\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\DXE\Input.h">
+      <Filter>DXE</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DXE\KeyCodes.h">
+      <Filter>DXE</Filter>
+    </ClInclude>
     <ClInclude Include="src\DXE\Layer.h">
       <Filter>DXE</Filter>
     </ClInclude>
@@ -55,28 +61,19 @@
     <ClInclude Include="src\DXE\Log.h">
       <Filter>DXE</Filter>
     </ClInclude>
+    <ClInclude Include="src\DXE\MouseButtonCodes.h">
+      <Filter>DXE</Filter>
+    </ClInclude>
     <ClInclude Include="src\DXE\Window.h">
       <Filter>DXE</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\DirectX\ImGuiDirectXRenderer.h">
-      <Filter>Platform\DirectX</Filter>
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h">
+      <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\dxepch.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsInput.h">
-      <Filter>Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DXE\Input.h">
-      <Filter>DXE</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DXE\KeyCodes.h">
-      <Filter>DXE</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DXE\MouseButtonCodes.h">
-      <Filter>DXE</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DXE\Application.cpp">
@@ -94,15 +91,15 @@
     <ClCompile Include="src\DXE\Log.cpp">
       <Filter>DXE</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\DirectX\ImGuiDirectXRenderer.cpp">
-      <Filter>Platform\DirectX</Filter>
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
+      <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\dxepch.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
-      <Filter>Platform\Windows</Filter>
+    <ClCompile Include="src\DXE\ImGui\ImGuiBuild.cpp">
+      <Filter>DXE\ImGui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
