@@ -72,8 +72,9 @@ namespace DXE {
 	void ImGuiLayer::OnAttach()
 	{
 		Application& app = Application::Get();
+		auto window = static_cast<HWND>( Application::Get().GetWindow().GetNativeWindow() );
 
-		if (CreateDeviceD3D( app.GetWindow().GetWindowHandle() ) < 0)
+		if (CreateDeviceD3D( window ) < 0)
 			DXE_ERROR( "Error creating the D3D object" );
 
 		ImGui::CreateContext();
@@ -83,7 +84,7 @@ namespace DXE {
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
-		// Temporary, will use Toast key codes
+		// Temporary, will use DXE key codes
 		io.KeyMap[ImGuiKey_Tab] = VK_TAB;
 		io.KeyMap[ImGuiKey_LeftArrow] = VK_LEFT;
 		io.KeyMap[ImGuiKey_RightArrow] = VK_RIGHT;
@@ -127,7 +128,7 @@ namespace DXE {
 		ImGui_ImplDX11_NewFrame();
 		ImGui::NewFrame();
 
-		ImVec4 clear_color = ImVec4( 0.0f, 0.0f, 0.0f, 1.0f );
+		ImVec4 clear_color = ImVec4( 0.06f, 0.60f, 0.06f, 1.0f );
 		static bool show = true;
 		ImGui::ShowDemoWindow( &show );
 

@@ -14,8 +14,8 @@ namespace DXE {
 		unsigned int Height;
 
 		WindowProps(const std::string& title = "DXE Engine",
-					unsigned int width = 1280,
-					unsigned int height = 720)
+					unsigned int width = 640,
+					unsigned int height = 480)
 			: Title(title), Width(width), Height(height)
 		{}
 	};
@@ -34,12 +34,12 @@ namespace DXE {
 		virtual unsigned int GetWidth() const = 0;
 		virtual unsigned int GetHeight() const = 0;
 
-		virtual HWND GetWindowHandle() const = 0;
-
 		// Window attributes
 		virtual void SetEventCallback( const EventCallbackFn& callback ) = 0;
 		virtual void SetVSync( bool enabled ) = 0;
 		virtual bool IsVSync() const = 0;
+
+		virtual void* GetNativeWindow() const = 0;
 
 		static Window* Create( const WindowProps& props = WindowProps() );
 	};
