@@ -11,21 +11,11 @@
 
 namespace DXE {
 
-	//static INT64                   g_Time = 0;
-	//static INT64                   g_TicksPerSecond = 0;
-
 	// Data
 	static ID3D11Device* g_pd3dDevice = NULL;
 	static ID3D11DeviceContext* g_pd3dDeviceContext = NULL;
 	static IDXGISwapChain* g_pSwapChain = NULL;
 	static ID3D11RenderTargetView* g_mainRenderTargetView = NULL;
-
-	// Forward declarations of helper functions
-	// bool CreateDeviceD3D( HWND hWnd );
-	// void CleanupDeviceD3D();
-	// void CreateRenderTarget();
-	// void CleanupRenderTarget();
-	// LRESULT WINAPI WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
 	void CreateRenderTarget()
 	{
@@ -99,6 +89,7 @@ namespace DXE {
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+		io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleFonts;     // FIXME-DPI: THIS CURRENTLY DOESN'T WORK AS EXPECTED. DON'T USE IN USER APP!
 		io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // FIXME-DPI
 
 		// Setup Dear ImGui style
@@ -143,13 +134,9 @@ namespace DXE {
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
-		io.DisplaySize = ImVec2( app.GetWindow().GetWidth(), app.GetWindow().GetHeight() );
+		io.DisplaySize = ImVec2( (float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight() );
 
 		ImVec4 clear_color = ImVec4( 0.06f, 0.60f, 0.06f, 1.0f );
-
-		CleanupRenderTarget();
-		g_pSwapChain->ResizeBuffers( 0, (UINT)( app.GetWindow().GetWidth() ), (UINT)( app.GetWindow().GetHeight() ), DXGI_FORMAT_UNKNOWN, 0 );
-		CreateRenderTarget();
 
 		// Rendering
 		ImGui::Render();
@@ -168,9 +155,24 @@ namespace DXE {
 		g_pSwapChain->Present( 1, 0 );
 	}
 
+	bool ImGuiLayer::OnWindowResizeEvent( WindowResizeEvent& )
+	{
+		CleanupRenderTarget();
+		g_pSwapChain->ResizeBuffers( 0, 0, 0, DXGI_FORMAT_UNKNOWN, 0 );
+		CreateRenderTarget();
+
+		return false;
+	}
+
 	void ImGuiLayer::OnImGuiRender()
 	{
 		static bool show = true;
 		ImGui::ShowDemoWindow( &show );
+	}
+
+	void ImGuiLayer::OnEvent( Event& e )
+	{
+		EventDispatcher dispatcher( e );
+		dispatcher.Dispatch<WindowResizeEvent>( DXE_BIND_EVENT_FN( ImGuiLayer::OnWindowResizeEvent ) );
 	}
 }

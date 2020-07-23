@@ -70,7 +70,7 @@ namespace DXE {
 			props.Title.c_str(),
 			WS_OVERLAPPEDWINDOW,
 			CW_USEDEFAULT, CW_USEDEFAULT, wr.right - wr.left, wr.bottom - wr.top,
-			nullptr, nullptr, hInstance, nullptr
+			nullptr, nullptr, wc.hInstance, nullptr
 		);
 
 		if (!s_Win32Initialized)
@@ -81,7 +81,8 @@ namespace DXE {
 		}
 
 		SetWindowLongPtr( m_Window, 0, (LONG_PTR)&m_Data );
-		ShowWindow( m_Window, SW_SHOW );
+		ShowWindow( m_Window, SW_SHOWDEFAULT );
+		UpdateWindow( m_Window );
 	}
 
 	void WindowsWindow::Shutdown()

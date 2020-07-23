@@ -1,11 +1,15 @@
 #pragma once
 
 #ifdef DXE_PLATFORM_WINDOWS
+#if DXE_DYNAMIC_LINK
 	#ifdef  DXE_BUILD_DLL
 		#define DXE_API __declspec(dllexport)
 	#else
 		#define DXE_API __declspec(dllimport)
 	#endif
+#else
+	#define DXE_API
+#endif
 #else
 	#error DXE only supports Windows!
 #endif
