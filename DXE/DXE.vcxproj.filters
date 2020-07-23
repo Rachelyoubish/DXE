@@ -13,9 +13,6 @@
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform\DirectX">
-      <UniqueIdentifier>{EC338E64-D82C-ADB6-015F-923BEDB68CC2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Platform\Windows">
       <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
     </Filter>
@@ -79,6 +76,9 @@
     <ClCompile Include="src\DXE\Application.cpp">
       <Filter>DXE</Filter>
     </ClCompile>
+    <ClCompile Include="src\DXE\ImGui\ImGuiBuild.cpp">
+      <Filter>DXE\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="src\DXE\ImGui\ImGuiLayer.cpp">
       <Filter>DXE\ImGui</Filter>
     </ClCompile>
@@ -98,8 +98,5 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\dxepch.cpp" />
-    <ClCompile Include="src\DXE\ImGui\ImGuiBuild.cpp">
-      <Filter>DXE\ImGui</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

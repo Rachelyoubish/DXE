@@ -1,5 +1,7 @@
 #include <DXE.h>
 
+#include "imgui/imgui.h"
+
 class ExampleLayer : public DXE::Layer
 {
 public:
@@ -16,6 +18,16 @@ public:
 
 		if ( DXE::Input::IsMouseButtonPressed( DXE_MOUSE_LBUTTON ) )
 			DXE_TRACE( "Left Mouse Button pressed (poll)!" );
+
+		//auto [x, y] = DXE::Input::GetMousePosition();
+		//DXE_CORE_TRACE( "{0}, {1}", x, y );
+	}
+
+	virtual void OnImGuiRender() override
+	{
+		ImGui::Begin( "Test" );
+		ImGui::Text( "Hello World" );
+		ImGui::End();
 	}
 
 	void OnEvent( DXE::Event& event ) override

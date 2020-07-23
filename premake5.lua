@@ -100,7 +100,8 @@ project "Sandbox"
 	includedirs
 	{
 		"DXE/vendor/spdlog/include",
-		"DXE/src"
+		"DXE/src",
+		"DXE/vendor"
 	}
 
 	links
