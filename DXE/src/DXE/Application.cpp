@@ -21,6 +21,8 @@ namespace DXE {
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
+
+		m_Context = Get().GetWindow().GetGraphicsContext();
 	}
 
 	Application::~Application()

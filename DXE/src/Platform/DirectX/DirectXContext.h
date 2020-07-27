@@ -13,8 +13,8 @@ namespace DXE {
 		virtual void SwapBuffers() override;
 		virtual void ResizeContext() override;
 
-		void SetRenderTargets();
-		void ClearScreen();
+		virtual void SetRenderTargets() override;
+		virtual void ClearScreen() override;
 
 		virtual ID3D11Device* GetD3D11Device() override;
 		virtual ID3D11DeviceContext* GetD3D11DeviceContext() override;
