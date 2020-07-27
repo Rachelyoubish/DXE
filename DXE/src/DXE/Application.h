@@ -10,6 +10,8 @@
 
 #include "DXE/ImGui/ImGuiLayer.h"
 
+#include "Platform/DirectX/DirectXContext.h"
+
 namespace DXE {
 
 	class DXE_API Application
@@ -29,9 +31,11 @@ namespace DXE {
 		inline Window& GetWindow() { return *m_Window; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
+		bool OnWindowResize( WindowResizeEvent& e );
 
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
+		D3DContext* m_Context;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 	private:

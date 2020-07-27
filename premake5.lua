@@ -54,7 +54,8 @@ project "DXE"
     links
     {
         "ImGui",
-        "d3d11.lib"
+        "d3d11.lib",
+        "dxgi.lib"
     }
 
     filter "system:windows"

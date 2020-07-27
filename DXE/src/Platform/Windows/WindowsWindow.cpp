@@ -5,8 +5,11 @@
 #include "DXE/Events/MouseEvent.h"
 #include "DXE/Events/KeyEvent.h"
 
+#include "Platform/DirectX/DirectXContext.h"
+
 #include "imgui.h"
-IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
 namespace DXE {
 
@@ -51,11 +54,11 @@ namespace DXE {
 		wc.hInstance = hInstance;
 		wc.hIcon = nullptr;
 		wc.hCursor = LoadCursor( nullptr, IDC_ARROW );
-		wc.hbrBackground = (HBRUSH)GetStockObject( GRAY_BRUSH );
+		wc.hbrBackground = (HBRUSH)GetStockObject( BLACK_BRUSH );
 		wc.lpszMenuName = nullptr;
 		wc.lpszClassName = pClassName;
 		wc.hIconSm = nullptr;
-
+		
 		RegisterClassEx( &wc );
 
 		RECT wr;
@@ -80,6 +83,10 @@ namespace DXE {
 			s_Win32Initialized = true;
 		}
 
+		// Create DirectX Context
+		m_Context = new D3DContext( m_Window );
+		m_Context->Init();
+
 		SetWindowLongPtr( m_Window, 0, (LONG_PTR)&m_Data );
 		ShowWindow( m_Window, SW_SHOWDEFAULT );
 		UpdateWindow( m_Window );
@@ -101,7 +108,7 @@ namespace DXE {
 			TranslateMessage( &msg );
 			DispatchMessage( &msg );
 		}
-
+		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync( bool enabled )
@@ -114,12 +121,17 @@ namespace DXE {
 		return m_Data.VSync;
 	}
 
+	void WindowsWindow::OnResize() const
+	{
+		m_Context->ResizeContext();
+	}
+
 	LRESULT CALLBACK WindowsWindow::WindowProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 	{
-		LRESULT result = NULL;
-
 		if ( ImGui_ImplWin32_WndProcHandler( hWnd, msg, wParam, lParam ) )
 			return true;
+
+		LRESULT result = NULL;
 
 		WindowData& data = *(WindowData*)GetWindowLongPtr( hWnd, 0 );
 

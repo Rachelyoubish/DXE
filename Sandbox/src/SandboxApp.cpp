@@ -16,8 +16,8 @@ public:
 		if ( DXE::Input::IsKeyPressed( DXE_KEY_TAB ) )
 			DXE_TRACE( "Tab key is pressed (poll)!" );
 
-		if ( DXE::Input::IsMouseButtonPressed( DXE_MOUSE_LBUTTON ) )
-			DXE_TRACE( "Left Mouse Button pressed (poll)!" );
+		// if ( DXE::Input::IsMouseButtonPressed( DXE_MOUSE_LBUTTON ) )
+		//	DXE_TRACE( "Left Mouse Button pressed (poll)!" );
 
 		//auto [x, y] = DXE::Input::GetMousePosition();
 		//DXE_CORE_TRACE( "{0}, {1}", x, y );
@@ -26,7 +26,7 @@ public:
 	virtual void OnImGuiRender() override
 	{
 		ImGui::Begin( "Test" );
-		ImGui::Text( "Hello World" );
+		ImGui::Text( "DXE: Hello World!" );
 		ImGui::End();
 	}
 

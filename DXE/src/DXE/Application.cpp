@@ -43,6 +43,7 @@ namespace DXE {
 	{
 		EventDispatcher dispatcher( e );
 		dispatcher.Dispatch<WindowCloseEvent>( BIND_EVENT_FN( OnWindowClose ) );
+		dispatcher.Dispatch<WindowResizeEvent>( BIND_EVENT_FN( OnWindowResize ) );
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
@@ -56,6 +57,9 @@ namespace DXE {
 	{
 		while (m_Running)
 		{
+			m_Context->SetRenderTargets();
+			m_Context->ClearScreen();
+
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 
@@ -71,6 +75,12 @@ namespace DXE {
 	bool Application::OnWindowClose( WindowCloseEvent& e )
 	{
 		m_Running = false;
+		return true;
+	}
+
+	bool Application::OnWindowResize( WindowResizeEvent& e )
+	{
+		m_Window->OnResize();
 		return true;
 	}
 }

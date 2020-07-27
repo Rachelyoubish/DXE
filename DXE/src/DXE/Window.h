@@ -5,6 +5,8 @@
 #include "DXE/Core.h"
 #include "DXE/Events/Event.h"
 
+#include "DXE/Renderer/GraphicsContext.h"
+
 namespace DXE {
 
 	struct WindowProps
@@ -39,7 +41,10 @@ namespace DXE {
 		virtual void SetVSync( bool enabled ) = 0;
 		virtual bool IsVSync() const = 0;
 
+		virtual void OnResize() const = 0;
+
 		virtual void* GetNativeWindow() const = 0;
+		virtual GraphicsContext* GetGraphicsContext() const = 0;
 
 		static Window* Create( const WindowProps& props = WindowProps() );
 	};
