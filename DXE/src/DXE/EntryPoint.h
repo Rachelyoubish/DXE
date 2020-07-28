@@ -5,12 +5,15 @@
 
 extern DXE::Application* DXE::CreateApplication();
 
+// The entry point for our Windows application
 int CALLBACK WinMain( HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR     lpCmdLine,
 	int       nCmdShow )
 {
-	// Initialize console first, therefore all of spdlogs can be sent to it. 
+	// Allocate a new console for calling. 
+	// Initialize console first, therefore 
+	// all of spdlog can be sent to it. 
 	AllocConsole();
 	FILE* file = nullptr;
 	freopen_s( &file, "CONIN$", "r", stdin );

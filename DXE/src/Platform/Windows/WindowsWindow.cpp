@@ -37,15 +37,22 @@ namespace DXE {
 
 	void WindowsWindow::Init( const WindowProps& props )
 	{
+		// Data
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 
 		DXE_CORE_INFO( "Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height );
 
+		// Gets instance of the current window
 		hInstance = GetModuleHandle( 0 );
-
+		// This struct holds information for the window class
 		WNDCLASSEX wc = {};
+
+		// Clear out the window class for use
+		ZeroMemory( &wc, sizeof( WNDCLASSEX ) );
+
+		// Filling in the struct with needed information
 		wc.cbSize = sizeof( wc );
 		wc.style = CS_OWNDC;
 		wc.lpfnWndProc = WindowProc;
@@ -54,13 +61,15 @@ namespace DXE {
 		wc.hInstance = hInstance;
 		wc.hIcon = nullptr;
 		wc.hCursor = LoadCursor( nullptr, IDC_ARROW );
-		wc.hbrBackground = (HBRUSH)GetStockObject( BLACK_BRUSH );
+		wc.hbrBackground = nullptr;
 		wc.lpszMenuName = nullptr;
 		wc.lpszClassName = pClassName;
 		wc.hIconSm = nullptr;
 		
+		// Register the window class
 		RegisterClassEx( &wc );
 
+		// Calculate the size of the client area
 		RECT wr;
 		wr.left = 100;
 		wr.right = props.Width + wr.left;
@@ -68,6 +77,7 @@ namespace DXE {
 		wr.bottom = props.Height + wr.top;
 		AdjustWindowRect( &wr, WS_OVERLAPPEDWINDOW, FALSE );
 
+		// Create the Window and use the result as the handle 
 		m_Window = CreateWindowEx(
 			0, pClassName,
 			props.Title.c_str(),
@@ -89,7 +99,6 @@ namespace DXE {
 
 		SetWindowLongPtr( m_Window, 0, (LONG_PTR)&m_Data );
 		ShowWindow( m_Window, SW_SHOWDEFAULT );
-		UpdateWindow( m_Window );
 	}
 
 	void WindowsWindow::Shutdown()
@@ -99,15 +108,21 @@ namespace DXE {
 
 	void WindowsWindow::OnUpdate()
 	{
-		// DXE_CORE_TRACE( "Frame update" );
+		// Main loop of the window:
 
-		MSG msg;
+		// This struct holds Windows event messages
+		MSG msg = { 0 };
 
+		// Check to see if any messages are waiting in the queue
 		while (PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) > 0)
 		{
+			// Translate keystroke messages into the right format
 			TranslateMessage( &msg );
+			// Send the message to the WindowProc function
 			DispatchMessage( &msg );
 		}
+
+		// Present next frame
 		m_Context->SwapBuffers();
 	}
 

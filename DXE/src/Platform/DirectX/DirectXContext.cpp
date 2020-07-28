@@ -2,12 +2,6 @@
 #include "DirectXContext.h"
 
 namespace DXE {
-	
-	// Data
-	static ID3D11Device* m_D3DDevice = nullptr;
-	static ID3D11DeviceContext* m_D3DDeviceContext = nullptr;
-	static IDXGISwapChain* m_SwapChain = nullptr;
-	static ID3D11RenderTargetView* m_RenderTargetView = nullptr;
 
 	D3DContext::D3DContext( HWND windowHandle)
 		: m_WindowHandle(windowHandle)

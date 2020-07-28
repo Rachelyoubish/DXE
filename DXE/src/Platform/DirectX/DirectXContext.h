@@ -26,5 +26,10 @@ namespace DXE {
 		void LogAdapterInfo();
 	private:
 		HWND m_WindowHandle;
+
+		ID3D11Device* m_D3DDevice = nullptr;
+		ID3D11DeviceContext* m_D3DDeviceContext = nullptr;
+		IDXGISwapChain* m_SwapChain = nullptr;
+		ID3D11RenderTargetView* m_RenderTargetView = nullptr;
 	};
 }

@@ -39,8 +39,8 @@ namespace DXE {
 		struct WindowData
 		{
 			std::string Title;
-			unsigned int Width, Height;
-			bool VSync;
+			unsigned int Width, Height = 0;
+			bool VSync = 0;
 
 			EventCallbackFn EventCallback;
 		};
