@@ -47,7 +47,7 @@ namespace DXE {
 		// Gets instance of the current window
 		hInstance = GetModuleHandle( 0 );
 		// This struct holds information for the window class
-		WNDCLASSEX wc = {};
+		WNDCLASSEX wc = { 0 };
 
 		// Clear out the window class for use
 		ZeroMemory( &wc, sizeof( WNDCLASSEX ) );
@@ -70,17 +70,17 @@ namespace DXE {
 		RegisterClassEx( &wc );
 
 		// Calculate the size of the client area
-		RECT wr;
+		RECT wr = { 0 };
 		wr.left = 100;
-		wr.right = props.Width + wr.left;
+		wr.right = m_Data.Width + wr.left;
 		wr.top = 100;
-		wr.bottom = props.Height + wr.top;
+		wr.bottom = m_Data.Height + wr.top;
 		AdjustWindowRect( &wr, WS_OVERLAPPEDWINDOW, FALSE );
 
 		// Create the Window and use the result as the handle 
 		m_Window = CreateWindowEx(
 			0, pClassName,
-			props.Title.c_str(),
+			m_Data.Title.c_str(),
 			WS_OVERLAPPEDWINDOW,
 			CW_USEDEFAULT, CW_USEDEFAULT, wr.right - wr.left, wr.bottom - wr.top,
 			nullptr, nullptr, wc.hInstance, nullptr

@@ -12,7 +12,7 @@ namespace DXE {
 	void D3DContext::Init()
 	{
 		// Create a struct to hold information about swap chain
-		DXGI_SWAP_CHAIN_DESC sd;
+		DXGI_SWAP_CHAIN_DESC sd = { 0 };
 
 		// Clear out the struct for use
 		ZeroMemory( &sd, sizeof( sd ) );
@@ -22,15 +22,17 @@ namespace DXE {
 		sd.BufferDesc.Width = 0;
 		sd.BufferDesc.Height = 0;
 		sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		sd.BufferDesc.RefreshRate.Numerator = 60;
-		sd.BufferDesc.RefreshRate.Denominator = 1;
+		sd.BufferDesc.RefreshRate.Numerator = 0;
+		sd.BufferDesc.RefreshRate.Denominator = 0;
+		sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+		sd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 		sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 		sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		sd.OutputWindow = m_WindowHandle;
 		sd.SampleDesc.Count = 1;
 		sd.SampleDesc.Quality = 0;
 		sd.Windowed = true;
-		sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+		sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 
 		// Data
 		UINT createDeviceFlags = 0;
@@ -76,7 +78,7 @@ namespace DXE {
 	void D3DContext::SetRenderTargets()
 	{
 		// Set the render target as the back buffer
-		m_D3DDeviceContext->OMSetRenderTargets( 1, &m_RenderTargetView, nullptr );
+		m_D3DDeviceContext->OMSetRenderTargets( 1, m_RenderTargetView.GetAddressOf(), nullptr );
 	}
 
 	void D3DContext::ClearScreen()
@@ -85,7 +87,7 @@ namespace DXE {
 		const float clear_color[4] = { 0.06f, 0.60f, 0.06f, 1.0f };
 
 		// Clear the back buffer to desired color
-		m_D3DDeviceContext->ClearRenderTargetView( m_RenderTargetView, (float*)clear_color );
+		m_D3DDeviceContext->ClearRenderTargetView( m_RenderTargetView.Get(), (float*)clear_color );
 	}
 
 	void D3DContext::SwapBuffers()
@@ -96,19 +98,19 @@ namespace DXE {
 
 	void D3DContext::ResizeContext()
 	{
-		CleanupRenderTarget();
+		// CleanupRenderTarget();
 		m_SwapChain->ResizeBuffers( 0, 0, 0, DXGI_FORMAT_UNKNOWN, 0 );
 		CreateRenderTarget();
 	}
 
 	ID3D11Device* D3DContext::GetD3D11Device()
 	{
-		return m_D3DDevice;
+		return m_D3DDevice.Get();
 	}
-
+	
 	ID3D11DeviceContext* D3DContext::GetD3D11DeviceContext()
 	{
-		return m_D3DDeviceContext;
+		return m_D3DDeviceContext.Get();
 	}
 
 	void D3DContext::CleanupRenderTarget()

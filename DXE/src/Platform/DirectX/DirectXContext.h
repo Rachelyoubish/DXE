@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DXE/Renderer/GraphicsContext.h"
+#include <wrl.h>
 
 namespace DXE {
 
@@ -27,9 +28,9 @@ namespace DXE {
 	private:
 		HWND m_WindowHandle;
 
-		ID3D11Device* m_D3DDevice = nullptr;
-		ID3D11DeviceContext* m_D3DDeviceContext = nullptr;
-		IDXGISwapChain* m_SwapChain = nullptr;
-		ID3D11RenderTargetView* m_RenderTargetView = nullptr;
+		Microsoft::WRL::ComPtr<ID3D11Device> m_D3DDevice;
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_D3DDeviceContext;
+		Microsoft::WRL::ComPtr<IDXGISwapChain> m_SwapChain;
+		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTargetView;
 	};
 }
