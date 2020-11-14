@@ -98,7 +98,7 @@ namespace DXE {
 
 	void D3DContext::ResizeContext()
 	{
-		// CleanupRenderTarget();
+		CleanupRenderTarget();
 		m_SwapChain->ResizeBuffers( 0, 0, 0, DXGI_FORMAT_UNKNOWN, 0 );
 		CreateRenderTarget();
 	}
@@ -117,7 +117,7 @@ namespace DXE {
 	{
 		if ( m_RenderTargetView )
 		{
-			m_RenderTargetView->Release();
+			// m_RenderTargetView->Release();
 			m_RenderTargetView = nullptr;
 		}
 	}
