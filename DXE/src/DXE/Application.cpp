@@ -36,14 +36,17 @@ namespace DXE {
 		{
 			float x;
 			float y;
+			float r;
+			float g;
+			float b;
 		};
 		
 		// Create vertex buffer (1 2d triangle at the center of the screen).
 		const Vertex vertices[] =
 		{
-			{  0.0f,  0.5f },
-			{  0.5f, -0.5f },
-			{ -0.5f, -0.5f },
+			{  0.0f,  0.5f, 1.0f, 0.0f, 0.0f },
+			{  0.5f, -0.5f, 0.0f, 1.0f, 0.0f },
+			{ -0.5f, -0.5f, 0.0f, 0.0f, 1.0f },
 		};
 		
 		Microsoft::WRL::ComPtr<ID3D11Buffer> pVertexBuffer;
@@ -67,42 +70,7 @@ namespace DXE {
 		const UINT offset = 0u;
 		m_DeviceContext->IASetVertexBuffers( 0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset );
 		
-		// Create pixel shader.
-		Microsoft::WRL::ComPtr<ID3D11PixelShader> pPixelShader;
-		// PS sets and uses Blob first so vertex shader keeps relevant 
-		// Blob info once released from PS (and given to VS, handled automatically by COM).
-		// Remember: & releases then gets the pointer address.
-		Microsoft::WRL::ComPtr<ID3DBlob> pBlob;
-		D3DReadFileToBlob( L"PixelShader.cso", &pBlob );
-		m_Device->CreatePixelShader( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pPixelShader );
-		
-		// Bind pixel shader.
-		m_DeviceContext->PSSetShader( pPixelShader.Get(), nullptr, 0u );
-		
-		// Create vertex shader.
-		Microsoft::WRL::ComPtr<ID3D11VertexShader> pVertexShader;
-		D3DReadFileToBlob( L"VertexShader.cso", &pBlob );
-		m_Device->CreateVertexShader( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pVertexShader );
-		
-		// Bind vertex shader.
-		m_DeviceContext->VSSetShader( pVertexShader.Get(), nullptr, 0u );
-		
-		// Input (vertex) layout (2D position only).
-		Microsoft::WRL::ComPtr<ID3D11InputLayout> pInputLayout;
-		const D3D11_INPUT_ELEMENT_DESC ied[] =
-		{
-			{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		};
-		
-		m_Device->CreateInputLayout(
-			ied, (UINT)std::size( ied ),
-			pBlob->GetBufferPointer(),
-			pBlob->GetBufferSize(),
-			&pInputLayout
-		);
-		
-		// Bind vertex layout.
-		m_DeviceContext->IASetInputLayout( pInputLayout.Get() );
+		// old shader code was here.
 		
 		// Bind render target.
 		// SetRenderTargets();
@@ -129,6 +97,8 @@ namespace DXE {
 
 		// Stores the amount of vertices for the Draw command.
 		m_VertexBuffer = (UINT)std::size( vertices );
+
+		m_Shader.reset( new Shader( "VertexShader.cso", "PixelShader.cso", m_Device, m_DeviceContext ) );
 	}
 
 	Application::~Application()
@@ -167,6 +137,8 @@ namespace DXE {
 		{
 			m_Context->SetRenderTargets();
 			m_Context->ClearScreen();
+
+			m_Shader->Bind();
 			m_DeviceContext->Draw( m_VertexBuffer, 0u );
 
 			for (Layer* layer : m_LayerStack)

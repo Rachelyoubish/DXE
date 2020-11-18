@@ -10,6 +10,8 @@
 
 #include "DXE/ImGui/ImGuiLayer.h"
 
+#include "DXE/Renderer/Shader.h"
+
 namespace DXE {
 
 	class DXE_API Application
@@ -41,6 +43,7 @@ namespace DXE {
 		ID3D11Device* m_Device;
 		ID3D11DeviceContext* m_DeviceContext;
 		UINT m_VertexBuffer;
+		std::unique_ptr<Shader> m_Shader;
 	private:
 		static Application* s_Instance;
 	};

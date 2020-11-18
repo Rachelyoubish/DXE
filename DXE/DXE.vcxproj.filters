@@ -83,6 +83,9 @@
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\dxepch.h" />
+    <ClInclude Include="src\DXE\Renderer\Shader.h">
+      <Filter>DXE\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DXE\Application.cpp">
@@ -113,6 +116,9 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\dxepch.cpp" />
+    <ClCompile Include="src\DXE\Renderer\Shader.cpp">
+      <Filter>DXE\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl" />

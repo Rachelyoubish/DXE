@@ -143,6 +143,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\DXE\Renderer\Shader.h" />
     <ClInclude Include="src\DXE.h" />
     <ClInclude Include="src\DXE\Application.h" />
     <ClInclude Include="src\DXE\Core.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="src\dxepch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\DXE\Renderer\Shader.cpp" />
     <ClCompile Include="src\DXE\Application.cpp" />
     <ClCompile Include="src\DXE\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\DXE\ImGui\ImGuiLayer.cpp" />
