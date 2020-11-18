@@ -35,7 +35,12 @@ namespace DXE {
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+
 		GraphicsContext* m_Context;
+		// TEMP
+		ID3D11Device* m_Device;
+		ID3D11DeviceContext* m_DeviceContext;
+		UINT m_VertexBuffer;
 	private:
 		static Application* s_Instance;
 	};

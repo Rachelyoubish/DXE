@@ -114,4 +114,8 @@
     </ClCompile>
     <ClCompile Include="src\dxepch.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="VertexShader.hlsl" />
+    <FxCompile Include="PixelShader.hlsl" />
+  </ItemGroup>
 </Project>
