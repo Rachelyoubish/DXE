@@ -71,7 +71,29 @@ namespace DXE {
 		const UINT offset = 0u;
 		m_DeviceContext->IASetVertexBuffers( 0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset );
 		
-		// old shader code was here.
+		// Create index buffer.
+		const unsigned short indices[] =
+		{
+			0, 1, 2,
+		};
+
+		Microsoft::WRL::ComPtr<ID3D11Buffer> pIndexBuffer;
+
+		D3D11_BUFFER_DESC ibd = {};
+
+		ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		ibd.Usage = D3D11_USAGE_DEFAULT;
+		ibd.CPUAccessFlags = 0u;
+		ibd.MiscFlags = 0u;
+		ibd.ByteWidth = sizeof( indices );
+		ibd.StructureByteStride = sizeof( unsigned short );
+
+		D3D11_SUBRESOURCE_DATA isd = {};
+		isd.pSysMem = indices;
+		m_Device->CreateBuffer( &ibd, &isd, &pIndexBuffer );
+
+		// Bind index buffer.
+		m_DeviceContext->IASetIndexBuffer( pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u );
 		
 		// Bind render target.
 		// SetRenderTargets();
@@ -98,6 +120,7 @@ namespace DXE {
 
 		// Stores the amount of vertices for the Draw command.
 		m_VertexBuffer = (UINT)std::size( vertices );
+		m_IndexBuffer = (UINT)std::size( indices );
 
 		m_Shader.reset( new Shader( "VertexShader.cso", "PixelShader.cso", m_Device, m_DeviceContext ) );
 	}
@@ -140,7 +163,7 @@ namespace DXE {
 			m_Context->ClearScreen();
 
 			m_Shader->Bind();
-			m_DeviceContext->Draw( m_VertexBuffer, 0u );
+			m_DeviceContext->DrawIndexed( m_IndexBuffer, 0u, 0u );
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
