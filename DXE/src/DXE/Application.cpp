@@ -36,17 +36,18 @@ namespace DXE {
 		{
 			float x;
 			float y;
-			float r;
-			float g;
-			float b;
+			unsigned char r;
+			unsigned char g;
+			unsigned char b;
+			unsigned char a;
 		};
 		
 		// Create vertex buffer (1 2d triangle at the center of the screen).
 		const Vertex vertices[] =
 		{
-			{  0.0f,  0.5f, 1.0f, 0.0f, 0.0f },
-			{  0.5f, -0.5f, 0.0f, 1.0f, 0.0f },
-			{ -0.5f, -0.5f, 0.0f, 0.0f, 1.0f },
+			{  0.0f,  0.5f, 255, 0, 0, 0 },
+			{  0.5f, -0.5f, 0, 255, 0, 0 },
+			{ -0.5f, -0.5f, 0, 0, 255, 0 },
 		};
 		
 		Microsoft::WRL::ComPtr<ID3D11Buffer> pVertexBuffer;
