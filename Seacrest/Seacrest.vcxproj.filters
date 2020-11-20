@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\DirectX">
+      <UniqueIdentifier>{EC338E64-D82C-ADB6-015F-923BEDB68CC2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Seacrest">
+      <UniqueIdentifier>{1F66495D-0B33-A468-344C-92102078D9F6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Seacrest\Events">
+      <UniqueIdentifier>{23196913-8FA4-D6D7-98B5-59CC04C032D8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Seacrest\ImGui">
+      <UniqueIdentifier>{89B693E9-7584-87EF-5E18-F8154A856354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Seacrest\Renderer">
+      <UniqueIdentifier>{A5FC0E89-1113-0D1F-5A8A-9840C6DFDDA6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Platform\DirectX\DirectXContext.h">
+      <Filter>Platform\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest.h" />
+    <ClInclude Include="src\Seacrest\Application.h">
+      <Filter>Seacrest</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\Core.h">
+      <Filter>Seacrest</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\EntryPoint.h">
+      <Filter>Seacrest</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\Events\ApplicationEvent.h">
+      <Filter>Seacrest\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\Events\Event.h">
+      <Filter>Seacrest\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\Events\KeyEvent.h">
+      <Filter>Seacrest\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\Events\MouseEvent.h">
+      <Filter>Seacrest\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\ImGui\ImGuiLayer.h">
+      <Filter>Seacrest\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\Input.h">
+      <Filter>Seacrest</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\KeyCodes.h">
+      <Filter>Seacrest</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\Layer.h">
+      <Filter>Seacrest</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\LayerStack.h">
+      <Filter>Seacrest</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\Log.h">
+      <Filter>Seacrest</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\MouseButtonCodes.h">
+      <Filter>Seacrest</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\Renderer\GraphicsContext.h">
+      <Filter>Seacrest\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\Renderer\Shader.h">
+      <Filter>Seacrest\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\Window.h">
+      <Filter>Seacrest</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scpch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Platform\DirectX\DirectXContext.cpp">
+      <Filter>Platform\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Seacrest\Application.cpp">
+      <Filter>Seacrest</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Seacrest\ImGui\ImGuiBuild.cpp">
+      <Filter>Seacrest\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Seacrest\ImGui\ImGuiLayer.cpp">
+      <Filter>Seacrest\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Seacrest\Layer.cpp">
+      <Filter>Seacrest</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Seacrest\LayerStack.cpp">
+      <Filter>Seacrest</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Seacrest\Log.cpp">
+      <Filter>Seacrest</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Seacrest\Renderer\Shader.cpp">
+      <Filter>Seacrest\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scpch.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="PixelShader.hlsl" />
+    <FxCompile Include="VertexShader.hlsl" />
+  </ItemGroup>
+</Project>

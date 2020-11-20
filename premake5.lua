@@ -1,4 +1,4 @@
-workspace "DXE"
+workspace "Seacrest"
     architecture "x64"
     startproject "Sandbox"
 
@@ -13,14 +13,14 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Include directories relative to root folder (solution directory)
 IncludeDir = {}
-IncludeDir["ImGui"] = "DXE/vendor/imgui"
+IncludeDir["ImGui"] = "Seacrest/vendor/imgui"
 
 group "Dependencies"
-    include "DXE/vendor/imgui"
+    include "Seacrest/vendor/imgui"
 group ""
 
-project "DXE"
-    location "DXE"
+project "Seacrest"
+    location "Seacrest"
     kind "StaticLib"
     characterset "MBCS"
     language "C++"
@@ -30,8 +30,8 @@ project "DXE"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-    pchheader "dxepch.h"
-    pchsource "DXE/src/dxepch.cpp"
+    pchheader "scpch.h"
+    pchsource "Seacrest/src/scpch.cpp"
 
     files
     {
@@ -53,9 +53,7 @@ project "DXE"
 
     links
     {
-        "ImGui",
-        "d3d11.lib",
-        "dxgi.lib"
+        "ImGui"
     }
 
     filter "system:windows"
@@ -63,22 +61,22 @@ project "DXE"
 
         defines
         {
-            "DXE_PLATFORM_WINDOWS",
-            "DXE_BUILD_DLL"
+            "SEACREST_PLATFORM_WINDOWS",
+            "SEACREST_BUILD_DLL"
         }
 
     filter "configurations:Debug"
-        defines "DXE_DEBUG"
+        defines "SEACREST_DEBUG"
         runtime "Debug"
         symbols "on"
 
     filter "configurations:Release"
-        defines "DXE_RELEASE"
+        defines "SEACREST_RELEASE"
         runtime "Release"
         optimize "on"
 
     filter "configurations:Dist"
-        defines "DXE_DIST"
+        defines "SEACREST_DIST"
         runtime "Release"
         optimize "on"
 
@@ -100,14 +98,14 @@ project "Sandbox"
 
     includedirs
     {
-        "DXE/vendor/spdlog/include",
-        "DXE/src",
-        "DXE/vendor"
+        "Seacrest/vendor/spdlog/include",
+        "Seacrest/src",
+        "Seacrest/vendor"
     }
 
     links
     {
-        "DXE"
+        "Seacrest"
     }
 
     filter "system:windows"
@@ -115,20 +113,20 @@ project "Sandbox"
 
         defines
         {
-            "DXE_PLATFORM_WINDOWS"
+            "SEACREST_PLATFORM_WINDOWS"
         }
 
     filter "configurations:Debug"
-        defines "DXE_DEBUG"
+        defines "SEACREST_DEBUG"
         runtime "Debug"
         symbols "on"
 
     filter "configurations:Release"
-        defines "DXE_RELEASE"
+        defines "SEACREST_RELEASE"
         runtime "Release"
         optimize "on"
 
     filter "configurations:Dist"
-        defines "DXE_DIST"
+        defines "SEACREST_DIST"
         runtime "Release"
         optimize "on"
