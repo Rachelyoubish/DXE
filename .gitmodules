@@ -1,6 +1,6 @@
-[submodule "DXE/vendor/spdlog"]
-	path = DXE/vendor/spdlog
+[submodule "Seacrest/vendor/spdlog"]
+	path = Seacrest/vendor/spdlog
 	url = https://github.com/gabime/spdlog
-[submodule "DXE/vendor/imgui"]
-	path = DXE/vendor/imgui
+[submodule "Seacrest/vendor/imgui"]
+	path = Seacrest/vendor/imgui
 	url = https://github.com/Rachelyoubish/imgui
