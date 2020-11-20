@@ -29,14 +29,15 @@ project "Seacrest"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-
+    
     pchheader "scpch.h"
     pchsource "Seacrest/src/scpch.cpp"
 
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/src/**.hlsl"
     }
 
     defines
@@ -120,7 +121,7 @@ project "Sandbox"
         defines "SEACREST_DEBUG"
         runtime "Debug"
         symbols "on"
-
+        
     filter "configurations:Release"
         defines "SEACREST_RELEASE"
         runtime "Release"

@@ -121,7 +121,7 @@
     <ClCompile Include="src\scpch.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PixelShader.hlsl" />
-    <FxCompile Include="VertexShader.hlsl" />
+    <FxCompile Include="src\PixelShader.hlsl" />
+    <FxCompile Include="src\VertexShader.hlsl" />
   </ItemGroup>
 </Project>
