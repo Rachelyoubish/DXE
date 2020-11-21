@@ -12,6 +12,8 @@
 
 #include "Seacrest/Renderer/Shader.h"
 
+#include "Seacrest/Renderer/Buffer.h"
+
 namespace Seacrest {
 
 	class SEACREST_API Application
@@ -42,9 +44,11 @@ namespace Seacrest {
 		// TEMP
 		ID3D11Device* m_Device;
 		ID3D11DeviceContext* m_DeviceContext;
-		UINT m_VertexBuffer;
-		UINT m_IndexBuffer;
+		// UINT m_VertexBuffer;
+		// UINT m_IndexBuffer;
 		std::unique_ptr<Shader> m_Shader;
+		std::unique_ptr<VertexBuffer> m_VertexBuffer;
+		std::unique_ptr<IndexBuffer> m_IndexBuffer;
 	private:
 		static Application* s_Instance;
 	};

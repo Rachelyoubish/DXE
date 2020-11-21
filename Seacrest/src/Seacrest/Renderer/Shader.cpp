@@ -50,7 +50,7 @@ namespace Seacrest {
 		const D3D11_INPUT_ELEMENT_DESC ied[] =
 		{
 			{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "Color", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		};
 
 		m_Device->CreateInputLayout(
@@ -81,5 +81,6 @@ namespace Seacrest {
 
 	void Shader::Unbind()
 	{
+		// Com objects destroy themselves, this function may be useless as of now. 
 	}
 }

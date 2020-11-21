@@ -86,6 +86,13 @@
       <Filter>Seacrest</Filter>
     </ClInclude>
     <ClInclude Include="src\scpch.h" />
+    <ClInclude Include="src\Seacrest\Renderer\Buffer.h">
+      <Filter>Seacrest\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\DirectX\DirectXBuffer.h">
+      <Filter>Platform\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\DirectX\DirectXContext.cpp">
@@ -119,6 +126,11 @@
       <Filter>Seacrest\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\scpch.cpp" />
+    <ClCompile Include="src\Seacrest\Renderer\Buffer.cpp">
+      <Filter>Seacrest\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\DirectX\DirectXBuffer.cpp" />
+    <ClCompile Include="src\Seacrest\Renderer\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\PixelShader.hlsl" />

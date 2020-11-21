@@ -36,64 +36,35 @@ namespace Seacrest {
 		{
 			float x;
 			float y;
-			unsigned char r;
-			unsigned char g;
-			unsigned char b;
-			unsigned char a;
+			float r;
+			float g;
+			float b;
 		};
 		
 		// Create vertex buffer (1 2d triangle at the center of the screen).
-		const Vertex vertices[] =
+		Vertex vertices[3 * 5] =
 		{
-			{  0.0f,  0.5f, 255, 0, 0, 0 },
-			{  0.5f, -0.5f, 0, 255, 0, 0 },
-			{ -0.5f, -0.5f, 0, 0, 255, 0 },
+			 0.0f,  0.5f, 1.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			-0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
 		};
-		
-		Microsoft::WRL::ComPtr<ID3D11Buffer> pVertexBuffer;
-		
-		D3D11_BUFFER_DESC bd = {};
-		
-		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bd.Usage = D3D11_USAGE_DEFAULT;
-		bd.CPUAccessFlags = 0u;
-		bd.MiscFlags = 0u;
-		bd.ByteWidth = sizeof( vertices );
-		bd.StructureByteStride = sizeof( Vertex );
-		
-		D3D11_SUBRESOURCE_DATA sd = {};
-		sd.pSysMem = vertices;
-		
-		m_Device->CreateBuffer( &bd, &sd, &pVertexBuffer );
-		
-		// Bind vertex buffer to pipeline
-		const UINT stride = sizeof( Vertex );
-		const UINT offset = 0u;
-		m_DeviceContext->IASetVertexBuffers( 0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset );
+
+		//float vertices[] =
+		//{
+		//	 0.0f,  0.5f, 1.0f, 0.0f, 0.0f,
+		//	 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+		//	 0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
+		//};
+
+		m_VertexBuffer.reset(VertexBuffer::Create( (float*)vertices, sizeof( vertices ) ) );
 		
 		// Create index buffer.
-		const unsigned short indices[] =
+		uint32_t indices[] =
 		{
 			0, 1, 2,
 		};
-
-		Microsoft::WRL::ComPtr<ID3D11Buffer> pIndexBuffer;
-
-		D3D11_BUFFER_DESC ibd = {};
-
-		ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
-		ibd.Usage = D3D11_USAGE_DEFAULT;
-		ibd.CPUAccessFlags = 0u;
-		ibd.MiscFlags = 0u;
-		ibd.ByteWidth = sizeof( indices );
-		ibd.StructureByteStride = sizeof( unsigned short );
-
-		D3D11_SUBRESOURCE_DATA isd = {};
-		isd.pSysMem = indices;
-		m_Device->CreateBuffer( &ibd, &isd, &pIndexBuffer );
-
-		// Bind index buffer.
-		m_DeviceContext->IASetIndexBuffer( pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u );
+		
+		m_IndexBuffer.reset( IndexBuffer::Create( indices, sizeof( indices ) / sizeof( uint32_t ) ) );
 		
 		// Bind render target.
 		// SetRenderTargets();
@@ -119,8 +90,8 @@ namespace Seacrest {
 		// m_DeviceContext->Draw( (UINT)std::size( vertices ), 0u );
 
 		// Stores the amount of vertices for the Draw command.
-		m_VertexBuffer = (UINT)std::size( vertices );
-		m_IndexBuffer = (UINT)std::size( indices );
+		//m_VertexBuffer = (UINT)std::size( vertices );
+		//m_IndexBuffer = (UINT)std::size( indices );
 
 		m_Shader.reset( new Shader( "VertexShader.cso", "PixelShader.cso", m_Device, m_DeviceContext ) );
 	}
@@ -163,7 +134,7 @@ namespace Seacrest {
 			m_Context->ClearScreen();
 
 			m_Shader->Bind();
-			m_DeviceContext->DrawIndexed( m_IndexBuffer, 0u, 0u );
+			m_DeviceContext->DrawIndexed( m_IndexBuffer->GetCount(), 0u, 0u );
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();

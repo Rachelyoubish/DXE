@@ -140,6 +140,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\DirectX\DirectXBuffer.h" />
     <ClInclude Include="src\Platform\DirectX\DirectXContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
@@ -158,12 +159,15 @@
     <ClInclude Include="src\Seacrest\LayerStack.h" />
     <ClInclude Include="src\Seacrest\Log.h" />
     <ClInclude Include="src\Seacrest\MouseButtonCodes.h" />
+    <ClInclude Include="src\Seacrest\Renderer\Buffer.h" />
     <ClInclude Include="src\Seacrest\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Seacrest\Renderer\Renderer.h" />
     <ClInclude Include="src\Seacrest\Renderer\Shader.h" />
     <ClInclude Include="src\Seacrest\Window.h" />
     <ClInclude Include="src\scpch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\DirectX\DirectXBuffer.cpp" />
     <ClCompile Include="src\Platform\DirectX\DirectXContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
@@ -173,6 +177,8 @@
     <ClCompile Include="src\Seacrest\Layer.cpp" />
     <ClCompile Include="src\Seacrest\LayerStack.cpp" />
     <ClCompile Include="src\Seacrest\Log.cpp" />
+    <ClCompile Include="src\Seacrest\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Seacrest\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Seacrest\Renderer\Shader.cpp" />
     <ClCompile Include="src\scpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -181,14 +187,18 @@
   <ItemGroup>
     <FxCompile Include="src\PixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="src\VertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\imgui\ImGui.vcxproj">
-      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+      <Project>{c0ff640d-2c14-8dbe-f595-301e616989ef}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
