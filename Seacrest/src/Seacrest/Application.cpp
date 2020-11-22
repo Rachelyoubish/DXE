@@ -8,6 +8,7 @@
 // TEMP includes
 #include <wrl.h>
 #include <d3dcompiler.h>
+#include <vector>
 
 namespace Seacrest {
 
@@ -42,13 +43,13 @@ namespace Seacrest {
 		};
 		
 		// Create vertex buffer (1 2d triangle at the center of the screen).
-		Vertex vertices[3 * 5] =
+		const std::vector<float> vertices =
 		{
 			 0.0f,  0.5f, 1.0f, 0.0f, 0.0f,
 			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
 			-0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
 		};
-
+	
 		//float vertices[] =
 		//{
 		//	 0.0f,  0.5f, 1.0f, 0.0f, 0.0f,
@@ -56,10 +57,10 @@ namespace Seacrest {
 		//	 0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
 		//};
 
-		m_VertexBuffer.reset(VertexBuffer::Create( (float*)vertices, sizeof( vertices ) ) );
+		m_VertexBuffer.reset(VertexBuffer::Create( vertices, sizeof( vertices ) ) );
 		
 		// Create index buffer.
-		uint32_t indices[] =
+		std::vector<unsigned short> indices =
 		{
 			0, 1, 2,
 		};

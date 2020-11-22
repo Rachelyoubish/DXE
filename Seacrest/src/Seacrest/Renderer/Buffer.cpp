@@ -7,7 +7,7 @@
 
 namespace Seacrest {
 
-	VertexBuffer* VertexBuffer::Create( float* vertices, uint32_t size )
+	VertexBuffer* VertexBuffer::Create( const std::vector<float>& vertices, uint32_t size )
 	{
 		switch (Renderer::GetCurrentAPI())
 		{
@@ -19,7 +19,7 @@ namespace Seacrest {
 		return nullptr;
 	}
 
-	IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t size)
+	IndexBuffer* IndexBuffer::Create( const std::vector<unsigned short>& indices, uint32_t size)
 	{
 		switch (Renderer::GetCurrentAPI())
 		{

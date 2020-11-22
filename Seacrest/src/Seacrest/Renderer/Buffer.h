@@ -9,8 +9,7 @@ namespace Seacrest {
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
-
-		static VertexBuffer* Create( float* vertices, uint32_t size );
+		static VertexBuffer* Create( const std::vector<float>& vertices, uint32_t size );
 	};
 
 	class IndexBuffer
@@ -23,6 +22,6 @@ namespace Seacrest {
 
 		virtual uint32_t GetCount() const = 0;
 
-		static IndexBuffer* Create(uint32_t* indicies, uint32_t size);
+		static IndexBuffer* Create( const std::vector<unsigned short>& indicies, uint32_t size);
 	};
 }

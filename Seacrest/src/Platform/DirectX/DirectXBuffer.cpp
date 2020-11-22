@@ -8,8 +8,7 @@ namespace Seacrest {
 	///////////////////////////////////////////////////////////////////////////
 	// Vertex Buffer //////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
-
-	DirectXVertexBuffer::DirectXVertexBuffer( float* vertices, uint32_t size )
+	DirectXVertexBuffer::DirectXVertexBuffer( const std::vector<float>& vertices, uint32_t size )
 	{
 		Application& app = Application::Get();
 		ID3D11Device* pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
@@ -22,15 +21,17 @@ namespace Seacrest {
 		bd.Usage = D3D11_USAGE_DEFAULT;
 		bd.CPUAccessFlags = 0u;
 		bd.MiscFlags = 0u;
-		bd.ByteWidth = sizeof(vertices) * 3;
-		bd.StructureByteStride = (UINT)vertices;
+		bd.ByteWidth = sizeof(size) * 3;
+		bd.StructureByteStride = (UINT)(size);
 
 		D3D11_SUBRESOURCE_DATA sd = {};
-		sd.pSysMem = vertices;
+		sd.pSysMem = &size;
 
 		pDevice->CreateBuffer(&bd, &sd, &pVertexBuffer);
 		
 		m_VertexBuffer = pVertexBuffer;
+		
+		Bind();
 	}
 
 	DirectXVertexBuffer::~DirectXVertexBuffer()
@@ -57,14 +58,14 @@ namespace Seacrest {
 	// Index Buffer ///////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-	DirectXIndexBuffer::DirectXIndexBuffer( uint32_t* indices, uint32_t count )
+	DirectXIndexBuffer::DirectXIndexBuffer( const std::vector<unsigned short>& indices, uint32_t count )
 		: m_Count( count )
 	{
 		Application& app = Application::Get();
 		ID3D11Device* pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
 	
 
-		Microsoft::WRL::ComPtr<ID3D11Buffer> pIndexBuffer;
+		// Microsoft::WRL::ComPtr<ID3D11Buffer> pIndexBuffer;
 
 		D3D11_BUFFER_DESC ibd = {};
 
@@ -72,14 +73,15 @@ namespace Seacrest {
 		ibd.Usage = D3D11_USAGE_DEFAULT;
 		ibd.CPUAccessFlags = 0u;
 		ibd.MiscFlags = 0u;
-		ibd.ByteWidth = sizeof( indices );
+		ibd.ByteWidth = UINT( indices.size() * sizeof( uint32_t ) );
 		ibd.StructureByteStride = sizeof( uint32_t );
 
 		D3D11_SUBRESOURCE_DATA isd = {};
-		isd.pSysMem = indices;
-		pDevice->CreateBuffer( &ibd, &isd, &pIndexBuffer );
+		isd.pSysMem = indices.data();
+		pDevice->CreateBuffer( &ibd, &isd, &m_IndexBuffer );
 
-		m_IndexBuffer = pIndexBuffer;
+		// m_IndexBuffer = pIndexBuffer;
+		Bind();
 	}
 
 	DirectXIndexBuffer::~DirectXIndexBuffer()
