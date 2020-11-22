@@ -19,7 +19,7 @@ namespace Seacrest {
 		return nullptr;
 	}
 
-	IndexBuffer* IndexBuffer::Create( const std::vector<unsigned short>& indices, uint32_t size)
+	IndexBuffer* IndexBuffer::Create( const std::vector<unsigned short>& indices, unsigned short size)
 	{
 		switch (Renderer::GetCurrentAPI())
 		{

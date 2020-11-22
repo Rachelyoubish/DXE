@@ -23,7 +23,7 @@ namespace Seacrest {
 	class DirectXIndexBuffer : public IndexBuffer
 	{
 	public:
-		DirectXIndexBuffer( const std::vector<unsigned short>&, uint32_t count );
+		DirectXIndexBuffer( const std::vector<unsigned short>&, unsigned short count );
 		virtual ~DirectXIndexBuffer();
 
 		virtual void Bind() const;

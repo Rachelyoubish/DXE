@@ -58,7 +58,7 @@ namespace Seacrest {
 	// Index Buffer ///////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-	DirectXIndexBuffer::DirectXIndexBuffer( const std::vector<unsigned short>& indices, uint32_t count )
+	DirectXIndexBuffer::DirectXIndexBuffer( const std::vector<unsigned short>& indices, unsigned short count )
 		: m_Count( count )
 	{
 		Application& app = Application::Get();
@@ -73,8 +73,8 @@ namespace Seacrest {
 		ibd.Usage = D3D11_USAGE_DEFAULT;
 		ibd.CPUAccessFlags = 0u;
 		ibd.MiscFlags = 0u;
-		ibd.ByteWidth = UINT( indices.size() * sizeof( uint32_t ) );
-		ibd.StructureByteStride = sizeof( uint32_t );
+		ibd.ByteWidth = UINT( count * sizeof( unsigned short ) );
+		ibd.StructureByteStride = sizeof( unsigned short );
 
 		D3D11_SUBRESOURCE_DATA isd = {};
 		isd.pSysMem = indices.data();

@@ -22,6 +22,6 @@ namespace Seacrest {
 
 		virtual uint32_t GetCount() const = 0;
 
-		static IndexBuffer* Create( const std::vector<unsigned short>& indicies, uint32_t size);
+		static IndexBuffer* Create( const std::vector<unsigned short>& indicies, unsigned short size);
 	};
 }

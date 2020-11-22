@@ -65,7 +65,7 @@ namespace Seacrest {
 			0, 1, 2,
 		};
 		
-		m_IndexBuffer.reset( IndexBuffer::Create( indices, sizeof( indices ) / sizeof( uint32_t ) ) );
+		m_IndexBuffer.reset( IndexBuffer::Create( indices, (UINT)indices.size() ) );
 		
 		// Bind render target.
 		// SetRenderTargets();
