@@ -129,8 +129,10 @@
     <ClCompile Include="src\Seacrest\Renderer\Buffer.cpp">
       <Filter>Seacrest\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\DirectX\DirectXBuffer.cpp" />
     <ClCompile Include="src\Seacrest\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Platform\DirectX\DirectXBuffer.cpp">
+      <Filter>Platform\DirectX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\PixelShader.hlsl" />

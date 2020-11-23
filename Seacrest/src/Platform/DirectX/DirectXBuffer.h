@@ -8,7 +8,7 @@ namespace Seacrest {
 	class DirectXVertexBuffer : public VertexBuffer
 	{
 	public:
-		DirectXVertexBuffer( const std::vector<float>& vertices, uint32_t size );
+		DirectXVertexBuffer( float* vertices, uint32_t size );
 		virtual ~DirectXVertexBuffer();
 
 		virtual void Bind() const;
@@ -23,7 +23,7 @@ namespace Seacrest {
 	class DirectXIndexBuffer : public IndexBuffer
 	{
 	public:
-		DirectXIndexBuffer( const std::vector<unsigned short>&, unsigned short count );
+		DirectXIndexBuffer( uint32_t* indices, unsigned short count );
 		virtual ~DirectXIndexBuffer();
 
 		virtual void Bind() const;

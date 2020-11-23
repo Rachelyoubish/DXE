@@ -44,7 +44,7 @@ namespace Seacrest {
 		// TEMP
 		ID3D11Device* m_Device;
 		ID3D11DeviceContext* m_DeviceContext;
-		// UINT m_VertexBuffer;
+		UINT m_Vertex;
 		// UINT m_IndexBuffer;
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
