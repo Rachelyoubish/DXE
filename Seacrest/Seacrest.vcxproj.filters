@@ -22,6 +22,9 @@
     <Filter Include="Seacrest\Renderer">
       <UniqueIdentifier>{A5FC0E89-1113-0D1F-5A8A-9840C6DFDDA6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{b33110f1-70d6-431c-9dee-601d7358b656}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Platform\DirectX\DirectXContext.h">
@@ -139,7 +142,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="src\PixelShader.hlsl" />
-    <FxCompile Include="src\VertexShader.hlsl" />
+    <FxCompile Include="src\Shaders\VertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="src\Shaders\PixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
