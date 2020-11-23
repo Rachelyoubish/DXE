@@ -9,6 +9,8 @@
 
 #include "imgui.h"
 
+#include "examples/imgui_impl_win32.h" // Temp: only here to fix DPI issues. 
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
 namespace Seacrest {
@@ -37,6 +39,7 @@ namespace Seacrest {
 
 	void WindowsWindow::Init( const WindowProps& props )
 	{
+		ImGui_ImplWin32_EnableDpiAwareness();
 		// Data
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;

@@ -22,7 +22,7 @@ namespace Seacrest {
 
 	void ImGuiLayer::OnAttach()
 	{
-		ImGui_ImplWin32_EnableDpiAwareness();
+		// ImGui_ImplWin32_EnableDpiAwareness();
 
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
@@ -31,8 +31,8 @@ namespace Seacrest {
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
-		io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleFonts;     // FIXME-DPI: THIS CURRENTLY DOESN'T WORK AS EXPECTED. DON'T USE IN USER APP!
-		io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // FIXME-DPI
+		// io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleFonts;     // FIXME-DPI: THIS CURRENTLY DOESN'T WORK AS EXPECTED. DON'T USE IN USER APP!
+		// io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // FIXME-DPI
 
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();

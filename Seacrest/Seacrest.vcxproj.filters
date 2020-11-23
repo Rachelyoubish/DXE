@@ -92,7 +92,9 @@
     <ClInclude Include="src\Platform\DirectX\DirectXBuffer.h">
       <Filter>Platform\DirectX</Filter>
     </ClInclude>
-    <ClInclude Include="src\Seacrest\Renderer\Renderer.h" />
+    <ClInclude Include="src\Seacrest\Renderer\Renderer.h">
+      <Filter>Seacrest\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\DirectX\DirectXContext.cpp">
@@ -129,9 +131,11 @@
     <ClCompile Include="src\Seacrest\Renderer\Buffer.cpp">
       <Filter>Seacrest\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Seacrest\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Platform\DirectX\DirectXBuffer.cpp">
       <Filter>Platform\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Seacrest\Renderer\Renderer.cpp">
+      <Filter>Seacrest\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
