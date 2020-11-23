@@ -11,7 +11,7 @@ namespace Seacrest {
 	DirectXVertexBuffer::DirectXVertexBuffer( float* vertices, uint32_t size )
 	{
 		Application& app = Application::Get();
-		ID3D11Device* pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
+		Microsoft::WRL::ComPtr<ID3D11Device> pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
 
 		Microsoft::WRL::ComPtr<ID3D11Buffer> pVertexBuffer;
 
@@ -21,14 +21,15 @@ namespace Seacrest {
 		bd.Usage = D3D11_USAGE_DEFAULT;
 		bd.CPUAccessFlags = 0u;
 		bd.MiscFlags = 0u;
-		bd.ByteWidth = (UINT)size;
-		bd.StructureByteStride = (UINT)(size);
+		bd.ByteWidth = size;
+		bd.StructureByteStride = sizeof(float);
 
 		D3D11_SUBRESOURCE_DATA sd = {};
 		sd.pSysMem = vertices;
 
 		pDevice->CreateBuffer(&bd, &sd, &pVertexBuffer);
 		
+		vertexSize = vertices;
 		m_VertexBuffer = pVertexBuffer;
 		
 		Bind();
@@ -44,7 +45,7 @@ namespace Seacrest {
 		Application& app = Application::Get();
 		ID3D11DeviceContext* pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
 		// Bind vertex buffer to pipeline
-		const UINT stride = 6 * sizeof(float);
+		const UINT stride = sizeof(vertexSize);
 		const UINT offset = 0u;
 		pDeviceContext->IASetVertexBuffers(0u, 1u, m_VertexBuffer.GetAddressOf(), &stride, &offset);
 	}

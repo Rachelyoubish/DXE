@@ -42,8 +42,8 @@ namespace Seacrest {
 
 		GraphicsContext* m_Context;
 		// TEMP
-		ID3D11Device* m_Device;
-		ID3D11DeviceContext* m_DeviceContext;
+		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
 		UINT m_Vertex;
 		// UINT m_IndexBuffer;
 		std::unique_ptr<Shader> m_Shader;

@@ -49,8 +49,8 @@ namespace Seacrest {
 		Microsoft::WRL::ComPtr<ID3D11InputLayout> pInputLayout;
 		const D3D11_INPUT_ELEMENT_DESC ied[] =
 		{
-			{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "Color", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			// { "Color", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		};
 
 		m_Device->CreateInputLayout(
@@ -61,11 +61,11 @@ namespace Seacrest {
 		);
 
 		// Bind vertex layout.
-		// m_DeviceContext->IASetInputLayout( pInputLayout.Get() );
+		m_DeviceContext->IASetInputLayout( pInputLayout.Get() );
 
 		m_PixelShader = pPixelShader.Get();
 		m_VertexShader = pVertexShader.Get();
-		m_InputLayout = pInputLayout.Get();
+		// m_InputLayout = pInputLayout.Get();
 	}
 
 	Shader::~Shader()
@@ -76,7 +76,8 @@ namespace Seacrest {
 	{
 		m_DeviceContext->PSSetShader( m_PixelShader.Get(), nullptr, 0u );
 		m_DeviceContext->VSSetShader( m_VertexShader.Get(), nullptr, 0u );
-		m_DeviceContext->IASetInputLayout( m_InputLayout.Get() );
+		// m_DeviceContext->IASetInputLayout( m_InputLayout.Get() );
+		// I don't think it's logical to set the input layout every frame. 
 	}
 
 	void Shader::Unbind()

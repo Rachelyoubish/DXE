@@ -33,21 +33,28 @@ namespace Seacrest {
 		m_Device = Get().GetWindow().GetGraphicsContext()->GetD3D11Device();
 		m_DeviceContext = Get().GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
 		
-		// struct Vertex
-		// {
-		// 	float x;
-		// 	float y;
-		// 	float r;
-		// 	float g;
-		// 	float b;
-		// };
+		struct Vertex
+		{
+			float x;
+			float y;
+			//float r;
+			//float g;
+			//float b;
+		};
 		
 		// Create vertex buffer (1 2d triangle at the center of the screen).
-		float vertices[] =
+		// float vertices[] =
+		// {
+		// 	 0.0f,  0.5f, 1.0f, 0.0f, 0.0f,
+		// 	 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+		// 	-0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
+		// };
+
+		const Vertex vertices[] =
 		{
-			 0.0f,  0.5f, 1.0f, 0.0f, 0.0f,
-			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-			-0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
+			{0.0f,  0.5f},
+			{ 0.5f, -0.5f},
+			{-0.5f, -0.5f},
 		};
 	
 		//float vertices[] =
@@ -57,7 +64,7 @@ namespace Seacrest {
 		//	 0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
 		//};
 
-		m_VertexBuffer.reset(VertexBuffer::Create( vertices, sizeof( vertices ) ) );
+		m_VertexBuffer.reset(VertexBuffer::Create( (float*)vertices, sizeof( vertices ) ) );
 		
 		// Create index buffer.
 		uint32_t indices[3] =
@@ -94,7 +101,7 @@ namespace Seacrest {
 		m_Vertex = (UINT)std::size( vertices );
 		//m_IndexBuffer = (UINT)std::size( indices );
 
-		m_Shader.reset( new Shader( "VertexShader.cso", "PixelShader.cso", m_Device, m_DeviceContext ) );
+		m_Shader.reset( new Shader( "VertexShader.cso", "PixelShader.cso", m_Device.Get(), m_DeviceContext.Get() ) );
 	}
 
 	Application::~Application()
@@ -135,7 +142,8 @@ namespace Seacrest {
 			m_Context->ClearScreen();
 
 			m_Shader->Bind();
-			m_DeviceContext->DrawIndexed( m_IndexBuffer->GetCount(), 0u, 0u );
+			m_DeviceContext->Draw( m_Vertex, 0 );
+			// m_DeviceContext->DrawIndexed( m_IndexBuffer->GetCount(), 0u, 0u );
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
