@@ -23,10 +23,13 @@
       <UniqueIdentifier>{A5FC0E89-1113-0D1F-5A8A-9840C6DFDDA6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shaders">
-      <UniqueIdentifier>{b33110f1-70d6-431c-9dee-601d7358b656}</UniqueIdentifier>
+      <UniqueIdentifier>{EFAC8DF2-5B8C-0C8E-64A4-9764D00273EF}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\DirectX\DirectXBuffer.h">
+      <Filter>Platform\DirectX</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\DirectX\DirectXContext.h">
       <Filter>Platform\DirectX</Filter>
     </ClInclude>
@@ -79,7 +82,13 @@
     <ClInclude Include="src\Seacrest\MouseButtonCodes.h">
       <Filter>Seacrest</Filter>
     </ClInclude>
+    <ClInclude Include="src\Seacrest\Renderer\Buffer.h">
+      <Filter>Seacrest\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Seacrest\Renderer\GraphicsContext.h">
+      <Filter>Seacrest\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\Renderer\Renderer.h">
       <Filter>Seacrest\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Seacrest\Renderer\Shader.h">
@@ -89,17 +98,11 @@
       <Filter>Seacrest</Filter>
     </ClInclude>
     <ClInclude Include="src\scpch.h" />
-    <ClInclude Include="src\Seacrest\Renderer\Buffer.h">
-      <Filter>Seacrest\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\DirectX\DirectXBuffer.h">
-      <Filter>Platform\DirectX</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Seacrest\Renderer\Renderer.h">
-      <Filter>Seacrest\Renderer</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\DirectX\DirectXBuffer.cpp">
+      <Filter>Platform\DirectX</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\DirectX\DirectXContext.cpp">
       <Filter>Platform\DirectX</Filter>
     </ClCompile>
@@ -127,25 +130,22 @@
     <ClCompile Include="src\Seacrest\Log.cpp">
       <Filter>Seacrest</Filter>
     </ClCompile>
-    <ClCompile Include="src\Seacrest\Renderer\Shader.cpp">
-      <Filter>Seacrest\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scpch.cpp" />
     <ClCompile Include="src\Seacrest\Renderer\Buffer.cpp">
       <Filter>Seacrest\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\DirectX\DirectXBuffer.cpp">
-      <Filter>Platform\DirectX</Filter>
     </ClCompile>
     <ClCompile Include="src\Seacrest\Renderer\Renderer.cpp">
       <Filter>Seacrest\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Seacrest\Renderer\Shader.cpp">
+      <Filter>Seacrest\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scpch.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="src\Shaders\VertexShader.hlsl">
+    <FxCompile Include="src\Shaders\PixelShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="src\Shaders\PixelShader.hlsl">
+    <FxCompile Include="src\Shaders\VertexShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

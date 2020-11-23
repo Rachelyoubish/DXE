@@ -19,6 +19,7 @@ namespace Seacrest {
 		//Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
 		Microsoft::WRL::ComPtr<ID3D11Buffer> m_VertexBuffer;
 		float* vertexSize;
+		//UINT vertexSize;
 	};
 
 	class DirectXIndexBuffer : public IndexBuffer

@@ -22,7 +22,7 @@ namespace Seacrest {
 		bd.CPUAccessFlags = 0u;
 		bd.MiscFlags = 0u;
 		bd.ByteWidth = size;
-		bd.StructureByteStride = sizeof(float);
+		bd.StructureByteStride = sizeof(vertices);
 
 		D3D11_SUBRESOURCE_DATA sd = {};
 		sd.pSysMem = vertices;
@@ -45,7 +45,7 @@ namespace Seacrest {
 		Application& app = Application::Get();
 		ID3D11DeviceContext* pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
 		// Bind vertex buffer to pipeline
-		const UINT stride = sizeof(vertexSize);
+		const UINT stride = 20; // sizeof(vertexSize); This sizeof thing isn't working.  
 		const UINT offset = 0u;
 		pDeviceContext->IASetVertexBuffers(0u, 1u, m_VertexBuffer.GetAddressOf(), &stride, &offset);
 	}

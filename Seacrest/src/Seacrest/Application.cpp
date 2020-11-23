@@ -37,9 +37,9 @@ namespace Seacrest {
 		{
 			float x;
 			float y;
-			//float r;
-			//float g;
-			//float b;
+			float r;
+			float g;
+			float b;
 		};
 		
 		// Create vertex buffer (1 2d triangle at the center of the screen).
@@ -52,9 +52,9 @@ namespace Seacrest {
 
 		const Vertex vertices[] =
 		{
-			{0.0f,  0.5f},
-			{ 0.5f, -0.5f},
-			{-0.5f, -0.5f},
+			{  0.0f,  0.5f, 1.0f, 0.0f, 0.0f },
+			{  0.5f, -0.5f, 0.0f, 1.0f, 0.0f },
+			{ -0.5f, -0.5f, 0.0f, 0.0f, 1.0f },
 		};
 	
 		//float vertices[] =
