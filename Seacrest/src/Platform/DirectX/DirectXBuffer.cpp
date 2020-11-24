@@ -8,7 +8,7 @@ namespace Seacrest {
 	///////////////////////////////////////////////////////////////////////////
 	// Vertex Buffer //////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
-	DirectXVertexBuffer::DirectXVertexBuffer( float* vertices, uint32_t size )
+	DirectXVertexBuffer::DirectXVertexBuffer( void* vertices, uint32_t size, uint32_t sizeList )
 	{
 		Application& app = Application::Get();
 		Microsoft::WRL::ComPtr<ID3D11Device> pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
@@ -21,15 +21,15 @@ namespace Seacrest {
 		bd.Usage = D3D11_USAGE_DEFAULT;
 		bd.CPUAccessFlags = 0u;
 		bd.MiscFlags = 0u;
-		bd.ByteWidth = size;
-		bd.StructureByteStride = sizeof(vertices);
+		bd.ByteWidth = size * sizeList;
+		bd.StructureByteStride = 0; // sizeof(vertices);
 
 		D3D11_SUBRESOURCE_DATA sd = {};
 		sd.pSysMem = vertices;
 
 		pDevice->CreateBuffer(&bd, &sd, &pVertexBuffer);
 		
-		vertexSize = vertices;
+		vertexSize = size;
 		m_VertexBuffer = pVertexBuffer;
 		
 		Bind();
@@ -45,7 +45,7 @@ namespace Seacrest {
 		Application& app = Application::Get();
 		ID3D11DeviceContext* pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
 		// Bind vertex buffer to pipeline
-		const UINT stride = 20; // sizeof(vertexSize); This sizeof thing isn't working.  
+		const UINT stride = vertexSize; // This sizeof thing isn't working.  
 		const UINT offset = 0u;
 		pDeviceContext->IASetVertexBuffers(0u, 1u, m_VertexBuffer.GetAddressOf(), &stride, &offset);
 	}

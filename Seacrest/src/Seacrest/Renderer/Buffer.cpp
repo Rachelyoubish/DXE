@@ -7,12 +7,12 @@
 
 namespace Seacrest {
 
-	VertexBuffer* VertexBuffer::Create( float* vertices, uint32_t size )
+	VertexBuffer* VertexBuffer::Create( void* vertices, uint32_t size, uint32_t sizeList )
 	{
 		switch (Renderer::GetCurrentAPI())
 		{
 			case RendererAPI::None:     SEACREST_ASSERT(false, "RendererAPI::None is currently not supported!");  return nullptr;
-			case RendererAPI::Direct3D: return new DirectXVertexBuffer(vertices, size);
+			case RendererAPI::Direct3D: return new DirectXVertexBuffer(vertices, size, sizeList);
 		}
 
 		SEACREST_ASSERT( false, "Unknown RendererAPI!" );

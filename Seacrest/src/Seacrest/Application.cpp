@@ -37,9 +37,10 @@ namespace Seacrest {
 		{
 			float x;
 			float y;
-			float r;
-			float g;
-			float b;
+			unsigned char r;
+			unsigned char g;
+			unsigned char b;
+			unsigned char a;
 		};
 		
 		// Create vertex buffer (1 2d triangle at the center of the screen).
@@ -50,11 +51,11 @@ namespace Seacrest {
 		// 	-0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
 		// };
 
-		const Vertex vertices[] =
+		Vertex vertices[] =
 		{
-			{  0.0f,  0.5f, 1.0f, 0.0f, 0.0f },
-			{  0.5f, -0.5f, 0.0f, 1.0f, 0.0f },
-			{ -0.5f, -0.5f, 0.0f, 0.0f, 1.0f },
+			{  0.0f,  0.5f, 255, 0, 0, 0},
+			{  0.5f, -0.5f, 0, 255, 0, 0 },
+			{ -0.5f, -0.5f, 0, 0, 255, 0 },
 		};
 	
 		//float vertices[] =
@@ -64,7 +65,9 @@ namespace Seacrest {
 		//	 0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
 		//};
 
-		m_VertexBuffer.reset(VertexBuffer::Create( (float*)vertices, sizeof( vertices ) ) );
+		UINT sizeList = ARRAYSIZE( vertices );
+
+		m_VertexBuffer.reset(VertexBuffer::Create( vertices, sizeof( Vertex ), sizeList ) );
 		
 		// Create index buffer.
 		uint32_t indices[3] =

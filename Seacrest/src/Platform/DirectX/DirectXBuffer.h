@@ -8,7 +8,7 @@ namespace Seacrest {
 	class DirectXVertexBuffer : public VertexBuffer
 	{
 	public:
-		DirectXVertexBuffer( float* vertices, uint32_t size );
+		DirectXVertexBuffer( void* vertices, uint32_t size, uint32_t sizeList );
 		virtual ~DirectXVertexBuffer();
 
 		virtual void Bind() const;
@@ -18,8 +18,8 @@ namespace Seacrest {
 		//Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
 		//Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
 		Microsoft::WRL::ComPtr<ID3D11Buffer> m_VertexBuffer;
-		float* vertexSize;
-		//UINT vertexSize;
+		// float* vertexSize;
+		UINT vertexSize;
 	};
 
 	class DirectXIndexBuffer : public IndexBuffer
