@@ -4,9 +4,6 @@
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform\DirectX">
-      <UniqueIdentifier>{EC338E64-D82C-ADB6-015F-923BEDB68CC2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Platform\Windows">
       <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
     </Filter>
@@ -25,14 +22,11 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{EFAC8DF2-5B8C-0C8E-64A4-9764D00273EF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform\Direct3D">
+      <UniqueIdentifier>{EC338E64-D82C-ADB6-015F-923BEDB68CC2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Platform\DirectX\DirectXBuffer.h">
-      <Filter>Platform\DirectX</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\DirectX\DirectXContext.h">
-      <Filter>Platform\DirectX</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
@@ -98,14 +92,14 @@
       <Filter>Seacrest</Filter>
     </ClInclude>
     <ClInclude Include="src\scpch.h" />
+    <ClInclude Include="src\Platform\Direct3D\Direct3DBuffer.h">
+      <Filter>Platform\Direct3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Direct3D\Direct3DContext.h">
+      <Filter>Platform\Direct3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Platform\DirectX\DirectXBuffer.cpp">
-      <Filter>Platform\DirectX</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\DirectX\DirectXContext.cpp">
-      <Filter>Platform\DirectX</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
@@ -140,6 +134,12 @@
       <Filter>Seacrest\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\scpch.cpp" />
+    <ClCompile Include="src\Platform\Direct3D\Direct3DBuffer.cpp">
+      <Filter>Platform\Direct3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Direct3D\Direct3DContext.cpp">
+      <Filter>Platform\Direct3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Shaders\PixelShader.hlsl">

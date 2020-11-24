@@ -1,5 +1,5 @@
 #include "scpch.h"
-#include "DirectXContext.h"
+#include "Direct3DContext.h"
 
 namespace Seacrest {
 

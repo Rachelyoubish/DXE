@@ -3,7 +3,7 @@
 
 #include "Renderer.h"
 
-#include "Platform/DirectX/DirectXBuffer.h"
+#include "Platform/Direct3D/Direct3DBuffer.h"
 
 namespace Seacrest {
 

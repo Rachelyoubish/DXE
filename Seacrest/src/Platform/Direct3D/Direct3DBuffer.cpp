@@ -1,5 +1,5 @@
 #include "scpch.h"
-#include "DirectXBuffer.h"
+#include "Direct3DBuffer.h"
 
 #include "Seacrest/Application.h"
 

@@ -140,8 +140,8 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Platform\DirectX\DirectXBuffer.h" />
-    <ClInclude Include="src\Platform\DirectX\DirectXContext.h" />
+    <ClInclude Include="src\Platform\Direct3D\Direct3DBuffer.h" />
+    <ClInclude Include="src\Platform\Direct3D\Direct3DContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Seacrest.h" />
@@ -167,8 +167,8 @@
     <ClInclude Include="src\scpch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Platform\DirectX\DirectXBuffer.cpp" />
-    <ClCompile Include="src\Platform\DirectX\DirectXContext.cpp" />
+    <ClCompile Include="src\Platform\Direct3D\Direct3DBuffer.cpp" />
+    <ClCompile Include="src\Platform\Direct3D\Direct3DContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Seacrest\Application.cpp" />

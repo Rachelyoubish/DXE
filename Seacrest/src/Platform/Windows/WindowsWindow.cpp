@@ -5,7 +5,7 @@
 #include "Seacrest/Events/MouseEvent.h"
 #include "Seacrest/Events/KeyEvent.h"
 
-#include "Platform/DirectX/DirectXContext.h"
+#include "Platform/Direct3D/Direct3DContext.h"
 
 #include "imgui.h"
 
