@@ -25,7 +25,7 @@ namespace Seacrest {
 	class DirectXIndexBuffer : public IndexBuffer
 	{
 	public:
-		DirectXIndexBuffer( uint32_t* indices, unsigned short count );
+		DirectXIndexBuffer( unsigned short* indices, unsigned short count, unsigned short countList );
 		virtual ~DirectXIndexBuffer();
 
 		virtual void Bind() const;

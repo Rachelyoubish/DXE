@@ -45,7 +45,8 @@ namespace Seacrest {
 		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
 		UINT m_Vertex;
-		// UINT m_IndexBuffer;
+		UINT m_Index;
+		//UINT m_IndexBuffer;
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 		std::unique_ptr<IndexBuffer> m_IndexBuffer;

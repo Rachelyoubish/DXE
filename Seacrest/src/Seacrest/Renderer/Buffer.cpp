@@ -19,12 +19,12 @@ namespace Seacrest {
 		return nullptr;
 	}
 
-	IndexBuffer* IndexBuffer::Create( uint32_t* indices, unsigned short size)
+	IndexBuffer* IndexBuffer::Create( unsigned short* indices, unsigned short size, unsigned short sizeList)
 	{
 		switch (Renderer::GetCurrentAPI())
 		{
 			case RendererAPI::None:     SEACREST_ASSERT( false, "RendererAPI::None is currently not supported!" );  return nullptr;
-			case RendererAPI::Direct3D: return new DirectXIndexBuffer( indices, size );
+			case RendererAPI::Direct3D: return new DirectXIndexBuffer( indices, size, sizeList );
 		}
 
 		SEACREST_ASSERT( false, "Unknown RendererAPI!" );

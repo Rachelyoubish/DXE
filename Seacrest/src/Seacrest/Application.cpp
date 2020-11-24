@@ -7,8 +7,8 @@
 
 // TEMP includes
 #include <wrl.h>
-#include <d3dcompiler.h>
-#include <vector>
+// #include <d3dcompiler.h>
+// #include <vector>
 
 namespace Seacrest {
 
@@ -51,22 +51,32 @@ namespace Seacrest {
 
 		Vertex vertices[] =
 		{
-			{  0.0f,  0.5f, 255, 0, 0, 0},
+			{  0.0f,  0.5f, 255, 0, 0, 0 },
 			{  0.5f, -0.5f, 0, 255, 0, 0 },
 			{ -0.5f, -0.5f, 0, 0, 255, 0 },
+			{ -0.3f,  0.3f, 0, 255, 0, 0 },
+			{  0.3f,  0.3f, 0, 0, 255, 0 },
+			{  0.0f, -0.8f, 255, 0, 0, 0 },
 		};
+
+		vertices[0].color.g = 255;
 
 		UINT sizeList = ARRAYSIZE( vertices );
 
 		m_VertexBuffer.reset(VertexBuffer::Create( vertices, sizeof( Vertex ), sizeList ) );
 		
 		// Create index buffer.
-		uint32_t indices[3] =
+		unsigned short indices[] =
 		{
 			0, 1, 2,
+			0, 2, 3,
+			0, 4, 1,
+			2, 1, 5,
 		};
 		
-		m_IndexBuffer.reset( IndexBuffer::Create( indices, sizeof( indices ) / sizeof( uint32_t ) ) );
+		unsigned short indicesList = ARRAYSIZE( indices );
+
+		m_IndexBuffer.reset( IndexBuffer::Create( indices, sizeof( indices ), indicesList ) );
 		
 		// Set primitive topology to triangle list (groups of 3 vertices).
 		m_DeviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
@@ -87,7 +97,7 @@ namespace Seacrest {
 
 		// Stores the amount of vertices for the Draw command.
 		m_Vertex = (UINT)std::size( vertices );
-		//m_IndexBuffer = (UINT)std::size( indices );
+		m_Index = (UINT)std::size( indices );
 
 		m_Shader.reset( new Shader( "VertexShader.cso", "PixelShader.cso", m_Device.Get(), m_DeviceContext.Get() ) );
 	}
@@ -130,8 +140,8 @@ namespace Seacrest {
 			m_Context->ClearScreen();
 
 			m_Shader->Bind();
-			m_DeviceContext->Draw( m_Vertex, 0 );
-			// m_DeviceContext->DrawIndexed( m_IndexBuffer->GetCount(), 0u, 0u );
+			// m_DeviceContext->Draw( m_Vertex, 0 );
+			m_DeviceContext->DrawIndexed( m_IndexBuffer->GetCount(), 0u, 0u );
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
