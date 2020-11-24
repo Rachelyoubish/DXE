@@ -46,6 +46,8 @@ namespace Seacrest {
 		// best here since the function input is relevant to
 		// shader creation specifically, however, this is
 		// relevant to shader /data/... 
+		// Update: Yeah, this should be set through the
+		// D3D Buffer class.
 		Microsoft::WRL::ComPtr<ID3D11InputLayout> pInputLayout;
 		const D3D11_INPUT_ELEMENT_DESC ied[] =
 		{

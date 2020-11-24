@@ -35,21 +35,19 @@ namespace Seacrest {
 		
 		struct Vertex
 		{
-			float x;
-			float y;
-			unsigned char r;
-			unsigned char g;
-			unsigned char b;
-			unsigned char a;
+			struct
+			{
+				float x;
+				float y;
+			} pos;
+			struct
+			{
+				unsigned char r;
+				unsigned char g;
+				unsigned char b;
+				unsigned char a;
+			} color;
 		};
-		
-		// Create vertex buffer (1 2d triangle at the center of the screen).
-		// float vertices[] =
-		// {
-		// 	 0.0f,  0.5f, 1.0f, 0.0f, 0.0f,
-		// 	 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-		// 	-0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
-		// };
 
 		Vertex vertices[] =
 		{
@@ -57,13 +55,6 @@ namespace Seacrest {
 			{  0.5f, -0.5f, 0, 255, 0, 0 },
 			{ -0.5f, -0.5f, 0, 0, 255, 0 },
 		};
-	
-		//float vertices[] =
-		//{
-		//	 0.0f,  0.5f, 1.0f, 0.0f, 0.0f,
-		//	 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-		//	 0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
-		//};
 
 		UINT sizeList = ARRAYSIZE( vertices );
 
@@ -76,12 +67,6 @@ namespace Seacrest {
 		};
 		
 		m_IndexBuffer.reset( IndexBuffer::Create( indices, sizeof( indices ) / sizeof( uint32_t ) ) );
-		
-		// Bind render target.
-		// SetRenderTargets();
-		// However, in the context of the current setup, render targets
-		// are already set every frame, do I really need to duplicate
-		// setting them in this function again? 
 		
 		// Set primitive topology to triangle list (groups of 3 vertices).
 		m_DeviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
