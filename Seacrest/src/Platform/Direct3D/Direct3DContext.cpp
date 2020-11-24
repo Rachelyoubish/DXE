@@ -84,7 +84,7 @@ namespace Seacrest {
 	void D3DContext::ClearScreen()
 	{
 		// Clear back buffer to desired color
-		const float clear_color[4] = { 0.06f, 0.60f, 0.06f, 1.0f };
+		const float clear_color[4] = { 0.16f, 0.16f, 0.16f, 1.0f };
 
 		// Clear the back buffer to desired color
 		m_D3DDeviceContext->ClearRenderTargetView( m_RenderTargetView.Get(), (float*)clear_color );

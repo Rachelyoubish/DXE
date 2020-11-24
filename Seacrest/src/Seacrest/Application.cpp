@@ -46,15 +46,12 @@ namespace Seacrest {
 
 		Vertex vertices[] =
 		{
-			{  0.0f,  0.5f, 255, 0, 0, 0 },
-			{  0.5f, -0.5f, 0, 255, 0, 0 },
-			{ -0.5f, -0.5f, 0, 0, 255, 0 },
-			{ -0.3f,  0.3f, 0, 255, 0, 0 },
-			{  0.3f,  0.3f, 0, 0, 255, 0 },
-			{  0.0f, -0.8f, 255, 0, 0, 0 },
+			{  0.0f,  0.5f, 204, 51, 204, 0 },
+			{  0.5f, -0.5f, 51, 76, 204, 0 },
+			{ -0.5f, -0.5f, 204, 204, 51, 0 },
 		};
 
-		vertices[0].color.g = 255;
+		// vertices[0].color.g = 255;
 
 		UINT sizeList = ARRAYSIZE( vertices );
 
@@ -64,9 +61,6 @@ namespace Seacrest {
 		unsigned short indices[] =
 		{
 			0, 1, 2,
-			0, 2, 3,
-			0, 4, 1,
-			2, 1, 5,
 		};
 		
 		unsigned short indicesList = ARRAYSIZE( indices );
