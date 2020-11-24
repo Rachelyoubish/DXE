@@ -5,11 +5,6 @@
 
 #include "Input.h"
 
-// TEMP includes
-#include <wrl.h>
-// #include <d3dcompiler.h>
-// #include <vector>
-
 namespace Seacrest {
 
 #define BIND_EVENT_FN(x) std::bind( &Application::x, this, std::placeholders::_1 )
