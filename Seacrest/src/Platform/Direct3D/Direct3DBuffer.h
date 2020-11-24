@@ -5,11 +5,11 @@
 
 namespace Seacrest {
 
-	class DirectXVertexBuffer : public VertexBuffer
+	class Direct3DVertexBuffer : public VertexBuffer
 	{
 	public:
-		DirectXVertexBuffer( void* vertices, uint32_t size, uint32_t sizeList );
-		virtual ~DirectXVertexBuffer();
+		Direct3DVertexBuffer( void* vertices, uint32_t size, uint32_t sizeList );
+		virtual ~Direct3DVertexBuffer();
 
 		virtual void Bind() const;
 		virtual void Unbind() const;
@@ -22,11 +22,11 @@ namespace Seacrest {
 		UINT vertexSize;
 	};
 
-	class DirectXIndexBuffer : public IndexBuffer
+	class Direct3DIndexBuffer : public IndexBuffer
 	{
 	public:
-		DirectXIndexBuffer( unsigned short* indices, unsigned short count, unsigned short countList );
-		virtual ~DirectXIndexBuffer();
+		Direct3DIndexBuffer( unsigned short* indices, unsigned short count, unsigned short countList );
+		virtual ~Direct3DIndexBuffer();
 
 		virtual void Bind() const;
 		virtual void Unbind() const;

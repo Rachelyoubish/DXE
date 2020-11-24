@@ -8,7 +8,7 @@ namespace Seacrest {
 	///////////////////////////////////////////////////////////////////////////
 	// Vertex Buffer //////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
-	DirectXVertexBuffer::DirectXVertexBuffer( void* vertices, uint32_t size, uint32_t sizeList )
+	Direct3DVertexBuffer::Direct3DVertexBuffer( void* vertices, uint32_t size, uint32_t sizeList )
 	{
 		Application& app = Application::Get();
 		Microsoft::WRL::ComPtr<ID3D11Device> pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
@@ -35,12 +35,12 @@ namespace Seacrest {
 		Bind();
 	}
 
-	DirectXVertexBuffer::~DirectXVertexBuffer()
+	Direct3DVertexBuffer::~Direct3DVertexBuffer()
 	{
 
 	}
 
-	void DirectXVertexBuffer::Bind() const
+	void Direct3DVertexBuffer::Bind() const
 	{
 		Application& app = Application::Get();
 		ID3D11DeviceContext* pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
@@ -50,7 +50,7 @@ namespace Seacrest {
 		pDeviceContext->IASetVertexBuffers(0u, 1u, m_VertexBuffer.GetAddressOf(), &stride, &offset);
 	}
 	
-	void DirectXVertexBuffer::Unbind() const
+	void Direct3DVertexBuffer::Unbind() const
 	{
 
 	}
@@ -59,7 +59,7 @@ namespace Seacrest {
 	// Index Buffer ///////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-	DirectXIndexBuffer::DirectXIndexBuffer( unsigned short* indices, unsigned short count, unsigned short countList )
+	Direct3DIndexBuffer::Direct3DIndexBuffer( unsigned short* indices, unsigned short count, unsigned short countList )
 		: m_Count( count )
 	{
 		Application& app = Application::Get();
@@ -85,11 +85,11 @@ namespace Seacrest {
 		Bind();
 	}
 
-	DirectXIndexBuffer::~DirectXIndexBuffer()
+	Direct3DIndexBuffer::~Direct3DIndexBuffer()
 	{
 	}
 
-	void DirectXIndexBuffer::Bind() const
+	void Direct3DIndexBuffer::Bind() const
 	{
 		Application& app = Application::Get();
 		ID3D11DeviceContext* pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
@@ -97,7 +97,7 @@ namespace Seacrest {
 		pDeviceContext->IASetIndexBuffer( m_IndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u );
 	}
 
-	void DirectXIndexBuffer::Unbind() const
+	void Direct3DIndexBuffer::Unbind() const
 	{
 	}
 }

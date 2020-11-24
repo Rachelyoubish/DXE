@@ -12,7 +12,7 @@ namespace Seacrest {
 		switch (Renderer::GetCurrentAPI())
 		{
 			case RendererAPI::None:     SEACREST_ASSERT(false, "RendererAPI::None is currently not supported!");  return nullptr;
-			case RendererAPI::Direct3D: return new DirectXVertexBuffer(vertices, size, sizeList);
+			case RendererAPI::Direct3D: return new Direct3DVertexBuffer(vertices, size, sizeList);
 		}
 
 		SEACREST_ASSERT( false, "Unknown RendererAPI!" );
@@ -24,7 +24,7 @@ namespace Seacrest {
 		switch (Renderer::GetCurrentAPI())
 		{
 			case RendererAPI::None:     SEACREST_ASSERT( false, "RendererAPI::None is currently not supported!" );  return nullptr;
-			case RendererAPI::Direct3D: return new DirectXIndexBuffer( indices, size, sizeList );
+			case RendererAPI::Direct3D: return new Direct3DIndexBuffer( indices, size, sizeList );
 		}
 
 		SEACREST_ASSERT( false, "Unknown RendererAPI!" );
