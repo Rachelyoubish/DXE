@@ -21,6 +21,7 @@ namespace Seacrest {
                 Critical = 5,
                 Off = 6, // Display nothing
             };
+        private:
             struct Color { float r, g, b, a; };
         public:
             Message( const std::string message = "", Level level = Level::Invalid );
@@ -33,15 +34,14 @@ namespace Seacrest {
         public:
             const std::string m_Message;
             const Level m_Level;
-            static std::vector<Message::Level> s_Levels;
+            static std::vector<Level> s_Levels;
         };
     public:
         ~ImGuiConsole() = default;
-        static std::shared_ptr<ImGuiConsole> GetConsole();
+        static void AddMessage( std::shared_ptr<Message> message );
         static void OnImGuiRender( bool* show );
     protected:
         ImGuiConsole() = default;
-        static void AddMessage( std::shared_ptr<Message> message );
     private:
         struct ImGuiRendering
         {

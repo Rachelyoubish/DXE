@@ -98,10 +98,10 @@
     <ClInclude Include="src\Platform\Direct3D\Direct3DContext.h">
       <Filter>Platform\Direct3D</Filter>
     </ClInclude>
-    <ClInclude Include="src\Seacrest\ImGui\ImGuiLogSink.h">
+    <ClInclude Include="src\Seacrest\ImGui\ImGuiConsole.h">
       <Filter>Seacrest\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Seacrest\ImGui\ImGuiConsole.h">
+    <ClInclude Include="src\Seacrest\ImGui\ImGuiConsoleSink.h">
       <Filter>Seacrest\ImGui</Filter>
     </ClInclude>
   </ItemGroup>

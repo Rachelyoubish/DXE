@@ -16,11 +16,6 @@ namespace Seacrest {
 	bool ImGuiConsole::s_AllowScrollingToBottom = true;
 	bool ImGuiConsole::s_RequestScrollToBottom = false;
 
-	std::shared_ptr<ImGuiConsole> ImGuiConsole::GetConsole()
-	{
-		return std::dynamic_pointer_cast<ImGuiConsole>( Log::GetSinks()[1] );
-	}
-
 	void ImGuiConsole::AddMessage( std::shared_ptr<Message> message )
 	{
 		if (message->m_Level == Message::Level::Invalid)

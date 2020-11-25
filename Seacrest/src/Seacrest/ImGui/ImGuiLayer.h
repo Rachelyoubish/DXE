@@ -25,6 +25,5 @@ namespace Seacrest {
 	private:
 		bool m_RenderDemo;
 		bool m_RenderConsole;
-		std::shared_ptr<ImGuiConsole> m_Console;
 	};
 }
