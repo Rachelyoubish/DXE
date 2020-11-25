@@ -6,7 +6,7 @@
 extern Seacrest::Application* Seacrest::CreateApplication();
 
 // The entry point for our Windows application
-int CALLBACK WinMain( HINSTANCE hInstance,
+int WINAPI WinMain( HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR     lpCmdLine,
 	int       nCmdShow )
