@@ -1,2 +1,2 @@
-# DXE
-DXE Engine. Based on the Hazel Engine, except it uses Win32 & the DirectX 11 Graphics API; [Cherno Game Engine Series](https://www.youtube.com/playlist?list=PLlrATfBNZ98dC-V-N3m0Go4deliWHPFwT).
+# Seacrest
+Seacrest Engine. Inspired by [Hazel](https://github.com/TheCherno/Hazel), except it uses Win32 & Direct3D 11 thanks to [Daddy Chili's Hardware 3D Series](https://github.com/planetchili/hw3d)!
