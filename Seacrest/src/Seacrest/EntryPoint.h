@@ -14,10 +14,12 @@ int CALLBACK WinMain( HINSTANCE hInstance,
 	// Allocate a new console for calling. 
 	// Initialize console first, therefore 
 	// all of spdlog can be sent to it. 
-	AllocConsole();
-	FILE* file = nullptr;
-	freopen_s( &file, "CONIN$", "r", stdin );
-	freopen_s( &file, "CONOUT$", "w", stdout );
+	// AllocConsole();
+	// FILE* file = nullptr;
+	// freopen_s( &file, "CONIN$", "r", stdin );
+	// freopen_s( &file, "CONOUT$", "w", stdout );
+
+	// Dear ImGui now handles the logger's output. 
 
 	Seacrest::Log::Init();
 	SEACREST_CORE_WARN( "Initialized Log!" );
