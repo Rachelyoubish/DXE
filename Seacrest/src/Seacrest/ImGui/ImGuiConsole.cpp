@@ -13,12 +13,12 @@ namespace Seacrest {
     uint16_t ImGuiConsole::s_MessageBufferIndex = 0;
 
     std::unordered_map<ImGuiConsole::Message::Level, ImGuiConsole::Color> ImGuiConsole::s_RenderColors = {
-        {ImGuiConsole::Message::Level::Trace   , {1.0f, 1.0f, 1.0f, 1.0f}}, // White
-        {ImGuiConsole::Message::Level::Info    , {0.0f, 1.0f, 0.0f, 1.0f}}, // Green
-        {ImGuiConsole::Message::Level::Debug   , {0.0f, 1.0f, 1.0f, 1.0f}}, // Cyan
-        {ImGuiConsole::Message::Level::Warn    , {1.0f, 1.0f, 0.0f, 1.0f}}, // Yellow
-        {ImGuiConsole::Message::Level::Error   , {1.0f, 0.0f, 0.0f, 1.0f}}, // Red
-        {ImGuiConsole::Message::Level::Critical, {1.0f, 0.0f, 1.0f, 1.0f}}  // Magenta
+         {ImGuiConsole::Message::Level::Trace   , {0.75f, 0.75f, 0.75f, 1.00f}}, // White-ish gray
+         {ImGuiConsole::Message::Level::Info    , {0.00f, 0.50f, 0.00f, 1.00f}}, // Green
+         {ImGuiConsole::Message::Level::Debug   , {0.00f, 0.50f, 0.50f, 1.00f}}, // Cyan
+         {ImGuiConsole::Message::Level::Warn    , {1.00f, 1.00f, 0.00f, 1.00f}}, // Yellow
+         {ImGuiConsole::Message::Level::Error   , {1.00f, 0.00f, 0.00f, 1.00f}}, // Red
+         {ImGuiConsole::Message::Level::Critical, {1.00f, 0.00f, 1.00f, 1.00f}}  // Magenta
     };
 
     std::shared_ptr<ImGuiConsole> ImGuiConsole::GetConsole()
@@ -41,13 +41,17 @@ namespace Seacrest {
         ImGui::SetNextWindowSize( ImVec2( 640, 480 ), ImGuiCond_FirstUseEver );
         ImGui::Begin( "Console", show );
         {
-            auto messageStart = s_MessageBuffer.begin() + s_MessageBufferIndex;
-            if (*messageStart) // If contains old message here
-                for (auto message = messageStart; message != s_MessageBuffer.end(); message++)
-                    ( *message )->OnImGuiRender();
-            if (s_MessageBufferIndex != 0) // Skipped first messages in vector
-                for (auto message = s_MessageBuffer.begin(); message != messageStart; message++)
-                    ( *message )->OnImGuiRender();
+            ImGui::BeginChild( "ScrollRegion", ImVec2( 0, 0 ), false, ImGuiWindowFlags_HorizontalScrollbar );
+            {
+                auto messageStart = s_MessageBuffer.begin() + s_MessageBufferIndex;
+                if (*messageStart) // If contains old message here
+                    for (auto message = messageStart; message != s_MessageBuffer.end(); message++)
+                        ( *message )->OnImGuiRender();
+                if (s_MessageBufferIndex != 0) // Skipped first messages in vector
+                    for (auto message = s_MessageBuffer.begin(); message != messageStart; message++)
+                        ( *message )->OnImGuiRender();
+            }
+            ImGui::EndChild();
         }
         ImGui::End();
     }

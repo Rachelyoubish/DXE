@@ -159,8 +159,8 @@ namespace Seacrest {
 		build = std::to_string( LOWORD( driverVersion.LowPart ) );
 
 		SEACREST_CORE_WARN( "DirectX Information:" );
-		SEACREST_CORE_INFO( "Vendor:	{0}", vendor );
-		SEACREST_CORE_INFO( "Renderer:	{0}", videoCardDescription );
-		SEACREST_CORE_INFO( "Version:	{0}.{1}.{2}.{3}", major, minor, release, build );
+		SEACREST_CORE_INFO( "Vendor:    {0}", vendor );
+		SEACREST_CORE_INFO( "Renderer:  {0}", videoCardDescription );
+		SEACREST_CORE_INFO( "Version:   {0}.{1}.{2}.{3}", major, minor, release, build );
 	}
 }
