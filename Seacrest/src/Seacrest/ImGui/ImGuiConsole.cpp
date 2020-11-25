@@ -31,6 +31,13 @@ namespace Seacrest {
 			s_RequestScrollToBottom = true;
 	}
 
+	void ImGuiConsole::Flush()
+	{
+		for (auto message = s_MessageBuffer.begin(); message != s_MessageBuffer.end(); message++)
+			( *message ) = std::make_shared<Message>();
+		s_MessageBufferBegin = 0;
+	}
+
 	void ImGuiConsole::OnImGuiRender( bool* show )
 	{
 		ImGui::SetNextWindowSize( ImVec2( 640, 480 ), ImGuiCond_FirstUseEver );
@@ -46,14 +53,18 @@ namespace Seacrest {
 	void ImGuiConsole::ImGuiRendering::ImGuiRenderHeader()
 	{
 		ImGuiStyle& style = ImGui::GetStyle();
-		float spacing = style.ItemInnerSpacing.x;
-		float button_sz = ImGui::GetFrameHeight();
-		float width = ImGui::CalcItemWidth() / 2.0f;
+		const float spacing = style.ItemInnerSpacing.x;
+
+		// Text change level
+		// ImGui::AlignFirstTextHeightToWidgets();
+		ImGui::Text( "Display" );
+
+		ImGui::SameLine( 0.0f, 2.0f * spacing );
 
 		// Dropdown with levels
-		ImGui::PushItemWidth( width - spacing * 2.0f - button_sz * 2.0f );
+		ImGui::PushItemWidth( ImGui::CalcTextSize( "Critical" ).x * 1.36f );
 		if (ImGui::BeginCombo(
-			"##MessageBufferRenderFilter",
+			"##MessageRenderFilter",
 			Message::GetLevelName( s_MessageBufferRenderFilter ),
 			ImGuiComboFlags_NoArrowButton ))
 		{
@@ -69,25 +80,38 @@ namespace Seacrest {
 		}
 		ImGui::PopItemWidth();
 
-		// Buttons to quickly change level
 		ImGui::SameLine( 0.0f, spacing );
-		if (ImGui::ArrowButton( "##MessageBufferRenderFilter_L", ImGuiDir_Left ))
+
+		// Buttons to quickly change level
+		if (ImGui::ArrowButton( "##MessageRenderFilter_L", ImGuiDir_Left ))
 		{
 			s_MessageBufferRenderFilter = Message::GetLowerLevel( s_MessageBufferRenderFilter );
 		}
+
 		ImGui::SameLine( 0.0f, spacing );
-		if (ImGui::ArrowButton( "##MessageBufferRenderFilter_R", ImGuiDir_Right ))
+
+		if (ImGui::ArrowButton( "##MessageRenderFilter_R", ImGuiDir_Right ))
 		{
 			s_MessageBufferRenderFilter = Message::GetHigherLevel( s_MessageBufferRenderFilter );
 		}
 
-		// Text change level
 		ImGui::SameLine( 0.0f, spacing );
-		ImGui::Text( "Display level" );
 
-		// Checkbox for scrolling lock
-		ImGui::SameLine( 0.0f, 5.0f * spacing );
-		ImGui::Checkbox( "Scroll to bottom", &s_AllowScrollingToBottom );
+		// Button for advanced settings
+		if (ImGui::Button( "Settings" ))
+			ImGui::OpenPopup( "SettingsPopup" );
+		if (ImGui::BeginPopup( "SettingsPopup" ))
+		{
+			// Checkbox for scrolling lock
+			ImGui::Checkbox( "Scroll to bottom", &s_AllowScrollingToBottom );
+
+			// Button to clear the console
+			if (ImGui::Button( "Clear console" ))
+				ImGuiConsole::Flush();
+
+			ImGui::EndPopup();
+		}
+
 	}
 
 	void ImGuiConsole::ImGuiRendering::ImGuiRenderMessages()
@@ -156,13 +180,13 @@ namespace Seacrest {
 	{
 		switch (level)
 		{
-			case ImGuiConsole::Message::Level::Trace: return ImGuiConsole::Message::Level::Info;
-			case ImGuiConsole::Message::Level::Info://return ImGuiConsole::Message::Level::Debug;
-			case ImGuiConsole::Message::Level::Debug: return ImGuiConsole::Message::Level::Warn;
-			case ImGuiConsole::Message::Level::Warn:  return ImGuiConsole::Message::Level::Error;
-			case ImGuiConsole::Message::Level::Error: return ImGuiConsole::Message::Level::Critical;
+			case ImGuiConsole::Message::Level::Trace:    return ImGuiConsole::Message::Level::Info;
+			case ImGuiConsole::Message::Level::Info:     //return ImGuiConsole::Message::Level::Debug;
+			case ImGuiConsole::Message::Level::Debug:    return ImGuiConsole::Message::Level::Warn;
+			case ImGuiConsole::Message::Level::Warn:     return ImGuiConsole::Message::Level::Error;
+			case ImGuiConsole::Message::Level::Error:    return ImGuiConsole::Message::Level::Critical;
 			case ImGuiConsole::Message::Level::Critical:
-			case ImGuiConsole::Message::Level::Off:   return ImGuiConsole::Message::Level::Off;
+			case ImGuiConsole::Message::Level::Off:      return ImGuiConsole::Message::Level::Off;
 		}
 		return ImGuiConsole::Message::Level::Invalid;
 	}
@@ -192,7 +216,7 @@ namespace Seacrest {
 			case ImGuiConsole::Message::Level::Debug:    return { 0.00f, 0.50f, 0.50f, 1.00f }; // Cyan
 			case ImGuiConsole::Message::Level::Warn:     return { 1.00f, 1.00f, 0.00f, 1.00f }; // Yellow
 			case ImGuiConsole::Message::Level::Error:    return { 1.00f, 0.00f, 0.00f, 1.00f }; // Red
-			case ImGuiConsole::Message::Level::Critical: return { 1.00f, 0.00f, 1.00f, 1.00f }; // Magenta 
+			case ImGuiConsole::Message::Level::Critical: return { 1.00f, 0.00f, 1.00f, 1.00f }; // Magenta
 		}
 		return { 1.00f, 1.00f, 1.00f, 1.00f };
 	}
