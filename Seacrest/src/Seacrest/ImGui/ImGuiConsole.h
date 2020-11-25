@@ -7,7 +7,7 @@ namespace Seacrest {
     class ImGuiConsole
     {
     public:
-        struct Message
+        class Message
         {
         public:
             enum class Level : int8_t
@@ -21,20 +21,23 @@ namespace Seacrest {
                 Critical = 5,
                 Off = 6, // Display nothing
             };
+            struct Color { float r, g, b, a; };
         public:
             Message( const std::string message = "", Level level = Level::Invalid );
             inline bool Valid() { return m_Level != Level::Invalid; }
             void OnImGuiRender();
+        private:
+            static Color GetRenderColor( Level level );
+            static const char* GetLevelName( Level level );
         public:
             const std::string m_Message;
             const Level m_Level;
+            static std::vector<Message::Level> s_Levels;
         };
-        struct Color { float r, g, b, a; };
     public:
         ~ImGuiConsole() = default;
         static std::shared_ptr<ImGuiConsole> GetConsole();
         static void OnImGuiRender( bool* show );
-        static inline void SetColor( Message::Level level, Color color ) { s_RenderColors[level] = color; }
     protected:
         ImGuiConsole() = default;
         static void AddMessage( std::shared_ptr<Message> message );
@@ -42,6 +45,6 @@ namespace Seacrest {
         static uint16_t s_MessageBufferCapacity;
         static std::vector<std::shared_ptr<Message>> s_MessageBuffer;
         static uint16_t s_MessageBufferIndex;
-        static std::unordered_map<Message::Level, Color> s_RenderColors;
+        static Message::Level s_MessageBufferRenderFilter;
     };
 }
