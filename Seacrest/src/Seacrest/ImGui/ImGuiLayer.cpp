@@ -9,12 +9,14 @@
 #include "examples/imgui_impl_win32.h"
 #include "examples/imgui_impl_dx11.h"
 
+#include "Seacrest/Log.h"
+
 namespace Seacrest {
 
 	ImGuiLayer::ImGuiLayer( bool renderDemo, bool renderConsole )
 		: Layer( "ImGuiLayer" ), m_RenderDemo( renderDemo ), m_RenderConsole( renderConsole )
 	{
-		
+		m_Console = std::dynamic_pointer_cast<ImGuiConsole>( Log::GetSinks()[1] );
 	}
 
 	ImGuiLayer::~ImGuiLayer()
@@ -93,5 +95,6 @@ namespace Seacrest {
 	void ImGuiLayer::OnImGuiRender()
 	{
 		ImGui::ShowDemoWindow( &m_RenderDemo );
+		m_Console->OnImGuiRender( &m_RenderConsole );
 	}
 }

@@ -1,9 +1,12 @@
 #include "spdlog/sinks/base_sink.h"
+#include "ImGuiConsole.h"
 
 namespace Seacrest {
 
     template<class Mutex>
-    class ImGuiLogSink : public spdlog::sinks::base_sink<std::mutex> {
+    class ImGuiLogSink : public spdlog::sinks::base_sink<std::mutex>,
+        public ImGuiConsole
+    {
     public:
         explicit ImGuiLogSink() {}
         ImGuiLogSink( const ImGuiLogSink& ) = delete;
@@ -18,8 +21,11 @@ namespace Seacrest {
 
             // If needed (very likely but not mandatory), the sink formats the message before sending it to its final destination:
             spdlog::memory_buf_t formatted;
+            // fmt::memory_buffer formatted;
             formatter_->format( msg, formatted );
             std::cout << fmt::to_string( formatted );
+
+            AddMessage( { fmt::to_string( formatted ).c_str(), Message::Level::Info } );
         }
 
         void flush_() override

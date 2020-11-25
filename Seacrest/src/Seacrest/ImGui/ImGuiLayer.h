@@ -6,6 +6,8 @@
 #include "Seacrest/Events/KeyEvent.h"
 #include "Seacrest/Events/MouseEvent.h"
 
+#include "ImGuiConsole.h"
+
 namespace Seacrest {
 
 	class SEACREST_API ImGuiLayer : public Layer
@@ -23,5 +25,6 @@ namespace Seacrest {
 	private:
 		bool m_RenderDemo;
 		bool m_RenderConsole;
+		std::shared_ptr<ImGuiConsole> m_Console;
 	};
 }
