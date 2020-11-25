@@ -13,7 +13,7 @@ namespace Seacrest {
 		// Create the sinks
 		std::vector<spdlog::sink_ptr> sinks;
 		sinks.emplace_back( std::make_shared<spdlog::sinks::stdout_color_sink_mt>() ); // VS debug console
-		sinks.emplace_back( std::make_shared<ImGuiConsoleSink_mt>() );                 // ImGuiConsole
+		sinks.emplace_back( std::make_shared<ImGuiConsoleSink_mt>( true ) );                 // ImGuiConsole
 
 		// Create the loggers
 		s_CoreLogger = std::make_shared<spdlog::logger>( "SEACREST", begin( sinks ), end( sinks ) );
