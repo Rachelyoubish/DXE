@@ -9,10 +9,12 @@
 #include "examples/imgui_impl_win32.h"
 #include "examples/imgui_impl_dx11.h"
 
+#include "Seacrest/Log.h"
+
 namespace Seacrest {
 
-	ImGuiLayer::ImGuiLayer()
-		: Layer( "ImGuiLayer" )
+	ImGuiLayer::ImGuiLayer( bool renderDemo, bool renderConsole )
+		: Layer( "ImGuiLayer" ), m_RenderDemo( renderDemo ), m_RenderConsole( renderConsole )
 	{
 	}
 
@@ -91,7 +93,8 @@ namespace Seacrest {
 
 	void ImGuiLayer::OnImGuiRender()
 	{
-		static bool show = true;
-		ImGui::ShowDemoWindow( &show );
+		ImGui::ShowDemoWindow( &m_RenderDemo );
+		if (m_RenderConsole)
+			ImGuiConsole::OnImGuiRender( &m_RenderConsole );
 	}
 }

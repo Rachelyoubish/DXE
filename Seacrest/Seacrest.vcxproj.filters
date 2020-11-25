@@ -98,6 +98,12 @@
     <ClInclude Include="src\Platform\Direct3D\Direct3DContext.h">
       <Filter>Platform\Direct3D</Filter>
     </ClInclude>
+    <ClInclude Include="src\Seacrest\ImGui\ImGuiConsole.h">
+      <Filter>Seacrest\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Seacrest\ImGui\ImGuiConsoleSink.h">
+      <Filter>Seacrest\ImGui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
@@ -139,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="src\Platform\Direct3D\Direct3DContext.cpp">
       <Filter>Platform\Direct3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Seacrest\ImGui\ImGuiConsole.cpp">
+      <Filter>Seacrest\ImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

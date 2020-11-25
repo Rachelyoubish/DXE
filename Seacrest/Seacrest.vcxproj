@@ -152,7 +152,9 @@
     <ClInclude Include="src\Seacrest\Events\Event.h" />
     <ClInclude Include="src\Seacrest\Events\KeyEvent.h" />
     <ClInclude Include="src\Seacrest\Events\MouseEvent.h" />
+    <ClInclude Include="src\Seacrest\ImGui\ImGuiConsole.h" />
     <ClInclude Include="src\Seacrest\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Seacrest\ImGui\ImGuiConsoleSink.h" />
     <ClInclude Include="src\Seacrest\Input.h" />
     <ClInclude Include="src\Seacrest\KeyCodes.h" />
     <ClInclude Include="src\Seacrest\Layer.h" />
@@ -173,6 +175,7 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Seacrest\Application.cpp" />
     <ClCompile Include="src\Seacrest\ImGui\ImGuiBuild.cpp" />
+    <ClCompile Include="src\Seacrest\ImGui\ImGuiConsole.cpp" />
     <ClCompile Include="src\Seacrest\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Seacrest\Layer.cpp" />
     <ClCompile Include="src\Seacrest\LayerStack.cpp" />
