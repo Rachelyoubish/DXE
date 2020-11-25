@@ -50,8 +50,11 @@ namespace Seacrest {
         };
     private:
         static uint16_t s_MessageBufferCapacity;
-        static std::vector<std::shared_ptr<Message>> s_MessageBuffer;
-        static uint16_t s_MessageBufferIndex;
+        static uint16_t s_MessageBufferSize;
+        static uint16_t s_MessageBufferBegin;
         static Message::Level s_MessageBufferRenderFilter;
+        static std::vector<std::shared_ptr<Message>> s_MessageBuffer;
+        static bool s_AllowScrollingToBottom;
+        static bool s_RequestScrollToBottom;
     };
 }
