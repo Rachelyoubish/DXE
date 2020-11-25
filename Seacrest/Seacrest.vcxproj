@@ -153,6 +153,7 @@
     <ClInclude Include="src\Seacrest\Events\KeyEvent.h" />
     <ClInclude Include="src\Seacrest\Events\MouseEvent.h" />
     <ClInclude Include="src\Seacrest\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Seacrest\ImGui\ImGuiLogSink.h" />
     <ClInclude Include="src\Seacrest\Input.h" />
     <ClInclude Include="src\Seacrest\KeyCodes.h" />
     <ClInclude Include="src\Seacrest\Layer.h" />

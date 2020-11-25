@@ -1,6 +1,7 @@
 #include "scpch.h"
 #include "Log.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
+#include "ImGui/ImGuiLogSink.h"
 
 namespace Seacrest {
 
@@ -9,12 +10,20 @@ namespace Seacrest {
 
 	void Log::Init()
 	{
-		spdlog::set_pattern( "%^[%T] %n: %v%$" );
+        // Create the sinks.
+        std::vector<spdlog::sink_ptr> sinks;
+        sinks.emplace_back( std::make_shared<spdlog::sinks::stdout_color_sink_mt>() ); // VS debug console
+        sinks.emplace_back( std::make_shared<ImGuiLogSink_mt>() ); // ImGuiConsole
 
-		s_CoreLogger = spdlog::stdout_color_mt( "Seacrest" );
-		s_CoreLogger->set_level( spdlog::level::trace );
+        // Create the logger.
+        s_CoreLogger = std::make_shared<spdlog::logger>( "SEACREST", begin( sinks ), end( sinks ) );
+        spdlog::register_logger( s_CoreLogger );
+        s_CoreLogger->set_level( spdlog::level::trace );
 
-		s_ClientLogger = spdlog::stdout_color_mt( "APP" );
-		s_ClientLogger->set_level( spdlog::level::trace );
+        s_ClientLogger = std::make_shared<spdlog::logger>( "APP", begin( sinks ), end( sinks ) );
+        spdlog::register_logger( s_ClientLogger );
+        s_ClientLogger->set_level( spdlog::level::trace );
+
+        spdlog::set_pattern( "%^[%T] %n: %v%$" );
 	}
 }

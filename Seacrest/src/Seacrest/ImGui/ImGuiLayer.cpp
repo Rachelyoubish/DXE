@@ -11,9 +11,10 @@
 
 namespace Seacrest {
 
-	ImGuiLayer::ImGuiLayer()
-		: Layer( "ImGuiLayer" )
+	ImGuiLayer::ImGuiLayer( bool renderDemo, bool renderConsole )
+		: Layer( "ImGuiLayer" ), m_RenderDemo( renderDemo ), m_RenderConsole( renderConsole )
 	{
+		
 	}
 
 	ImGuiLayer::~ImGuiLayer()
@@ -91,7 +92,6 @@ namespace Seacrest {
 
 	void ImGuiLayer::OnImGuiRender()
 	{
-		static bool show = true;
-		ImGui::ShowDemoWindow( &show );
+		ImGui::ShowDemoWindow( &m_RenderDemo );
 	}
 }

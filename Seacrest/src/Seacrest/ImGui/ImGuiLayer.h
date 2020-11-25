@@ -11,7 +11,7 @@ namespace Seacrest {
 	class SEACREST_API ImGuiLayer : public Layer
 	{
 	public:
-		ImGuiLayer();
+		ImGuiLayer( bool renderDemo = true, bool renderConsole = true );
 		~ImGuiLayer();
 
 		virtual void OnAttach() override;
@@ -20,5 +20,8 @@ namespace Seacrest {
 
 		void Begin();
 		void End();
+	private:
+		bool m_RenderDemo;
+		bool m_RenderConsole;
 	};
 }
