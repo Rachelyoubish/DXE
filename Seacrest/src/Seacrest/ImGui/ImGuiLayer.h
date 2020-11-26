@@ -14,7 +14,7 @@ namespace Seacrest {
 	{
 	public:
 		ImGuiLayer( bool renderDemo = true, bool renderConsole = true );
-		~ImGuiLayer();
+		~ImGuiLayer() = default;
 
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
