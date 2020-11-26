@@ -122,6 +122,26 @@ namespace Seacrest {
 		}
 	}
 
+	void D3DContext::SetViewport( unsigned int width, unsigned int height )
+	{
+		// Configure viewport.
+		D3D11_VIEWPORT viewport{ 0 };
+		ZeroMemory( &viewport, sizeof( viewport ) );
+
+		RECT clientRect;
+		GetClientRect( m_WindowHandle, &clientRect );
+
+		// Make sure width and height match that 
+		// which is described in window constructor.
+		viewport.Width = (float)width;
+		viewport.Height = (float)height;
+		viewport.MinDepth = 0;
+		viewport.MaxDepth = 1;
+		viewport.TopLeftX = (float)clientRect.left;
+		viewport.TopLeftY = (float)clientRect.top;
+		m_D3DDeviceContext->RSSetViewports( 1u, &viewport );
+	}
+
 	void D3DContext::LogAdapterInfo()
 	{
 		IDXGIFactory* factory = NULL;

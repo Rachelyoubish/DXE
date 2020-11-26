@@ -114,20 +114,12 @@ namespace Seacrest {
 		
 		// Set primitive topology to triangle list (groups of 3 vertices).
 		m_DeviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
-		
-		// Configure viewport.
-		D3D11_VIEWPORT vp{ 0 };
-		// // Temp: Make sure width and height match that 
-		// // which is described in window constructor.
-		vp.Width = (float)m_Window->GetWidth();
-		vp.Height = (float)m_Window->GetHeight();
-		vp.MinDepth = 0;
-		vp.MaxDepth = 1;
-		vp.TopLeftX = 0;
-		vp.TopLeftY = 0;
-		m_DeviceContext->RSSetViewports( 1u, &vp );
-		
-		// m_DeviceContext->Draw( (UINT)std::size( vertices ), 0u );
+
+		// Trying to set D3D viewport abstractly. 
+		// Could be handled better, sorry. ;^]
+		auto width = m_Window->GetWidth();
+		auto height = m_Window->GetHeight();
+		m_Context->SetViewport( width, height ); 
 
 		// Stores the amount of vertices for the Draw command.
 		m_Vertex = (UINT)std::size( vertices );

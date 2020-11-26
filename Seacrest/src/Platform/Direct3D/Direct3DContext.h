@@ -16,10 +16,10 @@ namespace Seacrest {
 
 		virtual void SetRenderTargets() override;
 		virtual void ClearScreen() override;
+		virtual void SetViewport( unsigned int width, unsigned int height ) override;
 
 		virtual ID3D11Device* GetD3D11Device() override;
 		virtual ID3D11DeviceContext* GetD3D11DeviceContext() override;
-
 	private:
 		void CreateRenderTarget();
 		void CleanupRenderTarget();
