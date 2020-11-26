@@ -1,14 +1,15 @@
 #include "scpch.h"
 #include "Shader.h"
+#include "Seacrest/Application.h"
 #include <d3dcompiler.h>
 
 namespace Seacrest {
 	
-	Shader::Shader( const std::string& vertexSrc, const std::string& pixelSrc,
-		ID3D11Device* device, ID3D11DeviceContext* deviceContext)
+	Shader::Shader( const std::string& vertexSrc, const std::string& pixelSrc )
 	{
-		m_Device = device;
-		m_DeviceContext = deviceContext;
+		Application& app = Application::Get();
+		m_Device = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
+		m_DeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
 
 		// String conversion for D3DReadFileToBlob.
 		std::wstring ws;

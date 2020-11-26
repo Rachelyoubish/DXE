@@ -88,7 +88,7 @@ namespace Seacrest {
 		m_Vertex = (UINT)std::size( vertices );
 		m_Index = (UINT)std::size( indices );
 
-		m_Shader.reset( new Shader( "VertexShader.cso", "PixelShader.cso", m_Device.Get(), m_DeviceContext.Get() ) );
+		m_Shader.reset( new Shader( "VertexShader.cso", "PixelShader.cso") );
 	}
 
 	Application::~Application()
