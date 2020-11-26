@@ -11,6 +11,24 @@ namespace Seacrest {
 
 	Application* Application::s_Instance = nullptr;
 
+	static DXGI_FORMAT ShaderDataTypeToDirect3DBaseType( ShaderDataType type )
+	{
+		switch (type)
+		{
+			case Seacrest::ShaderDataType::Float:		return DXGI_FORMAT_R32_FLOAT;
+			case Seacrest::ShaderDataType::Float2:		return DXGI_FORMAT_R32G32_FLOAT;
+			case Seacrest::ShaderDataType::Float3:		return DXGI_FORMAT_R32G32B32_FLOAT;
+			case Seacrest::ShaderDataType::Float4:		return DXGI_FORMAT_R32G32B32A32_FLOAT;
+			case Seacrest::ShaderDataType::Int:		    return DXGI_FORMAT_R32_UINT;
+			case Seacrest::ShaderDataType::Int2:		return DXGI_FORMAT_R32G32_UINT;
+			case Seacrest::ShaderDataType::Int3:		return DXGI_FORMAT_R32G32B32_UINT;
+			case Seacrest::ShaderDataType::Int4:		return DXGI_FORMAT_R32G32B32A32_UINT;
+		}
+
+		SEACREST_CORE_ASSERT( false, "Unkown ShaderDataType!" );
+		return DXGI_FORMAT_UNKNOWN;
+	}
+
 	Application::Application()
 	{
 		SEACREST_CORE_ASSERT( !s_Instance, "Application already exists!" );
@@ -37,18 +55,18 @@ namespace Seacrest {
 			} pos;
 			struct
 			{
-				unsigned char r;
-				unsigned char g;
-				unsigned char b;
-				unsigned char a;
+				float r;
+				float g;
+				float b;
+				float a;
 			} color;
 		};
 
 		Vertex vertices[] =
 		{
-			{  0.0f,  0.5f, 204, 51, 204, 0 },
-			{  0.5f, -0.5f, 51, 76, 204, 0 },
-			{ -0.5f, -0.5f, 204, 204, 51, 0 },
+			{  0.0f,  0.5f, 0.8f, 0.2f, 0.8f, 1.0f },
+			{  0.5f, -0.5f, 0.2f, 0.3f, 0.8f, 1.0f },
+			{ -0.5f, -0.5f, 0.8f, 0.8f, 0.2f, 1.0f },
 		};
 
 		// vertices[0].color.g = 255;
@@ -56,6 +74,33 @@ namespace Seacrest {
 		UINT sizeList = ARRAYSIZE( vertices );
 
 		m_VertexBuffer.reset(VertexBuffer::Create( vertices, sizeof( Vertex ), sizeList ) );
+
+		// To prevent outside access to layout, place in its own local block. 
+		{
+			BufferLayout layout = {
+				{ ShaderDataType::Float2, "Position" },
+				{ ShaderDataType::Float4, "Color" },
+			};
+			m_VertexBuffer->SetLayout( layout );
+		}
+
+		uint32_t index = 0;
+		const auto& layout = m_VertexBuffer->GetLayout();
+
+		// Input (vertex) layout (2D position only).
+		D3D11_INPUT_ELEMENT_DESC* inputLayoutDesc = new D3D11_INPUT_ELEMENT_DESC[layout.GetElements().size()];
+		for (const auto& element : layout )
+		{
+			inputLayoutDesc[index].SemanticName = element.Name.c_str();
+			inputLayoutDesc[index].SemanticIndex = 0;
+			inputLayoutDesc[index].Format = ShaderDataTypeToDirect3DBaseType( element.Type );
+			inputLayoutDesc[index].InputSlot = 0;
+			inputLayoutDesc[index].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+			inputLayoutDesc[index].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+			inputLayoutDesc[index].InstanceDataStepRate = 0;
+
+			index++;
+		}
 		
 		// Create index buffer.
 		unsigned short indices[] =
@@ -91,16 +136,9 @@ namespace Seacrest {
 		m_Shader.reset( new Shader( "VertexShader.cso", "PixelShader.cso") );
 		Microsoft::WRL::ComPtr<ID3DBlob> pBlob = m_Shader->GetBlob();
 
-		// Input (vertex) layout (2D position only).
 		Microsoft::WRL::ComPtr<ID3D11InputLayout> pInputLayout;
-		const D3D11_INPUT_ELEMENT_DESC ied[] =
-		{
-			{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		};
-
 		m_Device->CreateInputLayout(
-			ied, (UINT)std::size( ied ),
+			inputLayoutDesc, (UINT)layout.GetElements().size(),
 			pBlob->GetBufferPointer(),
 			pBlob->GetBufferSize(),
 			&pInputLayout
@@ -108,6 +146,8 @@ namespace Seacrest {
 
 		// Bind vertex layout.
 		m_DeviceContext->IASetInputLayout( pInputLayout.Get() );
+
+		delete[] inputLayoutDesc;
 	}
 
 	Application::~Application()
@@ -146,6 +186,12 @@ namespace Seacrest {
 		{
 			m_Context->SetRenderTargets();
 			m_Context->ClearScreen();
+
+			// Binding the Vertex, Index, and Input Layout here instead may be something to do...
+			// Especially when constant buffers come around, I assume? 
+			// > Set Input
+			// > Bind Vertex
+			// > Bind Index
 
 			m_Shader->Bind();
 			// m_DeviceContext->Draw( m_Vertex, 0 );
