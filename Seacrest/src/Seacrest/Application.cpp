@@ -89,6 +89,25 @@ namespace Seacrest {
 		m_Index = (UINT)std::size( indices );
 
 		m_Shader.reset( new Shader( "VertexShader.cso", "PixelShader.cso") );
+		Microsoft::WRL::ComPtr<ID3DBlob> pBlob = m_Shader->GetBlob();
+
+		// Input (vertex) layout (2D position only).
+		Microsoft::WRL::ComPtr<ID3D11InputLayout> pInputLayout;
+		const D3D11_INPUT_ELEMENT_DESC ied[] =
+		{
+			{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		};
+
+		m_Device->CreateInputLayout(
+			ied, (UINT)std::size( ied ),
+			pBlob->GetBufferPointer(),
+			pBlob->GetBufferSize(),
+			&pInputLayout
+		);
+
+		// Bind vertex layout.
+		m_DeviceContext->IASetInputLayout( pInputLayout.Get() );
 	}
 
 	Application::~Application()
