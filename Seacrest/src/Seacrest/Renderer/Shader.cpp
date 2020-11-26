@@ -1,14 +1,15 @@
 #include "scpch.h"
 #include "Shader.h"
+#include "Seacrest/Application.h"
 #include <d3dcompiler.h>
 
 namespace Seacrest {
 	
-	Shader::Shader( const std::string& vertexSrc, const std::string& pixelSrc,
-		ID3D11Device* device, ID3D11DeviceContext* deviceContext)
+	Shader::Shader( const std::string& vertexSrc, const std::string& pixelSrc )
 	{
-		m_Device = device;
-		m_DeviceContext = deviceContext;
+		Application& app = Application::Get();
+		m_Device = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
+		m_DeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
 
 		// String conversion for D3DReadFileToBlob.
 		std::wstring ws;
@@ -21,7 +22,7 @@ namespace Seacrest {
 		// PS sets and uses Blob first so vertex shader keeps relevant 
 		// Blob info once released from PS (and given to VS, handled automatically by COM).
 		// Remember: & releases then gets the pointer address.
-		Microsoft::WRL::ComPtr<ID3DBlob> pBlob;
+		// Microsoft::WRL::ComPtr<ID3DBlob> pBlob;
 		D3DReadFileToBlob( ps, &pBlob );
 		m_Device->CreatePixelShader( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pPixelShader );
 
@@ -48,22 +49,22 @@ namespace Seacrest {
 		// relevant to shader /data/... 
 		// Update: Yeah, this should be set through the
 		// D3D Buffer class.
-		Microsoft::WRL::ComPtr<ID3D11InputLayout> pInputLayout;
-		const D3D11_INPUT_ELEMENT_DESC ied[] =
-		{
-			{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		};
-
-		m_Device->CreateInputLayout(
-			ied, (UINT)std::size( ied ),
-			pBlob->GetBufferPointer(),
-			pBlob->GetBufferSize(),
-			&pInputLayout
-		);
-
-		// Bind vertex layout.
-		m_DeviceContext->IASetInputLayout( pInputLayout.Get() );
+		// Microsoft::WRL::ComPtr<ID3D11InputLayout> pInputLayout;
+		// const D3D11_INPUT_ELEMENT_DESC ied[] =
+		// {
+		// 	{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		// 	{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		// };
+		// 
+		// m_Device->CreateInputLayout(
+		// 	ied, (UINT)std::size( ied ),
+		// 	pBlob->GetBufferPointer(),
+		// 	pBlob->GetBufferSize(),
+		// 	&pInputLayout
+		// );
+		// 
+		// // Bind vertex layout.
+		// m_DeviceContext->IASetInputLayout( pInputLayout.Get() );
 
 		m_PixelShader = pPixelShader.Get();
 		m_VertexShader = pVertexShader.Get();

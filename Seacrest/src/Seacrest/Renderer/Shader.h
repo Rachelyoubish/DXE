@@ -7,12 +7,13 @@ namespace Seacrest {
 	class Shader
 	{
 	public:
-		Shader( const std::string& vertexSrc, const std::string& pixelSrc,
-			ID3D11Device* device, ID3D11DeviceContext* deviceContext );
+		Shader( const std::string& vertexSrc, const std::string& pixelSrc );
 		~Shader();
 		void Bind();
 		void Unbind();
+		Microsoft::WRL::ComPtr<ID3DBlob> GetBlob() { return pBlob; }
 	private:
+		Microsoft::WRL::ComPtr<ID3DBlob> pBlob;
 		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
 		Microsoft::WRL::ComPtr<ID3D11PixelShader> m_PixelShader;
