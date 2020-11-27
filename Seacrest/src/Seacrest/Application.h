@@ -45,6 +45,8 @@ namespace Seacrest {
 		GraphicsContext* m_Context;
 		std::shared_ptr<InputLayout> m_InputLayout;
 		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<InputLayout> m_SquareInput;
+		std::shared_ptr<Shader> m_SquareShader;
 	private: // TEMP
 		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;

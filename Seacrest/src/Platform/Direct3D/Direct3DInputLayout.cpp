@@ -62,14 +62,12 @@ namespace Seacrest {
 			index++;
 		}
 
-		// ID3DBlob* pBlob = m_Shader->GetBlob();
-		
 		pDevice->CreateInputLayout(
-			inputLayoutDesc, (UINT)layout.GetElements().size(),
-			Blob->GetBufferPointer(),
-			Blob->GetBufferSize(),
-			&m_InputLayout
-		);
+				inputLayoutDesc, (UINT)layout.GetElements().size(),
+				Blob->GetBufferPointer(),
+				Blob->GetBufferSize(),
+				&m_InputLayout
+			);
 
 		m_VertexBuffers.push_back( vertexBuffer );
 
