@@ -32,7 +32,8 @@ namespace Seacrest {
 		vertexSize = size;
 		m_VertexBuffer = pVertexBuffer;
 		
-		Bind();
+		// Input Layout now handling binding. 
+		// Bind();
 	}
 
 	Direct3DVertexBuffer::~Direct3DVertexBuffer()

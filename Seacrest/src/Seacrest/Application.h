@@ -14,6 +14,8 @@
 
 #include "Seacrest/Renderer/Buffer.h"
 
+#include "Seacrest/Renderer/InputLayout.h"
+
 namespace Seacrest {
 
 	class SEACREST_API Application
@@ -47,9 +49,10 @@ namespace Seacrest {
 		UINT m_Vertex;
 		UINT m_Index;
 		//UINT m_IndexBuffer;
-		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;
+		std::shared_ptr<InputLayout> m_InputLayout;
+		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<VertexBuffer> m_VertexBuffer;
+		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 	private:
 		static Application* s_Instance;
 	};

@@ -104,6 +104,10 @@
     <ClInclude Include="src\Seacrest\ImGui\ImGuiConsoleSink.h">
       <Filter>Seacrest\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Seacrest\Renderer\InputLayout.h">
+      <Filter>Seacrest\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Direct3D\Direct3DInputLayout.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
@@ -149,6 +153,10 @@
     <ClCompile Include="src\Seacrest\ImGui\ImGuiConsole.cpp">
       <Filter>Seacrest\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Seacrest\Renderer\InputLayout.cpp">
+      <Filter>Seacrest\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Direct3D\Direct3DInputLayout.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Shaders\PixelShader.hlsl">

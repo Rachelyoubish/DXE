@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClInclude Include="src\Platform\Direct3D\Direct3DBuffer.h" />
     <ClInclude Include="src\Platform\Direct3D\Direct3DContext.h" />
+    <ClInclude Include="src\Platform\Direct3D\Direct3DInputLayout.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Seacrest.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="src\Seacrest\MouseButtonCodes.h" />
     <ClInclude Include="src\Seacrest\Renderer\Buffer.h" />
     <ClInclude Include="src\Seacrest\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Seacrest\Renderer\InputLayout.h" />
     <ClInclude Include="src\Seacrest\Renderer\Renderer.h" />
     <ClInclude Include="src\Seacrest\Renderer\Shader.h" />
     <ClInclude Include="src\Seacrest\Window.h" />
@@ -171,6 +173,7 @@
   <ItemGroup>
     <ClCompile Include="src\Platform\Direct3D\Direct3DBuffer.cpp" />
     <ClCompile Include="src\Platform\Direct3D\Direct3DContext.cpp" />
+    <ClCompile Include="src\Platform\Direct3D\Direct3DInputLayout.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Seacrest\Application.cpp" />
@@ -181,6 +184,7 @@
     <ClCompile Include="src\Seacrest\LayerStack.cpp" />
     <ClCompile Include="src\Seacrest\Log.cpp" />
     <ClCompile Include="src\Seacrest\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Seacrest\Renderer\InputLayout.cpp" />
     <ClCompile Include="src\Seacrest\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Seacrest\Renderer\Shader.cpp" />
     <ClCompile Include="src\scpch.cpp">

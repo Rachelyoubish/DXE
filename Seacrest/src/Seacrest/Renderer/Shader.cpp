@@ -22,7 +22,7 @@ namespace Seacrest {
 		// PS sets and uses Blob first so vertex shader keeps relevant 
 		// Blob info once released from PS (and given to VS, handled automatically by COM).
 		// Remember: & releases then gets the pointer address.
-		// Microsoft::WRL::ComPtr<ID3DBlob> pBlob;
+		// ID3DBlob* pBlob;
 		D3DReadFileToBlob( ps, &pBlob );
 		m_Device->CreatePixelShader( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pPixelShader );
 
