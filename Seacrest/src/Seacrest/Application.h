@@ -51,8 +51,9 @@ namespace Seacrest {
 		//UINT m_IndexBuffer;
 		std::shared_ptr<InputLayout> m_InputLayout;
 		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexBuffer> m_VertexBuffer;
-		std::shared_ptr<IndexBuffer> m_IndexBuffer;
+		std::shared_ptr<Shader> m_BlueShader;
+		//std::shared_ptr<VertexBuffer> m_VertexBuffer;
+		//std::shared_ptr<IndexBuffer> m_IndexBuffer;
 	private:
 		static Application* s_Instance;
 	};

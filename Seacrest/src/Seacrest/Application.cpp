@@ -77,8 +77,8 @@ namespace Seacrest {
 		};
 		
 		unsigned short indicesList = ARRAYSIZE( indices );
-
-		m_IndexBuffer.reset( IndexBuffer::Create( indices, sizeof( indices ), indicesList ) );
+		std::shared_ptr<IndexBuffer> indexBuffer;
+		indexBuffer.reset( IndexBuffer::Create( indices, sizeof( indices ), indicesList ) );
 		
 		// Set primitive topology to triangle list (groups of 3 vertices).
 		m_DeviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
@@ -99,6 +99,7 @@ namespace Seacrest {
 		// Now InputLayout can properly read Blob info. 
 		// (This is admittedly a symptom of D3D).
 		m_InputLayout->AddVertexBuffer( vertexBuffer, Blob );
+		m_InputLayout->SetIndexBuffer( indexBuffer );
 	}
 
 	void Application::PushLayer( Layer* layer )
@@ -134,16 +135,9 @@ namespace Seacrest {
 			m_Context->SetRenderTargets();
 			m_Context->ClearScreen();
 
-			// Binding the Vertex, Index, and Input Layout here instead may be something to do...
-			// Especially when constant buffers come around, I assume? 
-			// > Set Input
-			// > Bind Vertex
-			// > Bind Index
-
 			m_Shader->Bind();
 			m_InputLayout->Bind();
-			// m_DeviceContext->Draw( m_Vertex, 0 );
-			m_DeviceContext->DrawIndexed( m_IndexBuffer->GetCount(), 0u, 0u );
+			m_DeviceContext->DrawIndexed( m_InputLayout->GetIndexBuffer()->GetCount(), 0u, 0u );
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
