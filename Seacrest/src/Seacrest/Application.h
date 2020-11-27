@@ -43,17 +43,11 @@ namespace Seacrest {
 		LayerStack m_LayerStack;
 
 		GraphicsContext* m_Context;
-		// TEMP
-		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
-		UINT m_Vertex;
-		UINT m_Index;
-		//UINT m_IndexBuffer;
 		std::shared_ptr<InputLayout> m_InputLayout;
 		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<Shader> m_BlueShader;
-		//std::shared_ptr<VertexBuffer> m_VertexBuffer;
-		//std::shared_ptr<IndexBuffer> m_IndexBuffer;
+	private: // TEMP
+		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
 	private:
 		static Application* s_Instance;
 	};

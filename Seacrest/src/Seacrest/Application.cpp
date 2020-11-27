@@ -79,7 +79,8 @@ namespace Seacrest {
 		unsigned short indicesList = ARRAYSIZE( indices );
 		std::shared_ptr<IndexBuffer> indexBuffer;
 		indexBuffer.reset( IndexBuffer::Create( indices, sizeof( indices ), indicesList ) );
-		
+
+
 		// Set primitive topology to triangle list (groups of 3 vertices).
 		m_DeviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 
@@ -88,10 +89,6 @@ namespace Seacrest {
 		auto width = m_Window->GetWidth();
 		auto height = m_Window->GetHeight();
 		m_Context->SetViewport( width, height ); 
-
-		// Stores the amount of vertices for the Draw command.
-		m_Vertex = (UINT)std::size( vertices );
-		m_Index = (UINT)std::size( indices );
 
 		m_Shader.reset( new Shader( "VertexShader.cso", "PixelShader.cso") );
 		// Blob set after shader setup to retain shader info. 
