@@ -91,10 +91,6 @@ namespace Seacrest {
 		std::shared_ptr<IndexBuffer> indexBuffer;
 		indexBuffer.reset( IndexBuffer::Create( indices, sizeof( indices ), indicesList ) );
 
-
-		// Set primitive topology to triangle list (groups of 3 vertices).
-		m_DeviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
-
 		// Trying to set D3D viewport abstractly. 
 		// Could be handled better, sorry. ;^]
 		auto width = m_Window->GetWidth();
