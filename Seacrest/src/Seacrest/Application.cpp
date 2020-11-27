@@ -106,7 +106,7 @@ namespace Seacrest {
 		auto Blob = m_Shader->GetBlob();
 		// Now InputLayout can properly read Blob info. 
 		// (This is admittedly a symptom of D3D).
-		m_InputLayout->AddVertexBuffer( vertexBuffer, Blob );
+		m_InputLayout->AddVertexBuffer( vertexBuffer, Blob.Get() );
 		m_InputLayout->SetIndexBuffer( indexBuffer );
 	}
 
