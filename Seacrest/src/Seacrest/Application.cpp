@@ -48,6 +48,13 @@ namespace Seacrest {
 
 		Vertex vertices[] =
 		{
+			// Square.
+			{  -0.7f,  0.7f, 0.2f, 0.8f, 0.8f, 1.0f },
+			{  0.7f,  0.7f, 0.2f, 0.7f, 0.7f, 1.0f },
+			{  0.7f, -0.7f, 0.8f, 0.2f, 0.8f, 1.0f },
+			{  -0.7f,  -0.7f, 0.8f, 0.8f, 0.8f, 1.0f },
+
+			// Triangle.
 			{  0.0f,  0.5f, 0.8f, 0.2f, 0.8f, 1.0f },
 			{  0.5f, -0.5f, 0.2f, 0.3f, 0.8f, 1.0f },
 			{ -0.5f, -0.5f, 0.8f, 0.8f, 0.2f, 1.0f },
@@ -73,7 +80,11 @@ namespace Seacrest {
 		// Create index buffer.
 		unsigned short indices[] =
 		{
+			// Square.
 			0, 1, 2,
+			0, 2, 3,
+			// Triangle. 
+			4, 5, 6,
 		};
 		
 		unsigned short indicesList = ARRAYSIZE( indices );
