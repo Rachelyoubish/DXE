@@ -165,7 +165,5 @@
     <FxCompile Include="src\Shaders\VertexShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="src\Shaders\SquareVS.hlsl" />
-    <FxCompile Include="src\Shaders\SquarePS.hlsl" />
   </ItemGroup>
 </Project>

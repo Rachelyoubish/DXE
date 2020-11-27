@@ -24,6 +24,5 @@ namespace Seacrest {
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 		std::shared_ptr<Shader> m_Shader;
 		Microsoft::WRL::ComPtr<ID3D11InputLayout> m_InputLayout;
-		HRESULT hr;
 	};
 }

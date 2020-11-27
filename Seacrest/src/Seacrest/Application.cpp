@@ -48,6 +48,12 @@ namespace Seacrest {
 
 		Vertex vertices[] =
 		{
+			// Square.
+			{  -0.7f,  0.7f, 0.2f, 0.8f, 0.8f, 1.0f },
+			{  0.7f,  0.7f, 0.2f, 0.7f, 0.7f, 1.0f },
+			{  0.7f, -0.7f, 0.8f, 0.2f, 0.8f, 1.0f },
+			{  -0.7f,  -0.7f, 0.8f, 0.8f, 0.8f, 1.0f },
+
 			// Triangle.
 			{  0.0f,  0.5f, 0.8f, 0.2f, 0.8f, 1.0f },
 			{  0.5f, -0.5f, 0.2f, 0.3f, 0.8f, 1.0f },
@@ -74,59 +80,16 @@ namespace Seacrest {
 		// Create index buffer.
 		unsigned short indices[] =
 		{
-			// Triangle. 
+			// Square.
 			0, 1, 2,
+			0, 2, 3,
+			// Triangle. 
+			4, 5, 6,
 		};
 		
 		unsigned short indicesList = ARRAYSIZE( indices );
 		std::shared_ptr<IndexBuffer> indexBuffer;
 		indexBuffer.reset( IndexBuffer::Create( indices, sizeof( indices ), indicesList ) );
-
-		// Square.
-		m_SquareInput.reset( InputLayout::Create() );
-
-		struct SquareVertex
-		{
-			struct
-			{
-				float x;
-				float y;
-			} pos;
-			struct
-			{
-				float r;
-				float g;
-				float b;
-				float a;
-			} color;
-		};
-
-		SquareVertex squareVertices[] =
-		{
-			// Square.
-			{  -0.7f,   0.7f, 0.2f, 0.8f, 0.8f, 1.0f },
-			{   0.7f,   0.7f, 0.2f, 0.7f, 0.7f, 1.0f },
-			{   0.7f,  -0.7f, 0.8f, 0.2f, 0.8f, 1.0f },
-			{  -0.7f,  -0.7f, 0.8f, 0.8f, 0.8f, 1.0f },
-		};
-
-		std::shared_ptr<VertexBuffer> squareVB;
-		squareVB.reset( VertexBuffer::Create( squareVertices, sizeof( SquareVertex ), ARRAYSIZE( squareVertices ) ) );
-		squareVB->SetLayout( {
-			{ ShaderDataType::Float2, "Position" },
-			{ ShaderDataType::Float4, "Color" },
-			} );
-
-		// Create index buffer.
-		unsigned short squareIndices[] =
-		{
-			// Square.
-			0, 1, 2,
-			0, 2, 3,
-		};
-		std::shared_ptr<IndexBuffer> squareIB;
-		squareIB.reset( IndexBuffer::Create( squareIndices, sizeof( squareIndices ), ARRAYSIZE( squareIndices) ) );
-
 
 		// Trying to set D3D viewport abstractly. 
 		// Could be handled better, sorry. ;^]
@@ -141,10 +104,6 @@ namespace Seacrest {
 		// (This is admittedly a symptom of D3D).
 		m_InputLayout->AddVertexBuffer( vertexBuffer, Blob.Get() );
 		m_InputLayout->SetIndexBuffer( indexBuffer );
-
-		m_SquareShader.reset( new Shader( "SquareVS.cso", "SquarePS.cso" ) );
-		m_SquareInput->AddVertexBuffer( squareVB, Blob.Get() );
-		m_SquareInput->SetIndexBuffer( squareIB );
 	}
 
 	void Application::PushLayer( Layer* layer )
@@ -180,13 +139,9 @@ namespace Seacrest {
 			m_Context->SetRenderTargets();
 			m_Context->ClearScreen();
 
-			m_SquareShader->Bind();
-			m_SquareInput->Bind();
-			m_DeviceContext->DrawIndexed( m_SquareInput->GetIndexBuffer()->GetCount(), 0u, 0u );
-
 			m_Shader->Bind();
 			m_InputLayout->Bind();
-			m_DeviceContext->DrawIndexed( m_InputLayout->GetIndexBuffer()->GetCount(), 1u, 0u );
+			m_DeviceContext->DrawIndexed( m_InputLayout->GetIndexBuffer()->GetCount(), 0u, 0u );
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
