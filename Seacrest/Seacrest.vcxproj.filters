@@ -107,7 +107,9 @@
     <ClInclude Include="src\Seacrest\Renderer\InputLayout.h">
       <Filter>Seacrest\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\Direct3D\Direct3DInputLayout.h" />
+    <ClInclude Include="src\Platform\Direct3D\Direct3DInputLayout.h">
+      <Filter>Platform\Direct3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
@@ -156,7 +158,9 @@
     <ClCompile Include="src\Seacrest\Renderer\InputLayout.cpp">
       <Filter>Seacrest\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Direct3D\Direct3DInputLayout.cpp" />
+    <ClCompile Include="src\Platform\Direct3D\Direct3DInputLayout.cpp">
+      <Filter>Platform\Direct3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Shaders\PixelShader.hlsl">
