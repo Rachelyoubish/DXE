@@ -6,12 +6,13 @@
 
 namespace Seacrest {
 
-	InputLayout* InputLayout::Create()
+	InputLayout* InputLayout::Create( const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout,
+		ID3DBlob* pVertexShaderBytecode )
 	{
 		switch (Renderer::GetCurrentAPI())
 		{
 			case RendererAPI::None:     SEACREST_ASSERT( false, "RendererAPI::None is currently not supported!" );  return nullptr;
-			case RendererAPI::Direct3D: return new Direct3DInputLayout();
+			case RendererAPI::Direct3D: return new Direct3DInputLayout( layout, pVertexShaderBytecode );
 		}
 
 		SEACREST_ASSERT( false, "Unknown RendererAPI!" );

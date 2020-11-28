@@ -11,6 +11,24 @@ namespace Seacrest {
 
 	Application* Application::s_Instance = nullptr;
 
+	static DXGI_FORMAT ShaderDataTypeToDirect3DBaseType( ShaderDataType type )
+	{
+		switch (type)
+		{
+			case Seacrest::ShaderDataType::Float:		return DXGI_FORMAT_R32_FLOAT;
+			case Seacrest::ShaderDataType::Float2:		return DXGI_FORMAT_R32G32_FLOAT;
+			case Seacrest::ShaderDataType::Float3:		return DXGI_FORMAT_R32G32B32_FLOAT;
+			case Seacrest::ShaderDataType::Float4:		return DXGI_FORMAT_R32G32B32A32_FLOAT;
+			case Seacrest::ShaderDataType::Int:		    return DXGI_FORMAT_R32_UINT;
+			case Seacrest::ShaderDataType::Int2:		return DXGI_FORMAT_R32G32_UINT;
+			case Seacrest::ShaderDataType::Int3:		return DXGI_FORMAT_R32G32B32_UINT;
+			case Seacrest::ShaderDataType::Int4:		return DXGI_FORMAT_R32G32B32A32_UINT;
+		}
+
+		SEACREST_CORE_ASSERT( false, "Unkown ShaderDataType!" );
+		return DXGI_FORMAT_UNKNOWN;
+	}
+
 	Application::Application()
 	{
 		SEACREST_CORE_ASSERT( !s_Instance, "Application already exists!" );
@@ -27,8 +45,6 @@ namespace Seacrest {
 		// TEMP: (Just getting a triangle on the screen, to be moved).
 		m_Device = Get().GetWindow().GetGraphicsContext()->GetD3D11Device();
 		m_DeviceContext = Get().GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
-		
-		m_InputLayout.reset( InputLayout::Create() );
 
 		struct Vertex
 		{
@@ -83,7 +99,7 @@ namespace Seacrest {
 		indexBuffer.reset( IndexBuffer::Create( indices, sizeof( indices ), indicesList ) );
 
 		// Square.
-		m_SquareInput.reset( InputLayout::Create() );
+		// m_SquareInput.reset( InputLayout::Create() );
 
 		struct SquareVertex
 		{
@@ -137,13 +153,41 @@ namespace Seacrest {
 		m_Shader.reset( new Shader( "VertexShader.cso", "PixelShader.cso") );
 		// Blob set after shader setup to retain shader info. 
 		auto Blob = m_Shader->GetBlob();
+
+
+		vertexBuffer->Bind();
+
+		vertexBuffer->GetLayout();
+
+		// Input (vertex) layout (2D position only).
+		const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
+		{
+			{ "Position",0,DXGI_FORMAT_R32G32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0 },
+			{ "Color",0,DXGI_FORMAT_R32G32B32A32_FLOAT,0,D3D11_APPEND_ALIGNED_ELEMENT,D3D11_INPUT_PER_VERTEX_DATA,0 },
+		};
+
+		m_InputLayout.reset( InputLayout::Create(ied, Blob ));
+
+
 		// Now InputLayout can properly read Blob info. 
 		// (This is admittedly a symptom of D3D).
-		m_InputLayout->AddVertexBuffer( vertexBuffer, Blob.Get() );
+		m_InputLayout->AddVertexBuffer( vertexBuffer, Blob  );
 		m_InputLayout->SetIndexBuffer( indexBuffer );
 
+
+		squareVB->Bind();
+		
+		squareVB->GetLayout();
+		// Input (vertex) layout (2D position only).
+		const std::vector<D3D11_INPUT_ELEMENT_DESC> ied2 =
+		{
+			{ "Position",0,DXGI_FORMAT_R32G32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0 },
+		};
+
 		m_SquareShader.reset( new Shader( "SquareVS.cso", "SquarePS.cso" ) );
-		m_SquareInput->AddVertexBuffer( squareVB, Blob.Get() );
+		auto Blob2 = m_Shader->GetBlob();
+		//m_SquareInput->AddVertexBuffer( squareVB, Blob2 );
+		m_SquareInput.reset( InputLayout::Create(ied2, Blob2) );
 		m_SquareInput->SetIndexBuffer( squareIB );
 	}
 

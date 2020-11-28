@@ -11,7 +11,7 @@ namespace Seacrest {
 		~Shader();
 		void Bind();
 		void Unbind();
-		Microsoft::WRL::ComPtr<ID3DBlob> GetBlob() { return pBlob; }
+		ID3DBlob* GetBlob() { return pBlob.Get(); }
 	private:
 		Microsoft::WRL::ComPtr<ID3DBlob> pBlob;
 		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;

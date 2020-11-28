@@ -8,7 +8,8 @@ namespace Seacrest {
 	class Direct3DInputLayout : public InputLayout
 	{
 	public:
-		Direct3DInputLayout();
+		Direct3DInputLayout( const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout,
+			ID3DBlob* pVertexShaderBytecode );
 		virtual ~Direct3DInputLayout() = default;
 
 		virtual void Bind() const override;
@@ -24,6 +25,6 @@ namespace Seacrest {
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 		std::shared_ptr<Shader> m_Shader;
 		Microsoft::WRL::ComPtr<ID3D11InputLayout> m_InputLayout;
-		HRESULT hr;
+		//HRESULT hr;
 	};
 }
