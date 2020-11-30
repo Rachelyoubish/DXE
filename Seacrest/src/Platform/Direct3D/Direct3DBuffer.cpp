@@ -61,7 +61,7 @@ namespace Seacrest {
 	///////////////////////////////////////////////////////////////////////////
 
 	Direct3DIndexBuffer::Direct3DIndexBuffer( unsigned short* indices, unsigned short count, unsigned short countList )
-		: m_Count( count )
+		: m_Count( countList )
 	{
 		Application& app = Application::Get();
 		ID3D11Device* pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
