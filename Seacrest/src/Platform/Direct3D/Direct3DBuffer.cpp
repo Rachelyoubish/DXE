@@ -15,7 +15,7 @@ namespace Seacrest {
 
 		Microsoft::WRL::ComPtr<ID3D11Buffer> pVertexBuffer;
 
-		D3D11_BUFFER_DESC bd = {};
+		D3D11_BUFFER_DESC bd = { 0 };
 
 		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		bd.Usage = D3D11_USAGE_DEFAULT;
@@ -61,7 +61,7 @@ namespace Seacrest {
 	///////////////////////////////////////////////////////////////////////////
 
 	Direct3DIndexBuffer::Direct3DIndexBuffer( unsigned short* indices, unsigned short count, unsigned short countList )
-		: m_Count( count )
+		: m_Count( countList )
 	{
 		Application& app = Application::Get();
 		ID3D11Device* pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
@@ -83,7 +83,7 @@ namespace Seacrest {
 		pDevice->CreateBuffer( &ibd, &isd, &m_IndexBuffer );
 
 		// m_IndexBuffer = pIndexBuffer;
-		Bind();
+		//Bind();
 	}
 
 	Direct3DIndexBuffer::~Direct3DIndexBuffer()

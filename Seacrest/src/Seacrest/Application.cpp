@@ -120,10 +120,10 @@ namespace Seacrest {
 		SquareVertex squareVertices[] =
 		{
 			// Square.
-			{  -0.7f,   0.7f, 0.2f, 0.8f, 0.8f, 1.0f },
-			{   0.7f,   0.7f, 0.2f, 0.7f, 0.7f, 1.0f },
-			{   0.7f,  -0.7f, 0.8f, 0.2f, 0.8f, 1.0f },
-			{  -0.7f,  -0.7f, 0.8f, 0.8f, 0.8f, 1.0f },
+			{  -0.3f,   0.3f, 0.2f, 0.8f, 0.8f, 1.0f },
+			{   0.3f,   0.3f, 0.2f, 0.7f, 0.7f, 1.0f },
+			{   0.3f,  -0.3f, 0.8f, 0.2f, 0.8f, 1.0f },
+			{  -0.3f,  -0.3f, 0.8f, 0.8f, 0.8f, 1.0f },
 		};
 
 		std::shared_ptr<VertexBuffer> squareVB;
@@ -185,7 +185,7 @@ namespace Seacrest {
 		};
 
 		m_SquareShader.reset( new Shader( "SquareVS.cso", "SquarePS.cso" ) );
-		auto Blob2 = m_Shader->GetBlob();
+		auto Blob2 = m_SquareShader->GetBlob();
 		//m_SquareInput->AddVertexBuffer( squareVB, Blob2 );
 		m_SquareInput.reset( InputLayout::Create(ied2, Blob2) );
 		m_SquareInput->SetIndexBuffer( squareIB );
@@ -230,7 +230,7 @@ namespace Seacrest {
 
 			m_Shader->Bind();
 			m_InputLayout->Bind();
-			m_DeviceContext->DrawIndexed( m_InputLayout->GetIndexBuffer()->GetCount(), 1u, 0u );
+			m_DeviceContext->DrawIndexed( m_InputLayout->GetIndexBuffer()->GetCount(), 0u, 0u );
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
