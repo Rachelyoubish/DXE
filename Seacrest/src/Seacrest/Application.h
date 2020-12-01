@@ -47,6 +47,11 @@ namespace Seacrest {
 		std::shared_ptr<Shader> m_Shader;
 		std::shared_ptr<InputLayout> m_SquareInput;
 		std::shared_ptr<Shader> m_SquareShader;
+
+		std::shared_ptr<VertexBuffer> vertexBuffer;
+		std::shared_ptr<IndexBuffer> indexBuffer;
+		std::shared_ptr<VertexBuffer> squareVB;
+		std::shared_ptr<IndexBuffer> squareIB;
 	private: // TEMP
 		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;

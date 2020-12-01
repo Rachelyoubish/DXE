@@ -74,7 +74,7 @@ namespace Seacrest {
 
 		UINT sizeList = ARRAYSIZE( vertices );
 
-		std::shared_ptr<VertexBuffer> vertexBuffer;
+		// std::shared_ptr<VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(VertexBuffer::Create( vertices, sizeof( Vertex ), sizeList ) );
 
 		// Buffer Layout setup here for InputLayout
@@ -95,7 +95,7 @@ namespace Seacrest {
 		};
 		
 		unsigned short indicesList = ARRAYSIZE( indices );
-		std::shared_ptr<IndexBuffer> indexBuffer;
+		// std::shared_ptr<IndexBuffer> indexBuffer;
 		indexBuffer.reset( IndexBuffer::Create( indices, sizeof( indices ), indicesList ) );
 
 		// Square.
@@ -120,13 +120,13 @@ namespace Seacrest {
 		SquareVertex squareVertices[] =
 		{
 			// Square.
-			{  -0.3f,   0.3f, 0.2f, 0.8f, 0.8f, 1.0f },
-			{   0.3f,   0.3f, 0.2f, 0.7f, 0.7f, 1.0f },
-			{   0.3f,  -0.3f, 0.8f, 0.2f, 0.8f, 1.0f },
-			{  -0.3f,  -0.3f, 0.8f, 0.8f, 0.8f, 1.0f },
+			{  -0.7f,   0.7f, 0.2f, 0.8f, 0.8f, 1.0f },
+			{   0.7f,   0.7f, 0.2f, 0.7f, 0.7f, 1.0f },
+			{   0.7f,  -0.7f, 0.8f, 0.2f, 0.8f, 1.0f },
+			{  -0.7f,  -0.7f, 0.8f, 0.8f, 0.8f, 1.0f },
 		};
 
-		std::shared_ptr<VertexBuffer> squareVB;
+		//std::shared_ptr<VertexBuffer> squareVB;
 		squareVB.reset( VertexBuffer::Create( squareVertices, sizeof( SquareVertex ), ARRAYSIZE( squareVertices ) ) );
 		squareVB->SetLayout( {
 			{ ShaderDataType::Float2, "Position" },
@@ -140,7 +140,7 @@ namespace Seacrest {
 			0, 1, 2,
 			0, 2, 3,
 		};
-		std::shared_ptr<IndexBuffer> squareIB;
+		// std::shared_ptr<IndexBuffer> squareIB;
 		squareIB.reset( IndexBuffer::Create( squareIndices, sizeof( squareIndices ), ARRAYSIZE( squareIndices) ) );
 
 
@@ -226,10 +226,14 @@ namespace Seacrest {
 
 			m_SquareShader->Bind();
 			m_SquareInput->Bind();
+			squareVB->Bind();
+			squareIB->Bind();
 			m_DeviceContext->DrawIndexed( m_SquareInput->GetIndexBuffer()->GetCount(), 0u, 0u );
 
 			m_Shader->Bind();
 			m_InputLayout->Bind();
+			vertexBuffer->Bind();
+			indexBuffer->Bind();
 			m_DeviceContext->DrawIndexed( m_InputLayout->GetIndexBuffer()->GetCount(), 0u, 0u );
 
 			for (Layer* layer : m_LayerStack)
