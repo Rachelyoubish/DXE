@@ -83,7 +83,7 @@ namespace Seacrest {
 		pDevice->CreateBuffer( &ibd, &isd, &m_IndexBuffer );
 
 		// m_IndexBuffer = pIndexBuffer;
-		Bind();
+		// Bind();
 	}
 
 	Direct3DIndexBuffer::~Direct3DIndexBuffer()
