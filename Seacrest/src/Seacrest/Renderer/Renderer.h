@@ -1,17 +1,17 @@
 #pragma once
 
-namespace Seacrest
-{
-	enum class RendererAPI
-	{
-		None = 0, Direct3D = 1
-	};
+#include "RenderCommand.h"
+
+namespace Seacrest {
 
 	class Renderer
 	{
 	public:
-		inline static RendererAPI GetCurrentAPI() { return s_RendererAPI; }
-	private:
-		static RendererAPI s_RendererAPI;
+		static void BeginScene(); 
+		static void EndScene();
+
+		static void Submit( const std::shared_ptr<InputLayout>& inputLayout );
+
+		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	};
 }

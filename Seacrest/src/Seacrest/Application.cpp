@@ -5,6 +5,8 @@
 
 #include "Input.h"
 
+#include "Seacrest/Renderer/Renderer.h"
+
 namespace Seacrest {
 
 #define BIND_EVENT_FN(x) std::bind( &Application::x, this, std::placeholders::_1 )
@@ -135,10 +137,12 @@ namespace Seacrest {
 		// Now InputLayout can properly read Blob info. 
 		// (This is admittedly a symptom of D3D).
 		m_InputLayout->AddVertexBuffer( vertexBuffer, Blob.Get() );
+		m_InputLayout->Bind();
 		m_InputLayout->SetIndexBuffer( indexBuffer );
 
 		m_SquareShader.reset( new Shader( "SquareVS.cso", "SquarePS.cso" ) );
 		m_SquareInput->AddVertexBuffer( squareVB, Blob.Get() );
+		m_SquareInput->Bind();
 		m_SquareInput->SetIndexBuffer( squareIB );
 	}
 
@@ -172,20 +176,23 @@ namespace Seacrest {
 	{
 		while (m_Running)
 		{
-			m_Context->SetRenderTargets();
-			m_Context->ClearScreen();
+			RenderCommand::SetRenderTargets();
+			RenderCommand::SetClearColor( { 0.16f, 0.16f, 0.16f, 1.0f } );
+			RenderCommand::Clear();
+
+			Renderer::BeginScene();
 
 			m_SquareShader->Bind();
-			m_SquareInput->Bind();
 			squareVB->Bind();
 			squareIB->Bind();
-			m_DeviceContext->DrawIndexed( m_SquareInput->GetIndexBuffer()->GetCount(), 0u, 0u );
+			Renderer::Submit( m_SquareInput );
 
 			m_Shader->Bind();
-			m_InputLayout->Bind();
 			vertexBuffer->Bind();
 			indexBuffer->Bind();
-			m_DeviceContext->DrawIndexed( m_InputLayout->GetIndexBuffer()->GetCount(), 0u, 0u );
+			Renderer::Submit( m_InputLayout );
+
+			Renderer::EndScene();
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();

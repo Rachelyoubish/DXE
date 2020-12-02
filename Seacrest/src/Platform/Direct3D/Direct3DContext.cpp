@@ -115,6 +115,11 @@ namespace Seacrest {
 		return m_D3DDeviceContext.Get();
 	}
 
+	ID3D11RenderTargetView* D3DContext::GetD3D11RTV()
+	{
+		return m_RenderTargetView.Get();
+	}
+
 	void D3DContext::CleanupRenderTarget()
 	{
 		if ( m_RenderTargetView )
