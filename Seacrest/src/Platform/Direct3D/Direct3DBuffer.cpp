@@ -22,7 +22,6 @@ namespace Seacrest {
 		bd.CPUAccessFlags = 0u;
 		bd.MiscFlags = 0u;
 		bd.ByteWidth = size * sizeList;
-		bd.StructureByteStride = 0; // sizeof(vertices);
 
 		D3D11_SUBRESOURCE_DATA sd = {};
 		sd.pSysMem = vertices;
@@ -31,9 +30,6 @@ namespace Seacrest {
 		
 		vertexSize = size;
 		m_VertexBuffer = pVertexBuffer;
-		
-		// Input Layout now handling binding. 
-		// Bind();
 	}
 
 	Direct3DVertexBuffer::~Direct3DVertexBuffer()
@@ -46,7 +42,7 @@ namespace Seacrest {
 		Application& app = Application::Get();
 		ID3D11DeviceContext* pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
 		// Bind vertex buffer to pipeline
-		const UINT stride = vertexSize; // This sizeof thing isn't working.  
+		const UINT stride = vertexSize; 
 		const UINT offset = 0u;
 		pDeviceContext->IASetVertexBuffers(0u, 1u, m_VertexBuffer.GetAddressOf(), &stride, &offset);
 	}
@@ -66,8 +62,7 @@ namespace Seacrest {
 		Application& app = Application::Get();
 		ID3D11Device* pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
 	
-
-		// Microsoft::WRL::ComPtr<ID3D11Buffer> pIndexBuffer;
+		Microsoft::WRL::ComPtr<ID3D11Buffer> pIndexBuffer;
 
 		D3D11_BUFFER_DESC ibd = {};
 
@@ -76,14 +71,12 @@ namespace Seacrest {
 		ibd.CPUAccessFlags = 0u;
 		ibd.MiscFlags = 0u;
 		ibd.ByteWidth = UINT(m_Count) * countList;
-		ibd.StructureByteStride = 0; // sizeof( unsigned short );
 
 		D3D11_SUBRESOURCE_DATA isd = {};
 		isd.pSysMem = indices;
-		pDevice->CreateBuffer( &ibd, &isd, &m_IndexBuffer );
+		pDevice->CreateBuffer( &ibd, &isd, &pIndexBuffer );
 
-		// m_IndexBuffer = pIndexBuffer;
-		// Bind();
+		m_IndexBuffer = pIndexBuffer;
 	}
 
 	Direct3DIndexBuffer::~Direct3DIndexBuffer()

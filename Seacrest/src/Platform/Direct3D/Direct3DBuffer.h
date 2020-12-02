@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Seacrest/Renderer/Buffer.h"
-#include <wrl.h>
 
 namespace Seacrest {
 
@@ -19,11 +18,8 @@ namespace Seacrest {
 	private:
 		uint32_t m_RendererID;
 		BufferLayout m_Layout;
-		//Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
-		//Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
-		Microsoft::WRL::ComPtr<ID3D11Buffer> m_VertexBuffer;
-		// float* vertexSize;
 		UINT vertexSize;
+		Microsoft::WRL::ComPtr<ID3D11Buffer> m_VertexBuffer;
 	};
 
 	class Direct3DIndexBuffer : public IndexBuffer

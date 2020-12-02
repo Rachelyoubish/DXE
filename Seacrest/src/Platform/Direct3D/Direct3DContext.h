@@ -23,6 +23,7 @@ namespace Seacrest {
 	private:
 		void CreateRenderTarget();
 		void CleanupRenderTarget();
+		void SetTopology();
 
 		void LogAdapterInfo();
 	private:

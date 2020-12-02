@@ -9,7 +9,6 @@ namespace Seacrest {
 
 	bool WindowsInput::IsKeyPressedImpl( int keycode )
 	{
-		// auto window = static_cast<HWND*>( Application::Get().GetWindow().GetNativeWindow() );
 		auto state = GetAsyncKeyState( keycode );
 
 		return ( state & 0x8000 );

@@ -61,8 +61,6 @@ namespace Seacrest {
 
 			index++;
 		}
-
-		// ID3DBlob* pBlob = m_Shader->GetBlob();
 		
 		pDevice->CreateInputLayout(
 			inputLayoutDesc, (UINT)layout.GetElements().size(),
@@ -78,10 +76,7 @@ namespace Seacrest {
 
 	void Direct3DInputLayout::SetIndexBuffer( const std::shared_ptr<IndexBuffer>& indexBuffer )
 	{
-		// TEMP, unsure if this will be used... input layout
-		// far more relevent to the Vertex buffer. 
 		indexBuffer->Bind();
-
 		m_IndexBuffer = indexBuffer;
 	}
 

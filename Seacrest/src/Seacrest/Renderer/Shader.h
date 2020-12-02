@@ -4,6 +4,7 @@
 #include <wrl.h>
 
 namespace Seacrest {
+
 	class Shader
 	{
 	public:

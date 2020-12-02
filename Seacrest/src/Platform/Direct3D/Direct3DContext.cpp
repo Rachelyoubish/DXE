@@ -58,10 +58,9 @@ namespace Seacrest {
 		
 		SEACREST_CORE_ASSERT( SUCCEEDED(result), "Failed to create DirectX device and swap chain!" );
 
-		// Set primitive topology to triangle list (groups of 3 vertices).
-		m_D3DDeviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
-
 		LogAdapterInfo();
+
+		SetTopology();
 
 		CreateRenderTarget();
 	}
@@ -120,9 +119,14 @@ namespace Seacrest {
 	{
 		if ( m_RenderTargetView )
 		{
-			// m_RenderTargetView->Release();
 			m_RenderTargetView = nullptr;
 		}
+	}
+
+	void D3DContext::SetTopology()
+	{
+		// Set primitive topology to triangle list (groups of 3 vertices).
+		m_D3DDeviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 	}
 
 	void D3DContext::SetViewport( unsigned int width, unsigned int height )
