@@ -6,3 +6,7 @@ bin-int/
 # Files
 *.user
 **/Sandbox/imgui.ini
+/Sandbox/Sandbox.vcxproj
+/Seacrest/Seacrest.vcxproj
+/Seacrest/Seacrest.vcxproj.filters
+/Seacrest.sln
