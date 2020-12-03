@@ -31,10 +31,10 @@ namespace Seacrest {
         pDeviceContext->ClearRenderTargetView( pRTV.Get(), m_ClearColor );
     }
     
-    void Direct3DRendererAPI::DrawIndexed( const std::shared_ptr<InputLayout>& inputLayout )
+    void Direct3DRendererAPI::DrawIndexed( const std::shared_ptr<IndexBuffer>& indexBuffer )
     {
         Application& app = Application::Get();
         Microsoft::WRL::ComPtr<ID3D11DeviceContext> pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
-        pDeviceContext->DrawIndexed( inputLayout->GetIndexBuffer()->GetCount(), 0u, 0u );
+        pDeviceContext->DrawIndexed( indexBuffer->GetCount(), 0u, 0u );
     }
 }

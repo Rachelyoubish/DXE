@@ -13,9 +13,8 @@ namespace Seacrest {
 
     }
 
-    void Renderer::Submit( const std::shared_ptr<InputLayout>& inputLayout )
+    void Renderer::Submit( const std::shared_ptr<IndexBuffer>& indexBuffer )
     {
-        //inputLayout->Bind();
-        RenderCommand::DrawIndexed( inputLayout );
+        RenderCommand::DrawIndexed( indexBuffer );
     }
 }

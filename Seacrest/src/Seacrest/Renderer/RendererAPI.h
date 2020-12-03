@@ -2,7 +2,7 @@
 
 #include <DirectXMath.h>
 
-#include "InputLayout.h"
+#include "Buffer.h"
 
 namespace Seacrest
 {
@@ -18,10 +18,7 @@ namespace Seacrest
         virtual void SetClearColor( const DirectX::XMFLOAT4& color ) = 0;
         virtual void Clear() = 0;
 
-        // TODO: Rework Input layout implementation to be independent
-        // from drawing commands. It should only be concerned with the
-        // Input-assembler stage of Direct3D 11. 
-        virtual void DrawIndexed( const std::shared_ptr<InputLayout>& inputLayout ) = 0;
+        virtual void DrawIndexed( const std::shared_ptr<IndexBuffer>& indexBufer ) = 0;
 
         inline static API GetAPI() { return s_API; }
     private:

@@ -185,12 +185,12 @@ namespace Seacrest {
 			m_SquareShader->Bind();
 			squareVB->Bind();
 			squareIB->Bind();
-			Renderer::Submit( m_SquareInput );
+			Renderer::Submit( squareIB );
 
 			m_Shader->Bind();
 			vertexBuffer->Bind();
 			indexBuffer->Bind();
-			Renderer::Submit( m_InputLayout );
+			Renderer::Submit( indexBuffer );
 
 			Renderer::EndScene();
 

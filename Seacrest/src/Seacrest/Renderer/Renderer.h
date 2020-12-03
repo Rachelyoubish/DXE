@@ -10,7 +10,7 @@ namespace Seacrest {
 		static void BeginScene(); 
 		static void EndScene();
 
-		static void Submit( const std::shared_ptr<InputLayout>& inputLayout );
+		static void Submit( const std::shared_ptr<IndexBuffer>& indexBuffer );
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	};
