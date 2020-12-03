@@ -16,6 +16,7 @@ namespace Seacrest {
 		Microsoft::WRL::ComPtr<ID3D11Buffer> pVertexBuffer;
 
 		D3D11_BUFFER_DESC bd = {};
+		SecureZeroMemory( &bd, sizeof( bd ) );
 
 		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		bd.Usage = D3D11_USAGE_DEFAULT;
@@ -24,6 +25,7 @@ namespace Seacrest {
 		bd.ByteWidth = size * sizeList;
 
 		D3D11_SUBRESOURCE_DATA sd = {};
+		SecureZeroMemory( &sd, sizeof( sd ) );
 		sd.pSysMem = vertices;
 
 		pDevice->CreateBuffer(&bd, &sd, &pVertexBuffer);
@@ -65,6 +67,7 @@ namespace Seacrest {
 		Microsoft::WRL::ComPtr<ID3D11Buffer> pIndexBuffer;
 
 		D3D11_BUFFER_DESC ibd = {};
+		SecureZeroMemory( &ibd, sizeof( ibd ) );
 
 		ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 		ibd.Usage = D3D11_USAGE_DEFAULT;
@@ -73,6 +76,8 @@ namespace Seacrest {
 		ibd.ByteWidth = UINT(m_Count) * countList;
 
 		D3D11_SUBRESOURCE_DATA isd = {};
+		SecureZeroMemory( &isd, sizeof( isd ) );
+
 		isd.pSysMem = indices;
 		pDevice->CreateBuffer( &ibd, &isd, &pIndexBuffer );
 

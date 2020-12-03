@@ -49,6 +49,7 @@ namespace Seacrest {
 
 		// Input (vertex) layout (2D position only).
 		D3D11_INPUT_ELEMENT_DESC* inputLayoutDesc = new D3D11_INPUT_ELEMENT_DESC[layout.GetElements().size()];
+		SecureZeroMemory( inputLayoutDesc, sizeof( inputLayoutDesc ) );
 		for (const auto& element : layout)
 		{
 			inputLayoutDesc[index].SemanticName = element.Name.c_str();

@@ -15,7 +15,7 @@ namespace Seacrest {
 		DXGI_SWAP_CHAIN_DESC sd = { 0 };
 
 		// Clear out the struct for use
-		ZeroMemory( &sd, sizeof( sd ) );
+		SecureZeroMemory( &sd, sizeof( sd ) );
 
 		// Fill the swap chain description struct
 		sd.BufferCount = 2;
@@ -138,7 +138,7 @@ namespace Seacrest {
 	{
 		// Configure viewport.
 		D3D11_VIEWPORT viewport{ 0 };
-		ZeroMemory( &viewport, sizeof( viewport ) );
+		SecureZeroMemory( &viewport, sizeof( viewport ) );
 
 		RECT clientRect;
 		GetClientRect( m_WindowHandle, &clientRect );

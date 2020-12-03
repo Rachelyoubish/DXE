@@ -53,7 +53,7 @@ namespace Seacrest {
 		WNDCLASSEX wc = { 0 };
 
 		// Clear out the window class for use
-		ZeroMemory( &wc, sizeof( WNDCLASSEX ) );
+		SecureZeroMemory( &wc, sizeof( wc ) );
 
 		// Filling in the struct with needed information
 		wc.cbSize = sizeof( wc );
