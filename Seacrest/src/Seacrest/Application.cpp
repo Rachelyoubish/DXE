@@ -14,6 +14,7 @@ namespace Seacrest {
 	Application* Application::s_Instance = nullptr;
 
 	Application::Application()
+		: m_Camera(-1.6f, 1.6f, 0.9f, -0.9f )
 	{
 		SEACREST_CORE_ASSERT( !s_Instance, "Application already exists!" );
 		s_Instance = this;
@@ -104,10 +105,10 @@ namespace Seacrest {
 		SquareVertex squareVertices[] =
 		{
 			// Square.
-			{  -0.7f,   0.7f, 1.0f, 0.8f, 0.8f, 1.0f },
-			{   0.7f,   0.7f, 1.0f, 0.7f, 0.7f, 1.0f },
-			{   0.7f,  -0.7f, 0.8f, 1.0f, 0.8f, 1.0f },
-			{  -0.7f,  -0.7f, 0.8f, 0.8f, 0.8f, 1.0f },
+			{  -0.75f,   0.75f, 1.0f, 0.8f, 0.8f, 1.0f },
+			{   0.75f,   0.75f, 1.0f, 0.7f, 0.7f, 1.0f },
+			{   0.75f,  -0.75f, 0.8f, 1.0f, 0.8f, 1.0f },
+			{  -0.75f,  -0.75f, 0.8f, 0.8f, 0.8f, 1.0f },
 		};
 
 		squareVB.reset( VertexBuffer::Create( squareVertices, sizeof( SquareVertex ), ARRAYSIZE( squareVertices ) ) );
@@ -180,17 +181,13 @@ namespace Seacrest {
 			RenderCommand::SetClearColor( { 0.16f, 0.16f, 0.16f, 1.0f } );
 			RenderCommand::Clear();
 
-			Renderer::BeginScene();
+			m_Camera.SetPosition( { 0.5f,0.5f, 0.0f } );
+			m_Camera.SetRotation( 45.0f );
 
-			m_SquareShader->Bind();
-			squareVB->Bind();
-			squareIB->Bind();
-			Renderer::Submit( squareIB );
+			Renderer::BeginScene( m_Camera );
 
-			m_Shader->Bind();
-			vertexBuffer->Bind();
-			indexBuffer->Bind();
-			Renderer::Submit( indexBuffer );
+			Renderer::Submit( m_SquareShader, squareVB, squareIB );
+			Renderer::Submit( m_Shader, vertexBuffer, indexBuffer );
 
 			Renderer::EndScene();
 

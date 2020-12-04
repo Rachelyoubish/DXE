@@ -12,6 +12,9 @@ namespace Seacrest {
 		~Shader();
 		void Bind();
 		void Unbind();
+
+		void UploadConstantBuffer( const std::string& name, DirectX::XMMATRIX matrix );
+
 		Microsoft::WRL::ComPtr<ID3DBlob> GetBlob() { return pBlob; }
 	private:
 		Microsoft::WRL::ComPtr<ID3DBlob> pBlob;

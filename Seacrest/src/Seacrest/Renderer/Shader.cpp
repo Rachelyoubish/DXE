@@ -1,7 +1,8 @@
 #include "scpch.h"
 #include "Shader.h"
 #include "Seacrest/Application.h"
-#include <d3dcompiler.h>
+#include <DirectXMath.h>
+#include <d3d11shader.h>
 
 namespace Seacrest {
 	
@@ -56,5 +57,37 @@ namespace Seacrest {
 	void Shader::Unbind()
 	{
 		// Com objects destroy themselves, this function may be useless as of now. 
+	}
+
+	void Shader::UploadConstantBuffer( const std::string& name, DirectX::XMMATRIX matrix )
+	{
+		// Constant Buffer function is all thanks to Toast ( https://github.com/Toastmastern87 )
+		ID3D11ShaderReflection* reflector = nullptr;
+		D3D11_SHADER_INPUT_BIND_DESC bindDesc;
+		ID3D11Buffer* constantBuffer = nullptr;
+
+		D3DReflect( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), IID_ID3D11ShaderReflection, (void**)&reflector );
+
+		reflector->GetResourceBindingDescByName( name.c_str(), &bindDesc );
+
+		D3D11_BUFFER_DESC cbDesc;
+		cbDesc.ByteWidth = sizeof( DirectX::XMMATRIX );
+		cbDesc.Usage = D3D11_USAGE_DYNAMIC;
+		cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		cbDesc.MiscFlags = 0;
+		cbDesc.StructureByteStride = 0;
+
+		D3D11_SUBRESOURCE_DATA InitData;
+		InitData.pSysMem = &matrix;
+		InitData.SysMemPitch = 0;
+		InitData.SysMemSlicePitch = 0;
+
+		m_Device->CreateBuffer( &cbDesc, &InitData, &constantBuffer );
+
+		m_DeviceContext->VSSetConstantBuffers( bindDesc.BindPoint, 1, &constantBuffer );
+
+		reflector->Release();
+		constantBuffer->Release();
 	}
 }

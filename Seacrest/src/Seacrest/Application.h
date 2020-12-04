@@ -16,6 +16,8 @@
 
 #include "Seacrest/Renderer/InputLayout.h"
 
+#include "Seacrest/Renderer/OrthographicCamera.h"
+
 namespace Seacrest {
 
 	class SEACREST_API Application
@@ -52,6 +54,8 @@ namespace Seacrest {
 		std::shared_ptr<Shader> m_SquareShader;
 		std::shared_ptr<VertexBuffer> squareVB;
 		std::shared_ptr<IndexBuffer> squareIB;
+
+		OrthographicCamera m_Camera;
 	private:
 		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
