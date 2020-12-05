@@ -9,6 +9,10 @@ namespace Seacrest {
 		SEACREST_CORE_ASSERT( windowHandle, "Window handle is null!" );
 	}
 
+	D3DContext::~D3DContext()
+	{
+	}
+
 	void D3DContext::Init()
 	{
 		// Create a struct to hold information about swap chain
@@ -105,19 +109,19 @@ namespace Seacrest {
 		CreateRenderTarget();
 	}
 
-	ID3D11Device* D3DContext::GetD3D11Device()
+	Microsoft::WRL::ComPtr<ID3D11Device> D3DContext::GetD3D11Device()
 	{
-		return m_D3DDevice.Get();
+		return m_D3DDevice;
 	}
 	
-	ID3D11DeviceContext* D3DContext::GetD3D11DeviceContext()
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> D3DContext::GetD3D11DeviceContext()
 	{
-		return m_D3DDeviceContext.Get();
+		return m_D3DDeviceContext;
 	}
 
-	ID3D11RenderTargetView* D3DContext::GetD3D11RTV()
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> D3DContext::GetD3D11RTV()
 	{
-		return m_RenderTargetView.Get();
+		return m_RenderTargetView;
 	}
 
 	void D3DContext::CleanupRenderTarget()
@@ -194,5 +198,8 @@ namespace Seacrest {
 		SEACREST_CORE_INFO( "Vendor:    {0}", vendor );
 		SEACREST_CORE_INFO( "Renderer:  {0}", videoCardDescription );
 		SEACREST_CORE_INFO( "Version:   {0}.{1}.{2}.{3}", major, minor, release, build );
+
+		factory->Release();
+		adapter->Release();
 	}
 }

@@ -9,6 +9,7 @@ namespace Seacrest {
 	{
 	public:
 		D3DContext(HWND windowHandle);
+		~D3DContext() override;
 
 		virtual void Init() override;
 		virtual void SwapBuffers() override;
@@ -18,9 +19,9 @@ namespace Seacrest {
 		virtual void ClearScreen() override;
 		virtual void SetViewport( unsigned int width, unsigned int height ) override;
 
-		virtual ID3D11Device* GetD3D11Device() override;
-		virtual ID3D11DeviceContext* GetD3D11DeviceContext() override;
-		virtual ID3D11RenderTargetView* GetD3D11RTV() override;
+		virtual Microsoft::WRL::ComPtr<ID3D11Device> GetD3D11Device() override;
+		virtual Microsoft::WRL::ComPtr<ID3D11DeviceContext> GetD3D11DeviceContext() override;
+		virtual Microsoft::WRL::ComPtr<ID3D11RenderTargetView> GetD3D11RTV() override;
 	private:
 		void CreateRenderTarget();
 		void CleanupRenderTarget();

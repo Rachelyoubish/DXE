@@ -7,6 +7,7 @@ namespace Seacrest {
     class Direct3DRendererAPI : public RendererAPI
     {
     public:
+        ~Direct3DRendererAPI() = default;
         virtual void SetRenderTargets() override;
         virtual void SetClearColor( const DirectX::XMFLOAT4& color ) override;
         virtual void Clear() override;

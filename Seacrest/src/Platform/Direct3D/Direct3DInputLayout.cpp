@@ -29,7 +29,7 @@ namespace Seacrest {
 	void Direct3DInputLayout::Bind() const
 	{
 		Application& app = Application::Get();
-		ID3D11DeviceContext* pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
 		// Bind vertex layout.
 		pDeviceContext->IASetInputLayout( m_InputLayout.Get() );
 	}
@@ -41,8 +41,8 @@ namespace Seacrest {
 	void Direct3DInputLayout::AddVertexBuffer( const std::shared_ptr<VertexBuffer>& vertexBuffer, ID3DBlob* Blob )
 	{
 		Application& app = Application::Get();
-		ID3D11Device* pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
-		vertexBuffer->Bind();
+		Microsoft::WRL::ComPtr<ID3D11Device> pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
+		// vertexBuffer->Bind();
 
 		uint32_t index = 0;
 		const auto& layout = vertexBuffer->GetLayout();

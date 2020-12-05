@@ -1,6 +1,5 @@
 #pragma once
 
-
 #ifdef SEACREST_PLATFORM_WINDOWS
 
 extern Seacrest::Application* Seacrest::CreateApplication();

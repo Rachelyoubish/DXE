@@ -18,6 +18,8 @@
 
 #include "Seacrest/Renderer/OrthographicCamera.h"
 
+#include <dxgidebug.h>
+
 namespace Seacrest {
 
 	class SEACREST_API Application
@@ -38,6 +40,7 @@ namespace Seacrest {
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize( WindowResizeEvent& e );
+		void ReportLiveObjects();
 
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;

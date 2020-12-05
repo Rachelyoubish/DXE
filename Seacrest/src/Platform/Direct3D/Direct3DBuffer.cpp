@@ -36,13 +36,12 @@ namespace Seacrest {
 
 	Direct3DVertexBuffer::~Direct3DVertexBuffer()
 	{
-
 	}
 
 	void Direct3DVertexBuffer::Bind() const
 	{
 		Application& app = Application::Get();
-		ID3D11DeviceContext* pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
 		// Bind vertex buffer to pipeline
 		const UINT stride = vertexSize; 
 		const UINT offset = 0u;
@@ -62,7 +61,7 @@ namespace Seacrest {
 		: m_Count( countList )
 	{
 		Application& app = Application::Get();
-		ID3D11Device* pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
+		Microsoft::WRL::ComPtr<ID3D11Device> pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
 	
 		Microsoft::WRL::ComPtr<ID3D11Buffer> pIndexBuffer;
 
@@ -91,7 +90,7 @@ namespace Seacrest {
 	void Direct3DIndexBuffer::Bind() const
 	{
 		Application& app = Application::Get();
-		ID3D11DeviceContext* pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
 		// Bind index buffer.
 		pDeviceContext->IASetIndexBuffer( m_IndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u );
 	}

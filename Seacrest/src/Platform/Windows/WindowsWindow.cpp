@@ -106,6 +106,7 @@ namespace Seacrest {
 
 	void WindowsWindow::Shutdown()
 	{
+		delete m_Context;
 		DestroyWindow( m_Window );
 	}
 

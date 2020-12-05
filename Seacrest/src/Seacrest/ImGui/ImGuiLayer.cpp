@@ -45,12 +45,14 @@ namespace Seacrest {
 		Application& app = Application::Get();
 		HWND window = static_cast<HWND>( Application::Get().GetWindow().GetNativeWindow() );
 
-		ID3D11Device* pd3dDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
-		ID3D11DeviceContext* pd3dDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
+		Microsoft::WRL::ComPtr<ID3D11Device> pd3dDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> pd3dDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
 
 		// Setup Platform/Renderer bindings
 		ImGui_ImplWin32_Init( window );
-		ImGui_ImplDX11_Init( pd3dDevice, pd3dDeviceContext );
+		ImGui_ImplDX11_Init( pd3dDevice.Get(), pd3dDeviceContext.Get() );
+		pd3dDevice->Release();
+		pd3dDeviceContext->Release();
 	}
 
 	void ImGuiLayer::OnDetach()

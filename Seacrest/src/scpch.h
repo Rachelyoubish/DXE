@@ -29,6 +29,9 @@
     #include <d3dcompiler.h>
 	#include <DirectXMath.h>
 	#include <d3d11shader.h>
+	#include <dxgidebug.h>
+	#include <dxgi1_3.h>
+
 
 	// Link library dependencies  
 	#pragma comment(lib, "d3d11.lib")

@@ -139,12 +139,12 @@ namespace Seacrest {
 		// (This is admittedly a symptom of D3D).
 		m_InputLayout->AddVertexBuffer( vertexBuffer, Blob.Get() );
 		m_InputLayout->Bind();
-		m_InputLayout->SetIndexBuffer( indexBuffer );
+		//m_InputLayout->SetIndexBuffer( indexBuffer );
 
 		m_SquareShader.reset( new Shader( "SquareVS.cso", "SquarePS.cso" ) );
 		m_SquareInput->AddVertexBuffer( squareVB, Blob.Get() );
 		m_SquareInput->Bind();
-		m_SquareInput->SetIndexBuffer( squareIB );
+		//m_SquareInput->SetIndexBuffer( squareIB );
 	}
 
 	void Application::PushLayer( Layer* layer )
@@ -173,8 +173,23 @@ namespace Seacrest {
 		}
 	}
 
+	void Application::ReportLiveObjects()
+	{
+		ID3D11Debug* d3d11Debug;
+		m_Device->QueryInterface( IID_PPV_ARGS( &d3d11Debug ) );
+
+		d3d11Debug->ReportLiveDeviceObjects( D3D11_RLDO_DETAIL );
+		d3d11Debug->Release();
+	}
+
 	void Application::Run()
 	{
+		//IDXGIDebug1* dxgiDebug;
+		//DXGIGetDebugInterface1( 0, IID_PPV_ARGS( &dxgiDebug ) );
+		
+		ID3D11Debug* d3d11Debug;
+		m_Device->QueryInterface( IID_PPV_ARGS(&d3d11Debug) );
+
 		while (m_Running)
 		{
 			RenderCommand::SetRenderTargets();
@@ -191,6 +206,10 @@ namespace Seacrest {
 
 			Renderer::EndScene();
 
+			//dxgiDebug->ReportLiveObjects( DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_IGNORE_INTERNAL );
+			//ReportLiveObjects();
+			d3d11Debug->ReportLiveDeviceObjects( D3D11_RLDO_DETAIL );
+
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 
@@ -201,6 +220,8 @@ namespace Seacrest {
 
 			m_Window->OnUpdate();
 		}
+		//dxgiDebug->Release();
+		d3d11Debug->Release();
 	}
 
 	bool Application::OnWindowClose( WindowCloseEvent& e )

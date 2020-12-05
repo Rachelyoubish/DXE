@@ -62,9 +62,9 @@ namespace Seacrest {
 	void Shader::UploadConstantBuffer( const std::string& name, DirectX::XMMATRIX matrix )
 	{
 		// Constant Buffer function is all thanks to Toast ( https://github.com/Toastmastern87 )
-		ID3D11ShaderReflection* reflector = nullptr;
+		Microsoft::WRL::ComPtr<ID3D11ShaderReflection> reflector = nullptr;
 		D3D11_SHADER_INPUT_BIND_DESC bindDesc;
-		ID3D11Buffer* constantBuffer = nullptr;
+		Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer = nullptr;
 
 		D3DReflect( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), IID_ID3D11ShaderReflection, (void**)&reflector );
 
@@ -83,11 +83,8 @@ namespace Seacrest {
 		InitData.SysMemPitch = 0;
 		InitData.SysMemSlicePitch = 0;
 
-		m_Device->CreateBuffer( &cbDesc, &InitData, &constantBuffer );
+		m_Device->CreateBuffer( &cbDesc, &InitData, constantBuffer.GetAddressOf() );
 
-		m_DeviceContext->VSSetConstantBuffers( bindDesc.BindPoint, 1, &constantBuffer );
-
-		reflector->Release();
-		constantBuffer->Release();
+		m_DeviceContext->VSSetConstantBuffers( bindDesc.BindPoint, 1, constantBuffer.GetAddressOf() );
 	}
 }

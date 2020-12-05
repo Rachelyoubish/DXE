@@ -9,6 +9,9 @@ public:
 		: Layer("Example")
 	{}
 
+	~ExampleLayer()
+	{}
+
 	void OnUpdate() override
 	{
 		// SEACREST_INFO( "ExampleLayer::Update" );
