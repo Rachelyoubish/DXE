@@ -1,8 +1,6 @@
-#pragma pack_matrix( row_major )
-
 cbuffer Camera
 {
-    matrix viewProjectionMatrix;
+    row_major matrix viewProjectionMatrix;
 };
 
 struct VSOut

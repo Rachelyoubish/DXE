@@ -1,8 +1,6 @@
-#pragma pack_matrix( row_major )
-
 cbuffer Camera
 {
-    matrix viewProjectionMatrix;
+    row_major matrix viewProjectionMatrix;
 };
 
 struct VSOut
@@ -11,7 +9,7 @@ struct VSOut
     float4 pos : SV_Position;
 };
 
-VSOut main(float2 pos : Position, float3 color : Color)
+VSOut main( float2 pos : Position, float3 color : Color )
 {
     VSOut vso;
     vso.pos = mul( float4( pos.x, pos.y, 0.0f, 1.0f ), viewProjectionMatrix );

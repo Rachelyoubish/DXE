@@ -146,6 +146,9 @@ namespace Seacrest {
 		m_SquareInput->Bind();
 		// Why would the input layout care about 
 		// setting indices?
+		// To further clarify, indices set themselves
+		// up when constructed, and are bound during
+		// the Render submit command. 
 		// m_SquareInput->SetIndexBuffer( squareIB );
 	}
 
@@ -192,7 +195,7 @@ namespace Seacrest {
 			RenderCommand::SetClearColor( { 0.16f, 0.16f, 0.16f, 1.0f } );
 			RenderCommand::Clear();
 
-			m_Camera.SetPosition( { 0.5f,0.5f, 0.0f } );
+			m_Camera.SetPosition( { 0.5f, 0.5f, 0.0f } );
 			m_Camera.SetRotation( 45.0f );
 
 			Renderer::BeginScene( m_Camera );
