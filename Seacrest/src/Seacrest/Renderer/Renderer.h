@@ -21,6 +21,6 @@ namespace Seacrest {
 			DirectX::XMMATRIX ViewProjectionMatrix;
 		};
 
-		static SceneData* m_SceneData;
+		static SceneData* s_SceneData;
 	};
 }
