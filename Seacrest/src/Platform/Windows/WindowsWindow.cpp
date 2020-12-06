@@ -1,4 +1,5 @@
 #include "scpch.h"
+#include "Resources/resource.h"
 #include "WindowsWindow.h"
 
 #include "Seacrest/Events/ApplicationEvent.h"
@@ -62,12 +63,12 @@ namespace Seacrest {
 		wc.cbClsExtra = 0;
 		wc.cbWndExtra = sizeof( WindowData* );
 		wc.hInstance = hInstance;
-		wc.hIcon = nullptr;
+		wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE( IDI_ICON1 ) );
 		wc.hCursor = LoadCursor( nullptr, IDC_ARROW );
 		wc.hbrBackground = nullptr;
 		wc.lpszMenuName = nullptr;
 		wc.lpszClassName = pClassName;
-		wc.hIconSm = nullptr;
+		wc.hIconSm = LoadIcon( hInstance, MAKEINTRESOURCE( IDI_ICON1 ) );;
 		
 		// Register the window class
 		RegisterClassEx( &wc );
