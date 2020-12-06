@@ -14,7 +14,6 @@ namespace Seacrest {
 	Application* Application::s_Instance = nullptr;
 
 	Application::Application()
-		: m_Camera(-1.6f, 1.6f, 0.9f, -0.9f )
 	{
 		SEACREST_CORE_ASSERT( !s_Instance, "Application already exists!" );
 		s_Instance = this;
@@ -24,132 +23,6 @@ namespace Seacrest {
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
-
-		m_Context = Get().GetWindow().GetGraphicsContext();
-
-		// TEMP: (Just getting a triangle on the screen, to be moved).
-		m_Device = Get().GetWindow().GetGraphicsContext()->GetD3D11Device();
-		m_DeviceContext = Get().GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
-		
-		m_InputLayout.reset( InputLayout::Create() );
-
-		struct Vertex
-		{
-			struct
-			{
-				float x;
-				float y;
-			} pos;
-			struct
-			{
-				float r;
-				float g;
-				float b;
-				float a;
-			} color;
-		};
-
-		Vertex vertices[] =
-		{
-			// Triangle.
-			{  0.0f,  0.5f, 0.8f, 0.2f, 0.8f, 1.0f },
-			{  0.5f, -0.5f, 0.2f, 0.3f, 0.8f, 1.0f },
-			{ -0.5f, -0.5f, 0.8f, 0.8f, 0.2f, 1.0f },
-		};
-
-		// vertices[0].color.g = 255;
-
-		UINT sizeList = ARRAYSIZE( vertices );
-
-		vertexBuffer.reset(VertexBuffer::Create( vertices, sizeof( Vertex ), sizeList ) );
-
-		// Buffer Layout setup here for InputLayout
-		// to take in once shaders are set later.
-		// very linear, could be improved. 
-		BufferLayout layout = {
-			{ ShaderDataType::Float2, "Position" },
-			{ ShaderDataType::Float4, "Color" },
-		};
-		vertexBuffer->SetLayout( layout );
-
-		
-		// Create index buffer.
-		unsigned short indices[] =
-		{
-			// Triangle. 
-			0, 1, 2,
-		};
-		
-		unsigned short indicesList = ARRAYSIZE( indices );
-		indexBuffer.reset( IndexBuffer::Create( indices, sizeof( indices ), indicesList ) );
-
-		// Square.
-		m_SquareInput.reset( InputLayout::Create() );
-
-		struct SquareVertex
-		{
-			struct
-			{
-				float x;
-				float y;
-			} pos;
-			struct
-			{
-				float r;
-				float g;
-				float b;
-				float a;
-			} color;
-		};
-
-		SquareVertex squareVertices[] =
-		{
-			// Square.
-			{  -0.75f,   0.75f, 1.0f, 0.8f, 0.8f, 1.0f },
-			{   0.75f,   0.75f, 1.0f, 0.7f, 0.7f, 1.0f },
-			{   0.75f,  -0.75f, 0.8f, 1.0f, 0.8f, 1.0f },
-			{  -0.75f,  -0.75f, 0.8f, 0.8f, 0.8f, 1.0f },
-		};
-
-		squareVB.reset( VertexBuffer::Create( squareVertices, sizeof( SquareVertex ), ARRAYSIZE( squareVertices ) ) );
-		squareVB->SetLayout( {
-			{ ShaderDataType::Float2, "Position" },
-			{ ShaderDataType::Float4, "Color" },
-			} );
-
-		// Create index buffer.
-		unsigned short squareIndices[] =
-		{
-			// Square.
-			0, 1, 2,
-			0, 2, 3,
-		};
-		squareIB.reset( IndexBuffer::Create( squareIndices, sizeof( squareIndices ), ARRAYSIZE( squareIndices ) ) );
-
-		// Trying to set D3D viewport abstractly. 
-		// Could be handled better, sorry. ;^]
-		auto width = m_Window->GetWidth();
-		auto height = m_Window->GetHeight();
-		m_Context->SetViewport( width, height ); 
-
-		m_Shader.reset( new Shader( "VertexShader.cso", "PixelShader.cso") );
-		// Blob set after shader setup to retain shader info. 
-		auto Blob = m_Shader->GetBlob();
-		// Now InputLayout can properly read Blob info. 
-		// (This is admittedly a symptom of D3D).
-		m_InputLayout->AddVertexBuffer( vertexBuffer, Blob.Get() );
-		m_InputLayout->Bind();
-		// m_InputLayout->SetIndexBuffer( indexBuffer );
-
-		m_SquareShader.reset( new Shader( "SquareVS.cso", "SquarePS.cso" ) );
-		m_SquareInput->AddVertexBuffer( squareVB, Blob.Get() );
-		m_SquareInput->Bind();
-		// Why would the input layout care about 
-		// setting indices?
-		// To further clarify, indices set themselves
-		// up when constructed, and are bound during
-		// the Render submit command. 
-		// m_SquareInput->SetIndexBuffer( squareIB );
 	}
 
 	void Application::PushLayer( Layer* layer )
@@ -178,33 +51,10 @@ namespace Seacrest {
 		}
 	}
 
-	void Application::ReportLiveObjects()
-	{
-		ID3D11Debug* d3d11Debug;
-		m_Device->QueryInterface( IID_PPV_ARGS( &d3d11Debug ) );
-	
-		d3d11Debug->ReportLiveDeviceObjects( D3D11_RLDO_IGNORE_INTERNAL );
-		d3d11Debug->Release();
-	}
-
 	void Application::Run()
 	{
 		while (m_Running)
 		{
-			RenderCommand::SetRenderTargets();
-			RenderCommand::SetClearColor( { 0.16f, 0.16f, 0.16f, 1.0f } );
-			RenderCommand::Clear();
-
-			m_Camera.SetPosition( { 0.5f, 0.5f, 0.0f } );
-			m_Camera.SetRotation( 45.0f );
-
-			Renderer::BeginScene( m_Camera );
-
-			Renderer::Submit( m_SquareShader, squareVB, squareIB );
-			Renderer::Submit( m_Shader, vertexBuffer, indexBuffer );
-
-			Renderer::EndScene();
-
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 
@@ -214,10 +64,6 @@ namespace Seacrest {
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
-
-			#ifdef SEACREST_DEBUG
-			ReportLiveObjects();
-			#endif
 		}
 	}
 

@@ -12,6 +12,17 @@
 
 #include "Seacrest/ImGui/ImGuiLayer.h"
 
+// ---Renderer----------------
+#include "Seacrest/Renderer/Renderer.h"
+#include "Seacrest/Renderer/RenderCommand.h"
+
+#include "Seacrest/Renderer/Buffer.h"
+#include "Seacrest/Renderer/Shader.h"
+#include "Seacrest/Renderer/InputLayout.h"
+
+#include "Seacrest/Renderer/OrthographicCamera.h"
+// ---------------------------
+
 // ---Entry Point-------------
 #include "Seacrest/EntryPoint.h"
 // ---------------------------

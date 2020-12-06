@@ -10,19 +10,9 @@
 
 #include "Seacrest/ImGui/ImGuiLayer.h"
 
-#include "Seacrest/Renderer/Shader.h"
-
-#include "Seacrest/Renderer/Buffer.h"
-
-#include "Seacrest/Renderer/InputLayout.h"
-
-#include "Seacrest/Renderer/OrthographicCamera.h"
-
-#include <dxgidebug.h>
-
 namespace Seacrest {
 
-	class SEACREST_API Application
+	class Application
 	{
 	public:
 		Application();
@@ -40,28 +30,13 @@ namespace Seacrest {
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize( WindowResizeEvent& e );
-		void ReportLiveObjects();
 
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
-
-		GraphicsContext* m_Context;
-		std::shared_ptr<InputLayout> m_InputLayout;
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexBuffer> vertexBuffer;
-		std::shared_ptr<IndexBuffer> indexBuffer;
-
-		std::shared_ptr<InputLayout> m_SquareInput;
-		std::shared_ptr<Shader> m_SquareShader;
-		std::shared_ptr<VertexBuffer> squareVB;
-		std::shared_ptr<IndexBuffer> squareIB;
-
-		OrthographicCamera m_Camera;
 	private:
 		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
 	private:
 		static Application* s_Instance;
 	};
