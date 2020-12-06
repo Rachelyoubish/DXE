@@ -110,9 +110,9 @@ public:
 
 		// Trying to set D3D viewport abstractly. 
 		// Could be handled better, sorry. ;^]
-		//auto width = m_Window->GetWidth();
-		//auto height = m_Window->GetHeight();
-		m_Context->SetViewport( 1600, 900 );
+		auto width = m_Window.GetWidth();
+		auto height = m_Window.GetHeight();
+		m_Context->SetViewport( width, height );
 
 		m_Shader.reset( new Seacrest::Shader( "VertexShader.cso", "PixelShader.cso" ) );
 		// Blob set after shader setup to retain shader info. 
@@ -199,6 +199,7 @@ public:
 
 private:
 	Seacrest::GraphicsContext* m_Context;
+	Seacrest::Window& m_Window = Seacrest::Application::Get().GetWindow();
 
 	std::shared_ptr<Seacrest::Shader> m_Shader;
 	std::shared_ptr<Seacrest::VertexBuffer> vertexBuffer;
