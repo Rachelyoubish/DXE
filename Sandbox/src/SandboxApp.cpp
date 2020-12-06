@@ -161,6 +161,12 @@ public:
 			m_CameraRotation -= m_CameraRotationSpeed;
 		}
 
+		if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_BACK ))
+		{
+			m_CameraPosition = DirectX::XMFLOAT3( 0.0f, 0.0f, 0.0f );
+			m_CameraRotation = ( 0.0f );
+		}
+
 		Seacrest::RenderCommand::SetRenderTargets();
 		Seacrest::RenderCommand::SetClearColor( { 0.16f, 0.16f, 0.16f, 1.0f } );
 		Seacrest::RenderCommand::Clear();

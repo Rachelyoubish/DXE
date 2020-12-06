@@ -61,34 +61,35 @@ namespace Seacrest {
 
 	void Shader::UploadConstantBuffer( const std::string& name, DirectX::XMMATRIX matrix )
 	{
-		// Constant Buffer function is all thanks to Toast ( https://github.com/Toastmastern87 )
-		//Microsoft::WRL::ComPtr<ID3D11ShaderReflection> reflector = nullptr;
-		//D3D11_SHADER_INPUT_BIND_DESC bindDesc;
+		if (!m_ConstantBuffer)	// Prevent resources being made every frame. 
+		{
+			D3D11_BUFFER_DESC cbDesc = { 0 };
+			SecureZeroMemory( &cbDesc, sizeof( cbDesc ) );
 
-		// This works even with all that commented out... onto something.
-		ID3D11Buffer* constantBuffer = nullptr;
+			cbDesc.ByteWidth = sizeof( DirectX::XMMATRIX );
+			cbDesc.Usage = D3D11_USAGE_DYNAMIC;
+			cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+			cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+			cbDesc.MiscFlags = 0;
+			cbDesc.StructureByteStride = 0;
 
-		//D3DReflect( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), IID_ID3D11ShaderReflection, (void**)&reflector );
+			D3D11_SUBRESOURCE_DATA InitData = { 0 };
+			SecureZeroMemory( &InitData, sizeof( InitData ) );
 
-		//reflector->GetResourceBindingDescByName( name.c_str(), &bindDesc );
+			InitData.pSysMem = &matrix;
+			InitData.SysMemPitch = 0;
+			InitData.SysMemSlicePitch = 0;
 
-		D3D11_BUFFER_DESC cbDesc;
-		cbDesc.ByteWidth = sizeof( DirectX::XMMATRIX );
-		cbDesc.Usage = D3D11_USAGE_DYNAMIC;
-		cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-		cbDesc.MiscFlags = 0;
-		cbDesc.StructureByteStride = 0;
+			m_Device->CreateBuffer( &cbDesc, &InitData, &m_ConstantBuffer );
+		}
 
-		D3D11_SUBRESOURCE_DATA InitData;
-		InitData.pSysMem = &matrix;
-		InitData.SysMemPitch = 0;
-		InitData.SysMemSlicePitch = 0;
+		D3D11_MAPPED_SUBRESOURCE ms = { 0 };
+		SecureZeroMemory( &ms, sizeof( ms ) );
 
-		m_Device->CreateBuffer( &cbDesc, &InitData, &constantBuffer );
+		m_DeviceContext->Map( m_ConstantBuffer.Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms );
+		memcpy( ms.pData, &matrix, sizeof( DirectX::XMMATRIX ) );
+		m_DeviceContext->Unmap( m_ConstantBuffer.Get(), NULL );
 
-		m_DeviceContext->VSSetConstantBuffers( 0u, 1u, &constantBuffer );
-
-		constantBuffer->Release();
+		m_DeviceContext->VSSetConstantBuffers( 0u, 1u, m_ConstantBuffer.GetAddressOf() );
 	}
 }

@@ -22,6 +22,7 @@ namespace Seacrest {
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
 		Microsoft::WRL::ComPtr<ID3D11PixelShader> m_PixelShader;
 		Microsoft::WRL::ComPtr<ID3D11VertexShader> m_VertexShader;
+		Microsoft::WRL::ComPtr<ID3D11Buffer> m_ConstantBuffer;
 		Microsoft::WRL::ComPtr<ID3D11InputLayout> m_InputLayout;
 	};
 }
