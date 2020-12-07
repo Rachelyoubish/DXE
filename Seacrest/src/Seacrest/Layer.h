@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Seacrest/Core.h"
+#include "Seacrest/Core/Timestep.h"
 #include "Seacrest/Events/Event.h"
 
 namespace Seacrest {
@@ -13,7 +14,7 @@ namespace Seacrest {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate( Timestep ts ) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event) {}
 

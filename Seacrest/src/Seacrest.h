@@ -6,6 +6,8 @@
 #include "Seacrest/Layer.h"
 #include "Seacrest/Log.h"
 
+#include "Seacrest/Core/Timestep.h"
+
 #include "Seacrest/Input.h"
 #include "Seacrest/KeyCodes.h"
 #include "Seacrest/MouseButtonCodes.h"

@@ -17,6 +17,8 @@ namespace Seacrest {
 	{
 		SEACREST_CORE_ASSERT( !s_Instance, "Application already exists!" );
 		s_Instance = this;
+
+		QueryPerformanceCounter( &StartingTime );
 		
 		m_Window = std::unique_ptr<Window>( Window::Create() );
 		m_Window->SetEventCallback( BIND_EVENT_FN(OnEvent) );
@@ -55,8 +57,15 @@ namespace Seacrest {
 	{
 		while (m_Running)
 		{
+			QueryPerformanceCounter( &CurrentTime );
+			QueryPerformanceFrequency( &Frequency );
+
+			float time = static_cast<float>( ( CurrentTime.QuadPart - StartingTime.QuadPart ) / (double)Frequency.QuadPart );
+			Timestep timestep = time - m_LastFrameTime;
+			m_LastFrameTime = time;
+
 			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate();
+				layer->OnUpdate( timestep );
 
 			m_ImGuiLayer->Begin();
 			for ( Layer* layer : m_LayerStack )

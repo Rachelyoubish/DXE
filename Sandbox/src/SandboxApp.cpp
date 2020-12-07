@@ -130,35 +130,38 @@ public:
 	~ExampleLayer()
 	{}
 
-	void OnUpdate() override
+	void OnUpdate( Seacrest::Timestep ts ) override
 	{
+		#if SEACREST_DEBUG
+			SEACREST_TRACE( "Delta time: {0}s, ({1}ms)", ts.GetSeconds(), ts.GetMilliSeconds() );
+		#endif
 
 		if (Seacrest::Input::IsKeyPressed(SEACREST_KEY_LEFT))
 		{
-			m_CameraPosition.x -= m_CameraMoveSpeed;
+			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
 		}
 		else if (Seacrest::Input::IsKeyPressed(SEACREST_KEY_RIGHT))
 		{
-			m_CameraPosition.x += m_CameraMoveSpeed;
+			m_CameraPosition.x += m_CameraMoveSpeed * ts;
 		}
 
 		if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_UP ))
 		{
-			m_CameraPosition.y += m_CameraMoveSpeed;
+			m_CameraPosition.y += m_CameraMoveSpeed * ts;
 		}
 		else if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_DOWN))
 		{
-			m_CameraPosition.y -= m_CameraMoveSpeed;
+			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
 		}
 
 		if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_A ))
 		{
-			m_CameraRotation += m_CameraRotationSpeed;
+			m_CameraRotation += m_CameraRotationSpeed * ts;
 		}
 
 		if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_D ))
 		{
-			m_CameraRotation -= m_CameraRotationSpeed;
+			m_CameraRotation -= m_CameraRotationSpeed * ts;
 		}
 
 		if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_BACK ))
@@ -219,10 +222,10 @@ private:
 
 	Seacrest::OrthographicCamera m_Camera;
 	DirectX::XMFLOAT3 m_CameraPosition;
-	float m_CameraMoveSpeed = 0.1f;
+	float m_CameraMoveSpeed = 5.0f;
 
 	float m_CameraRotation = 0.0f;
-	float m_CameraRotationSpeed = 2.0f;
+	float m_CameraRotationSpeed = 180.0f;
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
