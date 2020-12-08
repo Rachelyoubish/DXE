@@ -9,4 +9,4 @@ Such as:
 - Setting the local debugging directory to the output directory.
 - And setting the shaders output directory to Sandbox's output directory.
 
-![Seacrest](https://i.imgur.com/BUZIAuG.png)
+![Seacrest](https://i.imgur.com/2mdGBWI.png)
