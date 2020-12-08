@@ -41,7 +41,6 @@ namespace Seacrest {
 
 		m_PixelShader = pPixelShader.Get();
 		m_VertexShader = pVertexShader.Get();
-		// m_InputLayout = pInputLayout.Get();
 	}
 
 	Shader::~Shader()
@@ -61,35 +60,36 @@ namespace Seacrest {
 
 	void Shader::UploadConstantBuffer( const std::string& name, DirectX::XMMATRIX matrix )
 	{
-		if (!m_ConstantBuffer)	// Prevent resources being made every frame. 
-		{
-			D3D11_BUFFER_DESC cbDesc = { 0 };
-			SecureZeroMemory( &cbDesc, sizeof( cbDesc ) );
+		// A shader-reflection interface accesses shader information.
+		// I.e. I believe this is how it's accessing constant buffer
+		// names, given the blunt "GetResourceBindingDescByName". 
 
-			cbDesc.ByteWidth = sizeof( DirectX::XMMATRIX );
-			cbDesc.Usage = D3D11_USAGE_DYNAMIC;
-			cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-			cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-			cbDesc.MiscFlags = 0;
-			cbDesc.StructureByteStride = 0;
+		D3D11_SHADER_INPUT_BIND_DESC bindDesc = { 0 };
+		SecureZeroMemory( &bindDesc, sizeof( bindDesc ) );
 
-			D3D11_SUBRESOURCE_DATA InitData = { 0 };
-			SecureZeroMemory( &InitData, sizeof( InitData ) );
+		D3DReflect( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), IID_ID3D11ShaderReflection, (void**)reflector.GetAddressOf() );
 
-			InitData.pSysMem = &matrix;
-			InitData.SysMemPitch = 0;
-			InitData.SysMemSlicePitch = 0;
+		reflector->GetResourceBindingDescByName( name.c_str(), &bindDesc );
 
-			m_Device->CreateBuffer( &cbDesc, &InitData, &m_ConstantBuffer );
-		}
+		D3D11_BUFFER_DESC cbDesc = { 0 };
+		SecureZeroMemory( &cbDesc, sizeof( cbDesc ) );
 
-		D3D11_MAPPED_SUBRESOURCE ms = { 0 };
-		SecureZeroMemory( &ms, sizeof( ms ) );
+		cbDesc.ByteWidth = sizeof( DirectX::XMMATRIX );
+		cbDesc.Usage = D3D11_USAGE_DYNAMIC;
+		cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		cbDesc.MiscFlags = 0;
+		cbDesc.StructureByteStride = 0;
 
-		m_DeviceContext->Map( m_ConstantBuffer.Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms );
-		memcpy( ms.pData, &matrix, sizeof( DirectX::XMMATRIX ) );
-		m_DeviceContext->Unmap( m_ConstantBuffer.Get(), NULL );
+		D3D11_SUBRESOURCE_DATA InitData = { 0 };
+		SecureZeroMemory( &InitData, sizeof( InitData ) );
 
-		m_DeviceContext->VSSetConstantBuffers( 0u, 1u, m_ConstantBuffer.GetAddressOf() );
+		InitData.pSysMem = &matrix;
+		InitData.SysMemPitch = 0;
+		InitData.SysMemSlicePitch = 0;
+
+		m_Device->CreateBuffer( &cbDesc, &InitData, &m_ConstantBuffer );
+
+		m_DeviceContext->VSSetConstantBuffers( bindDesc.BindPoint, 1, m_ConstantBuffer.GetAddressOf() );
 	}
 }

@@ -6,7 +6,7 @@ class ExampleLayer : public Seacrest::Layer
 {
 public:
 	ExampleLayer()
-		: Layer( "Example" ), m_Camera( -1.6f, 1.6f, 0.9f, -0.9f ), m_CameraPosition( DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f) )
+		: Layer( "Example" ), m_Camera( -1.6f, 1.6f, 0.9f, -0.9f ), m_CameraPosition( DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f) ), m_SquarePosition(DirectX::XMMatrixIdentity())
 	{
 		m_Context = Seacrest::Application::Get().GetWindow().GetGraphicsContext();
 
@@ -87,10 +87,10 @@ public:
 		SquareVertex squareVertices[] =
 		{
 			// Square.
-			{  -0.75f,   0.75f, 1.0f, 0.8f, 0.8f, 1.0f },
-			{   0.75f,   0.75f, 1.0f, 0.7f, 0.7f, 1.0f },
-			{   0.75f,  -0.75f, 0.8f, 1.0f, 0.8f, 1.0f },
-			{  -0.75f,  -0.75f, 0.8f, 0.8f, 0.8f, 1.0f },
+			{  -0.5f,   0.5f, 1.0f, 0.8f, 0.8f, 1.0f },
+			{   0.5f,   0.5f, 1.0f, 0.7f, 0.7f, 1.0f },
+			{   0.5f,  -0.5f, 0.8f, 1.0f, 0.8f, 1.0f },
+			{  -0.5f,  -0.5f, 0.8f, 0.8f, 0.8f, 1.0f },
 		};
 
 		squareVB.reset( Seacrest::VertexBuffer::Create( squareVertices, sizeof( SquareVertex ), ARRAYSIZE( squareVertices ) ) );
@@ -164,6 +164,36 @@ public:
 			m_CameraRotation -= m_CameraRotationSpeed * ts;
 		}
 
+		if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_I ))
+		{
+			DirectX::XMFLOAT4X4 spF4;
+			DirectX::XMStoreFloat4x4( &spF4, m_SquarePosition );
+			spF4._42 += m_SquareMoveSpeed * ts;
+			m_SquarePosition = DirectX::XMLoadFloat4x4( &spF4 );
+		}
+		else if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_K ))
+		{
+			DirectX::XMFLOAT4X4 spF4;
+			DirectX::XMStoreFloat4x4( &spF4, m_SquarePosition );
+			spF4._42 -= m_SquareMoveSpeed * ts;
+			m_SquarePosition = DirectX::XMLoadFloat4x4( &spF4 );
+		}
+
+		if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_J ))
+		{
+			DirectX::XMFLOAT4X4 spF4;
+			DirectX::XMStoreFloat4x4( &spF4, m_SquarePosition );
+			spF4._41 -= m_SquareMoveSpeed * ts;
+			m_SquarePosition = DirectX::XMLoadFloat4x4( &spF4 );
+		}
+		else if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_L ))
+		{
+			DirectX::XMFLOAT4X4 spF4;
+			DirectX::XMStoreFloat4x4( &spF4, m_SquarePosition );
+			spF4._41 += m_SquareMoveSpeed * ts;
+			m_SquarePosition = DirectX::XMLoadFloat4x4( &spF4 );
+		}
+
 		if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_BACK ))
 		{
 			m_CameraPosition = DirectX::XMFLOAT3( 0.0f, 0.0f, 0.0f );
@@ -179,8 +209,20 @@ public:
 
 		Seacrest::Renderer::BeginScene( m_Camera );
 
-		Seacrest::Renderer::Submit( m_SquareShader, squareVB, squareIB );
-		Seacrest::Renderer::Submit( m_Shader, vertexBuffer, indexBuffer );
+		//static DirectX::XMMATRIX scale = DirectX::XMMatrixScaling( 0.1f, 0.1f, 0.1f );
+		//
+		//for (int y = 0; y < 5; y++)
+		//{
+		//	for (int x = 0; x < 5; x++)
+		//	{
+		//		DirectX::XMMATRIX transform = DirectX::XMMatrixIdentity() * scale;
+		//		transform = transform * DirectX::XMMatrixTranslation( x * 0.11f, y * 0.11f, 0.0f );
+		//
+		//		Seacrest::Renderer::Submit( m_SquareShader, squareVB, squareIB, transform );
+		//	}
+		//}
+		Seacrest::Renderer::Submit( m_SquareShader, squareVB, squareIB, m_SquarePosition );
+		Seacrest::Renderer::Submit( m_Shader, vertexBuffer, indexBuffer);
 
 		Seacrest::Renderer::EndScene();
 
@@ -226,6 +268,9 @@ private:
 
 	float m_CameraRotation = 0.0f;
 	float m_CameraRotationSpeed = 180.0f;
+
+	DirectX::XMMATRIX m_SquarePosition;
+	float m_SquareMoveSpeed = 1.0f;
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;

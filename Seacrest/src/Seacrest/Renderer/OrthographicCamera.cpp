@@ -11,12 +11,7 @@ namespace Seacrest {
 
     void OrthographicCamera::RecalculateViewMatrix()
     {
-        DirectX::XMMATRIX translation = DirectX::XMMatrixTranslation( m_Position.x, m_Position.y, m_Position.z );
-
-        // Shouldn't translation be first? 
-        DirectX::XMMATRIX transform = DirectX::XMMatrixMultiply( DirectX::XMMatrixRotationZ( 
-            DirectX::XMConvertToRadians( m_Rotation ) ),
-            DirectX::XMMatrixTranslation( m_Position.x, m_Position.y, m_Position.z ) );
+        DirectX::XMMATRIX transform = DirectX::XMMatrixRotationZ( DirectX::XMConvertToRadians( m_Rotation ) ) * DirectX::XMMatrixTranslation( m_Position.x, m_Position.y, m_Position.z );
 
         m_ViewMatrix = DirectX::XMMatrixInverse( nullptr, transform );
         // Keep in mind, DirectX is row major. 

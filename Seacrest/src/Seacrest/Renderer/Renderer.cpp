@@ -15,10 +15,13 @@ namespace Seacrest {
 
     }
 
-    void Renderer::Submit( const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexBuffer>& vertexBuffer, const std::shared_ptr<IndexBuffer>& indexBuffer )
+    void Renderer::Submit( const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexBuffer>& vertexBuffer, const std::shared_ptr<IndexBuffer>& indexBuffer, const DirectX::XMMATRIX& transform  )
     {
         shader->Bind();
         shader->UploadConstantBuffer( "Camera", s_SceneData->ViewProjectionMatrix );
+        shader->UploadConstantBuffer( "Transform", transform);
+
+
         vertexBuffer->Bind();
         indexBuffer->Bind();
         RenderCommand::DrawIndexed( indexBuffer );
