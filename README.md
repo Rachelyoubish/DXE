@@ -10,3 +10,6 @@ Such as:
 - And setting the shaders output directory to Sandbox's output directory.
 
 ![Seacrest](https://i.imgur.com/2mdGBWI.png)
+## Extra Credits
+- [Toast Engine](https://github.com/Toastmastern87/Toast) 
+  - Another DirectX engine founded on Hazel that's been helpful. 
