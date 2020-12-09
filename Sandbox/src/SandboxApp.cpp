@@ -86,7 +86,7 @@ public:
 
 		SquareVertex squareVertices[] =
 		{
-			// Square.
+			// Square. Set pos to .5f for 1 to 1 unit. 
 			{  -0.5f,   0.5f, 1.0f, 0.8f, 0.8f, 1.0f },
 			{   0.5f,   0.5f, 1.0f, 0.7f, 0.7f, 1.0f },
 			{   0.5f,  -0.5f, 0.8f, 1.0f, 0.8f, 1.0f },
@@ -136,6 +136,8 @@ public:
 			SEACREST_TRACE( "Delta time: {0}s, ({1}ms)", ts.GetSeconds(), ts.GetMilliSeconds() );
 		#endif
 
+
+		// Input
 		if (Seacrest::Input::IsKeyPressed(SEACREST_KEY_LEFT))
 		{
 			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
@@ -208,20 +210,27 @@ public:
 		m_Camera.SetRotation( m_CameraRotation );
 
 		Seacrest::Renderer::BeginScene( m_Camera );
+		/*Square Grid*/
+		static DirectX::XMMATRIX scale = DirectX::XMMatrixScaling( 0.1f, 0.1f, 0.1f );
+		
+		DirectX::XMVECTOR redColor( { 0.8f, 0.2f, 0.3f, 1.0f } );
+		DirectX::XMVECTOR blueColor( { 0.2f, 0.3f, 0.8f, 1.0f } );
 
-		//static DirectX::XMMATRIX scale = DirectX::XMMatrixScaling( 0.1f, 0.1f, 0.1f );
-		//
-		//for (int y = 0; y < 5; y++)
-		//{
-		//	for (int x = 0; x < 5; x++)
-		//	{
-		//		DirectX::XMMATRIX transform = DirectX::XMMatrixIdentity() * scale;
-		//		transform = transform * DirectX::XMMatrixTranslation( x * 0.11f, y * 0.11f, 0.0f );
-		//
-		//		Seacrest::Renderer::Submit( m_SquareShader, squareVB, squareIB, transform );
-		//	}
-		//}
-		Seacrest::Renderer::Submit( m_SquareShader, squareVB, squareIB, m_SquarePosition );
+		for (int y = 0; y < 5; y++)
+		{
+			for (int x = 0; x < 5; x++)
+			{
+				DirectX::XMMATRIX transform = DirectX::XMMatrixIdentity() * scale;
+				transform = transform * DirectX::XMMatrixTranslation( x * 0.11f, y * 0.11f, 0.0f );
+
+				if (x % 2 == 0)
+					m_SquareShader->UploadConstantFloat4( "cbColor", redColor );
+				else
+					m_SquareShader->UploadConstantFloat4( "cbColor", blueColor );
+				Seacrest::Renderer::Submit( m_SquareShader, squareVB, squareIB, transform );
+			}
+		}
+		//Seacrest::Renderer::Submit( m_SquareShader, squareVB, squareIB, m_SquarePosition );
 		Seacrest::Renderer::Submit( m_Shader, vertexBuffer, indexBuffer);
 
 		Seacrest::Renderer::EndScene();

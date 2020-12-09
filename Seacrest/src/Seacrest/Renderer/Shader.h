@@ -13,7 +13,8 @@ namespace Seacrest {
 		void Bind();
 		void Unbind();
 
-		void UploadConstantBuffer( const std::string& name, DirectX::XMMATRIX matrix );
+		void UploadConstantFloat4( const std::string& name, const DirectX::XMVECTOR& values);
+		void UploadConstantBuffer( const std::string& name, const DirectX::XMMATRIX& matrix );
 
 		Microsoft::WRL::ComPtr<ID3DBlob> GetBlob() { return pBlob; }
 	private:

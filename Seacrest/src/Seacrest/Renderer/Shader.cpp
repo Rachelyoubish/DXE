@@ -58,7 +58,38 @@ namespace Seacrest {
 		// Com objects destroy themselves, this function may be useless as of now. 
 	}
 
-	void Shader::UploadConstantBuffer( const std::string& name, DirectX::XMMATRIX matrix )
+	void Shader::UploadConstantFloat4( const std::string& name, const DirectX::XMVECTOR& values )
+	{
+		D3D11_SHADER_INPUT_BIND_DESC bindDesc = { 0 };
+		SecureZeroMemory( &bindDesc, sizeof( bindDesc ) );
+
+		D3DReflect( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), IID_ID3D11ShaderReflection, (void**)reflector.GetAddressOf() );
+
+		reflector->GetResourceBindingDescByName( name.c_str(), &bindDesc );
+
+		D3D11_BUFFER_DESC cbDesc = { 0 };
+		SecureZeroMemory( &cbDesc, sizeof( cbDesc ) );
+
+		cbDesc.ByteWidth = sizeof( DirectX::XMVECTOR );
+		cbDesc.Usage = D3D11_USAGE_DYNAMIC;
+		cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		cbDesc.MiscFlags = 0;
+		cbDesc.StructureByteStride = 0;
+
+		D3D11_SUBRESOURCE_DATA InitData = { 0 };
+		SecureZeroMemory( &InitData, sizeof( InitData ) );
+
+		InitData.pSysMem = &values;
+		InitData.SysMemPitch = 0;
+		InitData.SysMemSlicePitch = 0;
+
+		m_Device->CreateBuffer( &cbDesc, &InitData, &m_ConstantBuffer );
+
+		m_DeviceContext->VSSetConstantBuffers( bindDesc.BindPoint, 1, m_ConstantBuffer.GetAddressOf() );
+	}
+
+	void Shader::UploadConstantBuffer( const std::string& name, const DirectX::XMMATRIX& matrix )
 	{
 		// A shader-reflection interface accesses shader information.
 		// I.e. I believe this is how it's accessing constant buffer
