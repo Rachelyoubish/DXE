@@ -1,31 +1,17 @@
 #pragma once
 
 #include <string>
-#include <wrl.h>
 
 namespace Seacrest {
 
 	class Shader
 	{
 	public:
-		Shader( const std::string& vertexSrc, const std::string& pixelSrc );
-		~Shader();
-		void Bind();
-		void Unbind();
+		virtual ~Shader() = default;
 
-		void UploadConstantFloat4( const std::string& name, const DirectX::XMVECTOR& values);
-		void UploadConstantBuffer( const std::string& name, const DirectX::XMMATRIX& matrix );
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
 
-		Microsoft::WRL::ComPtr<ID3DBlob> GetBlob() { return pBlob; }
-	private:
-		Microsoft::WRL::ComPtr<ID3DBlob> pBlob;
-		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
-		Microsoft::WRL::ComPtr<ID3D11PixelShader> m_PixelShader;
-		Microsoft::WRL::ComPtr<ID3D11VertexShader> m_VertexShader;
-		Microsoft::WRL::ComPtr<ID3D11Buffer> m_ConstantBuffer;
-		Microsoft::WRL::ComPtr<ID3D11InputLayout> m_InputLayout;
-
-		Microsoft::WRL::ComPtr<ID3D11ShaderReflection> reflector;
+		static Shader* Create( const std::string& vertexSrc, const std::string& pixelSrc );
 	};
 }

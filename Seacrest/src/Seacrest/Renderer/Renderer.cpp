@@ -1,6 +1,8 @@
 #include "scpch.h"
 #include "Renderer.h"
 
+#include "Platform/Direct3D/Direct3DShader.h"
+
 namespace Seacrest {
 
     Renderer::SceneData* Renderer::s_SceneData = new Renderer::SceneData;
@@ -18,8 +20,8 @@ namespace Seacrest {
     void Renderer::Submit( const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexBuffer>& vertexBuffer, const std::shared_ptr<IndexBuffer>& indexBuffer, const DirectX::XMMATRIX& transform  )
     {
         shader->Bind();
-        shader->UploadConstantBuffer( "Camera", s_SceneData->ViewProjectionMatrix );
-        shader->UploadConstantBuffer( "Transform", transform);
+        std::dynamic_pointer_cast<Direct3DShader>(shader)->UploadConstantMat( "Camera", s_SceneData->ViewProjectionMatrix );
+        std::dynamic_pointer_cast<Direct3DShader>( shader )->UploadConstantMat( "Transform", transform);
 
 
         vertexBuffer->Bind();

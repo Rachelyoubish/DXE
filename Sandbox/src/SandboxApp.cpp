@@ -1,5 +1,7 @@
 #include <Seacrest.h>
 
+#include "Platform/Direct3D/Direct3DShader.h"
+
 #include "imgui/imgui.h"
 
 class ExampleLayer : public Seacrest::Layer
@@ -114,15 +116,16 @@ public:
 		auto height = m_Window.GetHeight();
 		m_Context->SetViewport( width, height );
 
-		m_Shader.reset( new Seacrest::Shader( "VertexShader.cso", "PixelShader.cso" ) );
+		m_Shader.reset( Seacrest::Shader::Create( "VertexShader.cso", "PixelShader.cso" ) );
 		// Blob set after shader setup to retain shader info. 
-		auto Blob = m_Shader->GetBlob();
+		//auto &Blob = m_Shader->GetBlob();
+		auto Blob = std::dynamic_pointer_cast<Seacrest::Direct3DShader>( m_Shader )->GetBlob();
 		// Now InputLayout can properly read Blob info. 
 		// (This is admittedly a symptom of D3D).
 		m_InputLayout->AddVertexBuffer( vertexBuffer, Blob.Get() );
 		m_InputLayout->Bind();
 
-		m_SquareShader.reset( new Seacrest::Shader( "SquareVS.cso", "SquarePS.cso" ) );
+		m_FlatColorShader.reset( Seacrest::Shader::Create( "SquareVS.cso", "SquarePS.cso" ) );
 		m_SquareInput->AddVertexBuffer( squareVB, Blob.Get() );
 		m_SquareInput->Bind();
 	}
@@ -212,9 +215,9 @@ public:
 		Seacrest::Renderer::BeginScene( m_Camera );
 		/*Square Grid*/
 		static DirectX::XMMATRIX scale = DirectX::XMMatrixScaling( 0.1f, 0.1f, 0.1f );
-		
-		DirectX::XMVECTOR redColor( { 0.8f, 0.2f, 0.3f, 1.0f } );
-		DirectX::XMVECTOR blueColor( { 0.2f, 0.3f, 0.8f, 1.0f } );
+
+		std::dynamic_pointer_cast<Seacrest::Direct3DShader>( m_FlatColorShader )->Bind();
+		std::dynamic_pointer_cast<Seacrest::Direct3DShader>( m_FlatColorShader )->UploadConstantFloat4("cbColor", m_SquareColor);
 
 		for (int y = 0; y < 5; y++)
 		{
@@ -223,14 +226,10 @@ public:
 				DirectX::XMMATRIX transform = DirectX::XMMatrixIdentity() * scale;
 				transform = transform * DirectX::XMMatrixTranslation( x * 0.11f, y * 0.11f, 0.0f );
 
-				if (x % 2 == 0)
-					m_SquareShader->UploadConstantFloat4( "cbColor", redColor );
-				else
-					m_SquareShader->UploadConstantFloat4( "cbColor", blueColor );
-				Seacrest::Renderer::Submit( m_SquareShader, squareVB, squareIB, transform );
+				Seacrest::Renderer::Submit( m_FlatColorShader, squareVB, squareIB, transform );
 			}
 		}
-		//Seacrest::Renderer::Submit( m_SquareShader, squareVB, squareIB, m_SquarePosition );
+		//Seacrest::Renderer::Submit( m_FlatColorShader, squareVB, squareIB, m_SquarePosition );
 		Seacrest::Renderer::Submit( m_Shader, vertexBuffer, indexBuffer);
 
 		Seacrest::Renderer::EndScene();
@@ -242,6 +241,9 @@ public:
 
 	virtual void OnImGuiRender() override
 	{
+		ImGui::Begin( "Settings" );
+		ImGui::ColorEdit4( "Square Color", m_SquareColor.m128_f32 );
+		ImGui::End();
 	}
 
 	void OnEvent( Seacrest::Event& event ) override
@@ -266,7 +268,7 @@ private:
 	std::shared_ptr<Seacrest::IndexBuffer> indexBuffer;
 	std::shared_ptr<Seacrest::InputLayout> m_InputLayout;
 
-	std::shared_ptr<Seacrest::Shader> m_SquareShader;
+	std::shared_ptr<Seacrest::Shader> m_FlatColorShader;
 	std::shared_ptr<Seacrest::VertexBuffer> squareVB;
 	std::shared_ptr<Seacrest::IndexBuffer> squareIB;
 	std::shared_ptr<Seacrest::InputLayout> m_SquareInput;
@@ -280,6 +282,8 @@ private:
 
 	DirectX::XMMATRIX m_SquarePosition;
 	float m_SquareMoveSpeed = 1.0f;
+
+	DirectX::XMVECTOR m_SquareColor = DirectX::XMVectorSet(0.2f, 0.3f, 0.8f, 1.0f );
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
