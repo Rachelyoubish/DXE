@@ -122,9 +122,9 @@ namespace Seacrest {
 		m_DeviceContext->VSSetConstantBuffers( 1, 1, m_ConstantBuffer.GetAddressOf() );
 	}
 
-	void Direct3DShader::UploadConstantMat2( const std::string& name, const DirectX::XMMATRIX& matrix )
+	void Direct3DShader::UploadConstantTransform( const std::string& name, const DirectX::XMMATRIX& matrix )
 	{
-		if (!m_ConstantBuffer2)
+		if (!m_ConstantBufferTransform)
 		{
 			D3D11_BUFFER_DESC cbDesc = { 0 };
 			SecureZeroMemory( &cbDesc, sizeof( cbDesc ) );
@@ -143,14 +143,14 @@ namespace Seacrest {
 			InitData.SysMemPitch = 0;
 			InitData.SysMemSlicePitch = 0;
 
-			m_Device->CreateBuffer( &cbDesc, &InitData, &m_ConstantBuffer2 );
+			m_Device->CreateBuffer( &cbDesc, &InitData, &m_ConstantBufferTransform );
 		}
 
 		D3D11_MAPPED_SUBRESOURCE ms;
-		m_DeviceContext->Map( m_ConstantBuffer2.Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms );
+		m_DeviceContext->Map( m_ConstantBufferTransform.Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms );
 		memcpy( ms.pData, &matrix, sizeof( DirectX::XMMATRIX ) );
-		m_DeviceContext->Unmap( m_ConstantBuffer2.Get(), NULL );
+		m_DeviceContext->Unmap( m_ConstantBufferTransform.Get(), NULL );
 
-		m_DeviceContext->VSSetConstantBuffers( 2, 1, m_ConstantBuffer2.GetAddressOf() );
+		m_DeviceContext->VSSetConstantBuffers( 2, 1, m_ConstantBufferTransform.GetAddressOf() );
 	}
 }

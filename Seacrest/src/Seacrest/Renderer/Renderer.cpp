@@ -21,7 +21,7 @@ namespace Seacrest {
     {
         shader->Bind();
         std::dynamic_pointer_cast<Direct3DShader>(shader)->UploadConstantMat( "Camera", s_SceneData->ViewProjectionMatrix );
-        std::dynamic_pointer_cast<Direct3DShader>( shader )->UploadConstantMat2( "Transform", transform);
+        std::dynamic_pointer_cast<Direct3DShader>( shader )->UploadConstantTransform( "Transform", transform);
 
 
         vertexBuffer->Bind();
