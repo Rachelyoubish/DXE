@@ -59,67 +59,98 @@ namespace Seacrest {
 
 	void Direct3DShader::UploadConstantFloat4( const std::string& name, const DirectX::XMVECTOR& value )
 	{
-		D3D11_SHADER_INPUT_BIND_DESC bindDesc = { 0 };
-		SecureZeroMemory( &bindDesc, sizeof( bindDesc ) );
+		
+		if(!m_ConstantBufferColor )
+		{
+			D3D11_BUFFER_DESC cbDesc = { 0 };
+			SecureZeroMemory( &cbDesc, sizeof( cbDesc ) );
 
-		D3DReflect( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), IID_ID3D11ShaderReflection, (void**)reflector.GetAddressOf() );
+			cbDesc.ByteWidth = sizeof( DirectX::XMVECTOR );
+			cbDesc.Usage = D3D11_USAGE_DYNAMIC;
+			cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+			cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+			cbDesc.MiscFlags = 0;
+			cbDesc.StructureByteStride = 0;
 
-		reflector->GetResourceBindingDescByName( name.c_str(), &bindDesc );
+			D3D11_SUBRESOURCE_DATA InitData = { 0 };
+			SecureZeroMemory( &InitData, sizeof( InitData ) );
 
-		D3D11_BUFFER_DESC cbDesc = { 0 };
-		SecureZeroMemory( &cbDesc, sizeof( cbDesc ) );
+			InitData.pSysMem = &value;
+			InitData.SysMemPitch = 0;
+			InitData.SysMemSlicePitch = 0;
 
-		cbDesc.ByteWidth = sizeof( DirectX::XMVECTOR );
-		cbDesc.Usage = D3D11_USAGE_DYNAMIC;
-		cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-		cbDesc.MiscFlags = 0;
-		cbDesc.StructureByteStride = 0;
+			m_Device->CreateBuffer( &cbDesc, &InitData, &m_ConstantBufferColor );
+		}
 
-		D3D11_SUBRESOURCE_DATA InitData = { 0 };
-		SecureZeroMemory( &InitData, sizeof( InitData ) );
+		D3D11_MAPPED_SUBRESOURCE ms;
+		m_DeviceContext->Map( m_ConstantBufferColor.Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms );
+		memcpy( ms.pData, &value, sizeof( DirectX::XMVECTOR ) );
+		m_DeviceContext->Unmap( m_ConstantBufferColor.Get(), NULL );
 
-		InitData.pSysMem = &value;
-		InitData.SysMemPitch = 0;
-		InitData.SysMemSlicePitch = 0;
-
-		m_Device->CreateBuffer( &cbDesc, &InitData, &m_ConstantBuffer );
-
-		m_DeviceContext->VSSetConstantBuffers( bindDesc.BindPoint, 1, m_ConstantBuffer.GetAddressOf() );
+		m_DeviceContext->VSSetConstantBuffers( 0, 1, m_ConstantBufferColor.GetAddressOf() );
 	}
 
 	void Direct3DShader::UploadConstantMat( const std::string& name, const DirectX::XMMATRIX& matrix )
 	{
-		// A shader-reflection interface accesses shader information.
-		// I.e. I believe this is how it's accessing constant buffer
-		// names, given the blunt "GetResourceBindingDescByName". 
+		if (!m_ConstantBuffer)
+		{
+			D3D11_BUFFER_DESC cbDesc = { 0 };
+			SecureZeroMemory( &cbDesc, sizeof( cbDesc ) );
 
-		D3D11_SHADER_INPUT_BIND_DESC bindDesc = { 0 };
-		SecureZeroMemory( &bindDesc, sizeof( bindDesc ) );
+			cbDesc.ByteWidth = sizeof( DirectX::XMMATRIX );
+			cbDesc.Usage = D3D11_USAGE_DYNAMIC;
+			cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+			cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+			cbDesc.MiscFlags = 0;
+			cbDesc.StructureByteStride = 0;
 
-		D3DReflect( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), IID_ID3D11ShaderReflection, (void**)reflector.GetAddressOf() );
+			D3D11_SUBRESOURCE_DATA InitData = { 0 };
+			SecureZeroMemory( &InitData, sizeof( InitData ) );
 
-		reflector->GetResourceBindingDescByName( name.c_str(), &bindDesc );
+			InitData.pSysMem = &matrix;
+			InitData.SysMemPitch = 0;
+			InitData.SysMemSlicePitch = 0;
 
-		D3D11_BUFFER_DESC cbDesc = { 0 };
-		SecureZeroMemory( &cbDesc, sizeof( cbDesc ) );
+			m_Device->CreateBuffer( &cbDesc, &InitData, &m_ConstantBuffer );
+		}
 
-		cbDesc.ByteWidth = sizeof( DirectX::XMMATRIX );
-		cbDesc.Usage = D3D11_USAGE_DYNAMIC;
-		cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-		cbDesc.MiscFlags = 0;
-		cbDesc.StructureByteStride = 0;
+		D3D11_MAPPED_SUBRESOURCE ms;
+		m_DeviceContext->Map( m_ConstantBuffer.Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms );
+		memcpy( ms.pData, &matrix, sizeof( DirectX::XMMATRIX ) );
+		m_DeviceContext->Unmap( m_ConstantBuffer.Get(), NULL );
 
-		D3D11_SUBRESOURCE_DATA InitData = { 0 };
-		SecureZeroMemory( &InitData, sizeof( InitData ) );
+		m_DeviceContext->VSSetConstantBuffers( 1, 1, m_ConstantBuffer.GetAddressOf() );
+	}
 
-		InitData.pSysMem = &matrix;
-		InitData.SysMemPitch = 0;
-		InitData.SysMemSlicePitch = 0;
+	void Direct3DShader::UploadConstantMat2( const std::string& name, const DirectX::XMMATRIX& matrix )
+	{
+		if (!m_ConstantBuffer2)
+		{
+			D3D11_BUFFER_DESC cbDesc = { 0 };
+			SecureZeroMemory( &cbDesc, sizeof( cbDesc ) );
 
-		m_Device->CreateBuffer( &cbDesc, &InitData, &m_ConstantBuffer );
+			cbDesc.ByteWidth = sizeof( DirectX::XMMATRIX );
+			cbDesc.Usage = D3D11_USAGE_DYNAMIC;
+			cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+			cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+			cbDesc.MiscFlags = 0;
+			cbDesc.StructureByteStride = 0;
 
-		m_DeviceContext->VSSetConstantBuffers( bindDesc.BindPoint, 1, m_ConstantBuffer.GetAddressOf() );
+			D3D11_SUBRESOURCE_DATA InitData = { 0 };
+			SecureZeroMemory( &InitData, sizeof( InitData ) );
+
+			InitData.pSysMem = &matrix;
+			InitData.SysMemPitch = 0;
+			InitData.SysMemSlicePitch = 0;
+
+			m_Device->CreateBuffer( &cbDesc, &InitData, &m_ConstantBuffer2 );
+		}
+
+		D3D11_MAPPED_SUBRESOURCE ms;
+		m_DeviceContext->Map( m_ConstantBuffer2.Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms );
+		memcpy( ms.pData, &matrix, sizeof( DirectX::XMMATRIX ) );
+		m_DeviceContext->Unmap( m_ConstantBuffer2.Get(), NULL );
+
+		m_DeviceContext->VSSetConstantBuffers( 2, 1, m_ConstantBuffer2.GetAddressOf() );
 	}
 }

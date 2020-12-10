@@ -25,6 +25,7 @@ namespace Seacrest {
 		//void UploadConstantMat3( const std::string& name, const DirectX::XMMATRIX& matrix );
 		//void UploadConstantMat4( const std::string& name, const DirectX::XMMATRIX& matrix );
 		void UploadConstantMat( const std::string& name, const DirectX::XMMATRIX& matrix );
+		void UploadConstantMat2( const std::string& name, const DirectX::XMMATRIX& matrix );
 
 		Microsoft::WRL::ComPtr<ID3DBlob> GetBlob() const { return pBlob; }
 	private:
@@ -34,6 +35,8 @@ namespace Seacrest {
 		Microsoft::WRL::ComPtr<ID3D11PixelShader> m_PixelShader;
 		Microsoft::WRL::ComPtr<ID3D11VertexShader> m_VertexShader;
 		Microsoft::WRL::ComPtr<ID3D11Buffer> m_ConstantBuffer;
+		Microsoft::WRL::ComPtr<ID3D11Buffer> m_ConstantBuffer2;
+		Microsoft::WRL::ComPtr<ID3D11Buffer> m_ConstantBufferColor;
 		Microsoft::WRL::ComPtr<ID3D11InputLayout> m_InputLayout;
 
 		Microsoft::WRL::ComPtr<ID3D11ShaderReflection> reflector;

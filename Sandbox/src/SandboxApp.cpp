@@ -8,7 +8,7 @@ class ExampleLayer : public Seacrest::Layer
 {
 public:
 	ExampleLayer()
-		: Layer( "Example" ), m_Camera( -1.6f, 1.6f, 0.9f, -0.9f ), m_CameraPosition( DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f) ), m_SquarePosition(DirectX::XMMatrixIdentity())
+		: Layer( "Example" ), m_Camera( -1.6f, 1.6f, 0.9f, -0.9f ), m_CameraPosition( DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f) )
 	{
 		m_Context = Seacrest::Application::Get().GetWindow().GetGraphicsContext();
 
@@ -125,7 +125,7 @@ public:
 		m_InputLayout->AddVertexBuffer( vertexBuffer, Blob.Get() );
 		m_InputLayout->Bind();
 
-		m_FlatColorShader.reset( Seacrest::Shader::Create( "SquareVS.cso", "SquarePS.cso" ) );
+		m_FlatColorShader.reset( Seacrest::Shader::Create( "FlatColorVS.cso", "FlatColorPS.cso" ) );
 		m_SquareInput->AddVertexBuffer( squareVB, Blob.Get() );
 		m_SquareInput->Bind();
 	}
@@ -169,36 +169,6 @@ public:
 			m_CameraRotation -= m_CameraRotationSpeed * ts;
 		}
 
-		if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_I ))
-		{
-			DirectX::XMFLOAT4X4 spF4;
-			DirectX::XMStoreFloat4x4( &spF4, m_SquarePosition );
-			spF4._42 += m_SquareMoveSpeed * ts;
-			m_SquarePosition = DirectX::XMLoadFloat4x4( &spF4 );
-		}
-		else if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_K ))
-		{
-			DirectX::XMFLOAT4X4 spF4;
-			DirectX::XMStoreFloat4x4( &spF4, m_SquarePosition );
-			spF4._42 -= m_SquareMoveSpeed * ts;
-			m_SquarePosition = DirectX::XMLoadFloat4x4( &spF4 );
-		}
-
-		if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_J ))
-		{
-			DirectX::XMFLOAT4X4 spF4;
-			DirectX::XMStoreFloat4x4( &spF4, m_SquarePosition );
-			spF4._41 -= m_SquareMoveSpeed * ts;
-			m_SquarePosition = DirectX::XMLoadFloat4x4( &spF4 );
-		}
-		else if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_L ))
-		{
-			DirectX::XMFLOAT4X4 spF4;
-			DirectX::XMStoreFloat4x4( &spF4, m_SquarePosition );
-			spF4._41 += m_SquareMoveSpeed * ts;
-			m_SquarePosition = DirectX::XMLoadFloat4x4( &spF4 );
-		}
-
 		if (Seacrest::Input::IsKeyPressed( SEACREST_KEY_BACK ))
 		{
 			m_CameraPosition = DirectX::XMFLOAT3( 0.0f, 0.0f, 0.0f );
@@ -213,15 +183,16 @@ public:
 		m_Camera.SetRotation( m_CameraRotation );
 
 		Seacrest::Renderer::BeginScene( m_Camera );
+
 		/*Square Grid*/
 		static DirectX::XMMATRIX scale = DirectX::XMMatrixScaling( 0.1f, 0.1f, 0.1f );
 
 		std::dynamic_pointer_cast<Seacrest::Direct3DShader>( m_FlatColorShader )->Bind();
 		std::dynamic_pointer_cast<Seacrest::Direct3DShader>( m_FlatColorShader )->UploadConstantFloat4("cbColor", m_SquareColor);
 
-		for (int y = 0; y < 5; y++)
+		for (int y = 0; y < 10; y++)
 		{
-			for (int x = 0; x < 5; x++)
+			for (int x = 0; x < 10; x++)
 			{
 				DirectX::XMMATRIX transform = DirectX::XMMatrixIdentity() * scale;
 				transform = transform * DirectX::XMMatrixTranslation( x * 0.11f, y * 0.11f, 0.0f );
@@ -229,7 +200,6 @@ public:
 				Seacrest::Renderer::Submit( m_FlatColorShader, squareVB, squareIB, transform );
 			}
 		}
-		//Seacrest::Renderer::Submit( m_FlatColorShader, squareVB, squareIB, m_SquarePosition );
 		Seacrest::Renderer::Submit( m_Shader, vertexBuffer, indexBuffer);
 
 		Seacrest::Renderer::EndScene();
@@ -279,9 +249,6 @@ private:
 
 	float m_CameraRotation = 0.0f;
 	float m_CameraRotationSpeed = 180.0f;
-
-	DirectX::XMMATRIX m_SquarePosition;
-	float m_SquareMoveSpeed = 1.0f;
 
 	DirectX::XMVECTOR m_SquareColor = DirectX::XMVectorSet(0.2f, 0.3f, 0.8f, 1.0f );
 private:
