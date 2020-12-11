@@ -18,7 +18,7 @@ namespace Seacrest
         virtual void SetClearColor( const DirectX::XMFLOAT4& color ) = 0;
         virtual void Clear() = 0;
 
-        virtual void DrawIndexed( const std::shared_ptr<IndexBuffer>& indexBufer ) = 0;
+        virtual void DrawIndexed( const Ref<IndexBuffer>& indexBufer ) = 0;
 
         inline static API GetAPI() { return s_API; }
     private:

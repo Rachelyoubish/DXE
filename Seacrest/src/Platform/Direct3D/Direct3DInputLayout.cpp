@@ -38,7 +38,7 @@ namespace Seacrest {
 	{
 	}
 
-	void Direct3DInputLayout::AddVertexBuffer( const std::shared_ptr<VertexBuffer>& vertexBuffer, ID3DBlob* Blob )
+	void Direct3DInputLayout::AddVertexBuffer( const Ref<VertexBuffer>& vertexBuffer, ID3DBlob* Blob )
 	{
 		Application& app = Application::Get();
 		Microsoft::WRL::ComPtr<ID3D11Device> pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
@@ -75,7 +75,7 @@ namespace Seacrest {
 		delete[] inputLayoutDesc;
 	}
 
-	void Direct3DInputLayout::SetIndexBuffer( const std::shared_ptr<IndexBuffer>& indexBuffer )
+	void Direct3DInputLayout::SetIndexBuffer( const Ref<IndexBuffer>& indexBuffer )
 	{
 		indexBuffer->Bind();
 		m_IndexBuffer = indexBuffer;

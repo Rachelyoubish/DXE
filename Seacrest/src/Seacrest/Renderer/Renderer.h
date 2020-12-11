@@ -12,14 +12,13 @@ namespace Seacrest {
 		static void BeginScene( OrthographicCamera& camera ); 
 		static void EndScene();
 
-		static void Submit( const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexBuffer>& vertexBuffer, const std::shared_ptr<IndexBuffer>& indexBuffer, const DirectX::XMMATRIX& transform = DirectX::XMMatrixIdentity() );
+		static void Submit( const Ref<Shader>& shader, const Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const DirectX::XMMATRIX& transform = DirectX::XMMatrixIdentity() );
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	private:
 		struct SceneData
 		{
 			DirectX::XMMATRIX ViewProjectionMatrix;
-			DirectX::XMMATRIX transform;
 		};
 
 		static SceneData* s_SceneData;

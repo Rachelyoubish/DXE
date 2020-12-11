@@ -17,7 +17,7 @@ namespace Seacrest {
 
     }
 
-    void Renderer::Submit( const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexBuffer>& vertexBuffer, const std::shared_ptr<IndexBuffer>& indexBuffer, const DirectX::XMMATRIX& transform  )
+    void Renderer::Submit( const Ref<Shader>& shader, const Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const DirectX::XMMATRIX& transform  )
     {
         shader->Bind();
         std::dynamic_pointer_cast<Direct3DShader>(shader)->UploadConstantMat( "Camera", s_SceneData->ViewProjectionMatrix );

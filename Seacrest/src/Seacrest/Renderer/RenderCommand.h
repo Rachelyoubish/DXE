@@ -20,7 +20,7 @@ namespace Seacrest {
             s_RendererAPI->Clear();
         }
 
-        inline static void DrawIndexed( const std::shared_ptr<IndexBuffer>& indexBuffer )
+        inline static void DrawIndexed( const Ref<IndexBuffer>& indexBuffer )
         {
             s_RendererAPI->DrawIndexed( indexBuffer );
         }

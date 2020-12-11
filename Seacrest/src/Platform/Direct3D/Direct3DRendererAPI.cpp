@@ -31,7 +31,7 @@ namespace Seacrest {
         pDeviceContext->ClearRenderTargetView( pRTV.Get(), m_ClearColor );
     }
     
-    void Direct3DRendererAPI::DrawIndexed( const std::shared_ptr<IndexBuffer>& indexBuffer )
+    void Direct3DRendererAPI::DrawIndexed( const Ref<IndexBuffer>& indexBuffer )
     {
         Application& app = Application::Get();
         Microsoft::WRL::ComPtr<ID3D11DeviceContext> pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();

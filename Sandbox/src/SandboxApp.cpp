@@ -45,7 +45,7 @@ public:
 
 		UINT sizeList = ARRAYSIZE( vertices );
 
-		vertexBuffer.reset( Seacrest::VertexBuffer::Create( vertices, sizeof( Vertex ), sizeList ) );
+		m_VertexBuffer.reset( Seacrest::VertexBuffer::Create( vertices, sizeof( Vertex ), sizeList ) );
 
 		// Buffer Layout setup here for InputLayout
 		// to take in once shaders are set later.
@@ -54,7 +54,7 @@ public:
 			{ Seacrest::ShaderDataType::Float2, "Position" },
 			{ Seacrest::ShaderDataType::Float4, "Color" },
 		};
-		vertexBuffer->SetLayout( layout );
+		m_VertexBuffer->SetLayout( layout );
 
 
 		// Create index buffer.
@@ -65,7 +65,7 @@ public:
 		};
 
 		unsigned short indicesList = ARRAYSIZE( indices );
-		indexBuffer.reset( Seacrest::IndexBuffer::Create( indices, sizeof( indices ), indicesList ) );
+		m_IndexBuffer.reset( Seacrest::IndexBuffer::Create( indices, sizeof( indices ), indicesList ) );
 
 		// Square.
 		m_SquareInput.reset( Seacrest::InputLayout::Create() );
@@ -95,8 +95,8 @@ public:
 			{  -0.5f,  -0.5f, 0.8f, 0.8f, 0.8f, 1.0f },
 		};
 
-		squareVB.reset( Seacrest::VertexBuffer::Create( squareVertices, sizeof( SquareVertex ), ARRAYSIZE( squareVertices ) ) );
-		squareVB->SetLayout( {
+		m_SquareVB.reset( Seacrest::VertexBuffer::Create( squareVertices, sizeof( SquareVertex ), ARRAYSIZE( squareVertices ) ) );
+		m_SquareVB->SetLayout( {
 			{ Seacrest::ShaderDataType::Float2, "Position" },
 			{ Seacrest::ShaderDataType::Float4, "Color" },
 			} );
@@ -108,7 +108,7 @@ public:
 			0, 1, 2,
 			0, 2, 3,
 		};
-		squareIB.reset( Seacrest::IndexBuffer::Create( squareIndices, sizeof( squareIndices ), ARRAYSIZE( squareIndices ) ) );
+		m_SquareIB.reset( Seacrest::IndexBuffer::Create( squareIndices, sizeof( squareIndices ), ARRAYSIZE( squareIndices ) ) );
 
 		// Trying to set D3D viewport abstractly. 
 		// Could be handled better, sorry. ;^]
@@ -117,16 +117,17 @@ public:
 		m_Context->SetViewport( width, height );
 
 		m_Shader.reset( Seacrest::Shader::Create( "VertexShader.cso", "PixelShader.cso" ) );
+		
 		// Blob set after shader setup to retain shader info. 
-		//auto &Blob = m_Shader->GetBlob();
 		auto Blob = std::dynamic_pointer_cast<Seacrest::Direct3DShader>( m_Shader )->GetBlob();
+		
 		// Now InputLayout can properly read Blob info. 
 		// (This is admittedly a symptom of D3D).
-		m_InputLayout->AddVertexBuffer( vertexBuffer, Blob.Get() );
+		m_InputLayout->AddVertexBuffer( m_VertexBuffer, Blob.Get() );
 		m_InputLayout->Bind();
 
 		m_FlatColorShader.reset( Seacrest::Shader::Create( "FlatColorVS.cso", "FlatColorPS.cso" ) );
-		m_SquareInput->AddVertexBuffer( squareVB, Blob.Get() );
+		m_SquareInput->AddVertexBuffer( m_SquareVB, Blob.Get() );
 		m_SquareInput->Bind();
 	}
 
@@ -197,10 +198,10 @@ public:
 				DirectX::XMMATRIX transform = DirectX::XMMatrixIdentity() * scale;
 				transform = transform * DirectX::XMMatrixTranslation( x * 0.11f, y * 0.11f, 0.0f );
 
-				Seacrest::Renderer::Submit( m_FlatColorShader, squareVB, squareIB, transform );
+				Seacrest::Renderer::Submit( m_FlatColorShader, m_SquareVB, m_SquareIB, transform );
 			}
 		}
-		Seacrest::Renderer::Submit( m_Shader, vertexBuffer, indexBuffer);
+		Seacrest::Renderer::Submit( m_Shader, m_VertexBuffer, m_IndexBuffer);
 
 		Seacrest::Renderer::EndScene();
 
@@ -230,18 +231,15 @@ public:
 	}
 
 private:
-	Seacrest::GraphicsContext* m_Context;
-	Seacrest::Window& m_Window = Seacrest::Application::Get().GetWindow();
+	Seacrest::Ref<Seacrest::Shader> m_Shader;
+	Seacrest::Ref<Seacrest::VertexBuffer> m_VertexBuffer;
+	Seacrest::Ref<Seacrest::IndexBuffer> m_IndexBuffer;
+	Seacrest::Ref<Seacrest::InputLayout> m_InputLayout;
 
-	std::shared_ptr<Seacrest::Shader> m_Shader;
-	std::shared_ptr<Seacrest::VertexBuffer> vertexBuffer;
-	std::shared_ptr<Seacrest::IndexBuffer> indexBuffer;
-	std::shared_ptr<Seacrest::InputLayout> m_InputLayout;
-
-	std::shared_ptr<Seacrest::Shader> m_FlatColorShader;
-	std::shared_ptr<Seacrest::VertexBuffer> squareVB;
-	std::shared_ptr<Seacrest::IndexBuffer> squareIB;
-	std::shared_ptr<Seacrest::InputLayout> m_SquareInput;
+	Seacrest::Ref<Seacrest::Shader> m_FlatColorShader;
+	Seacrest::Ref<Seacrest::VertexBuffer> m_SquareVB;
+	Seacrest::Ref<Seacrest::IndexBuffer> m_SquareIB;
+	Seacrest::Ref<Seacrest::InputLayout> m_SquareInput;
 
 	Seacrest::OrthographicCamera m_Camera;
 	DirectX::XMFLOAT3 m_CameraPosition;
@@ -252,6 +250,8 @@ private:
 
 	DirectX::XMVECTOR m_SquareColor = DirectX::XMVectorSet(0.2f, 0.3f, 0.8f, 1.0f );
 private:
+	Seacrest::GraphicsContext* m_Context;
+	Seacrest::Window& m_Window = Seacrest::Application::Get().GetWindow();
 	Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
 };
