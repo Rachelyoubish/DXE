@@ -84,21 +84,27 @@ public:
 				float b;
 				float a;
 			} color;
+			struct
+			{
+				float u;
+				float v;
+			} tex;
 		};
 
 		SquareVertex squareVertices[] =
 		{
 			// Square. Set pos to .5f for 1 to 1 unit. 
-			{  -0.5f,   0.5f, 1.0f, 0.8f, 0.8f, 1.0f },
-			{   0.5f,   0.5f, 1.0f, 0.7f, 0.7f, 1.0f },
-			{   0.5f,  -0.5f, 0.8f, 1.0f, 0.8f, 1.0f },
-			{  -0.5f,  -0.5f, 0.8f, 0.8f, 0.8f, 1.0f },
+			{ -0.5f,   0.5f, 1.0f, 0.8f, 0.8f, 1.0f, 0.0f, 0.0f }, // Per struct above: pos, color, texCoord
+			{  0.5f,   0.5f, 1.0f, 0.7f, 0.7f, 1.0f, 1.0f, 0.0f },
+			{  0.5f,  -0.5f, 0.8f, 1.0f, 0.8f, 1.0f, 1.0f, 1.0f },
+			{ -0.5f,  -0.5f, 0.8f, 0.8f, 0.8f, 1.0f, 0.0f, 1.0f },
 		};
 
 		m_SquareVB.reset( Seacrest::VertexBuffer::Create( squareVertices, sizeof( SquareVertex ), ARRAYSIZE( squareVertices ) ) );
 		m_SquareVB->SetLayout( {
 			{ Seacrest::ShaderDataType::Float2, "Position" },
 			{ Seacrest::ShaderDataType::Float4, "Color" },
+			{ Seacrest::ShaderDataType::Float2, "TexCoord" },
 			} );
 
 		// Create index buffer.
@@ -129,6 +135,10 @@ public:
 		m_FlatColorShader.reset( Seacrest::Shader::Create( "FlatColorVS.cso", "FlatColorPS.cso" ) );
 		m_SquareInput->AddVertexBuffer( m_SquareVB, Blob.Get() );
 		m_SquareInput->Bind();
+
+		m_TextureShader.reset( Seacrest::Shader::Create( "TextureVS.cso", "TexturePS.cso" ) );
+		m_SquareInput->AddVertexBuffer( m_SquareVB, Blob.Get() );
+		m_SquareInput->Bind();
 	}
 
 	~ExampleLayer()
@@ -136,7 +146,7 @@ public:
 
 	void OnUpdate( Seacrest::Timestep ts ) override
 	{
-		#if SEACREST_DEBUG
+		#if 0
 			SEACREST_TRACE( "Delta time: {0}s, ({1}ms)", ts.GetSeconds(), ts.GetMilliSeconds() );
 		#endif
 
@@ -191,9 +201,9 @@ public:
 		std::dynamic_pointer_cast<Seacrest::Direct3DShader>( m_FlatColorShader )->Bind();
 		std::dynamic_pointer_cast<Seacrest::Direct3DShader>( m_FlatColorShader )->UploadConstantFloat4("cbColor", m_SquareColor);
 
-		for (int y = 0; y < 10; y++)
+		for (int y = 0; y < 20; y++)
 		{
-			for (int x = 0; x < 10; x++)
+			for (int x = 0; x < 20; x++)
 			{
 				DirectX::XMMATRIX transform = DirectX::XMMatrixIdentity() * scale;
 				transform = transform * DirectX::XMMatrixTranslation( x * 0.11f, y * 0.11f, 0.0f );
@@ -201,7 +211,10 @@ public:
 				Seacrest::Renderer::Submit( m_FlatColorShader, m_SquareVB, m_SquareIB, transform );
 			}
 		}
-		Seacrest::Renderer::Submit( m_Shader, m_VertexBuffer, m_IndexBuffer);
+		
+		Seacrest::Renderer::Submit( m_TextureShader, m_SquareVB, m_SquareIB, DirectX::XMMatrixScaling( 1.5f, 1.5f, 1.5f ) );
+		//Seacrest::Renderer::Submit( m_Shader, m_SquareVB, m_SquareIB );
+		//Seacrest::Renderer::Submit( m_Shader, m_VertexBuffer, m_IndexBuffer);
 
 		Seacrest::Renderer::EndScene();
 
@@ -236,7 +249,7 @@ private:
 	Seacrest::Ref<Seacrest::IndexBuffer> m_IndexBuffer;
 	Seacrest::Ref<Seacrest::InputLayout> m_InputLayout;
 
-	Seacrest::Ref<Seacrest::Shader> m_FlatColorShader;
+	Seacrest::Ref<Seacrest::Shader> m_FlatColorShader, m_TextureShader;
 	Seacrest::Ref<Seacrest::VertexBuffer> m_SquareVB;
 	Seacrest::Ref<Seacrest::IndexBuffer> m_SquareIB;
 	Seacrest::Ref<Seacrest::InputLayout> m_SquareInput;

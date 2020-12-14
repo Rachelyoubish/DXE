@@ -42,7 +42,7 @@ namespace Seacrest {
 	{
 		Application& app = Application::Get();
 		Microsoft::WRL::ComPtr<ID3D11Device> pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
-		// vertexBuffer->Bind();
+		vertexBuffer->Bind();
 
 		uint32_t index = 0;
 		const auto& layout = vertexBuffer->GetLayout();
