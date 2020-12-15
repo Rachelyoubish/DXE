@@ -20,6 +20,7 @@
 
 #include "Seacrest/Renderer/Buffer.h"
 #include "Seacrest/Renderer/Shader.h"
+#include "Seacrest/Renderer/Texture.h"
 #include "Seacrest/Renderer/InputLayout.h"
 
 #include "Seacrest/Renderer/OrthographicCamera.h"

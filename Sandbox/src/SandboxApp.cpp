@@ -139,6 +139,10 @@ public:
 		m_TextureShader.reset( Seacrest::Shader::Create( "TextureVS.cso", "TexturePS.cso" ) );
 		m_SquareInput->AddVertexBuffer( m_SquareVB, Blob.Get() );
 		m_SquareInput->Bind();
+
+		// Path seems to be relative to WIC's file location, 
+		// we have to jump out of nested vendor folder and into Sandbox. 
+		m_Texture = Seacrest::Texture2D::Create("../../../Sandbox/assets/textures/Checkerboard.png");
 	}
 
 	~ExampleLayer()
@@ -212,6 +216,7 @@ public:
 			}
 		}
 		
+		m_Texture->Bind();
 		Seacrest::Renderer::Submit( m_TextureShader, m_SquareVB, m_SquareIB, DirectX::XMMatrixScaling( 1.5f, 1.5f, 1.5f ) );
 		//Seacrest::Renderer::Submit( m_Shader, m_SquareVB, m_SquareIB );
 		//Seacrest::Renderer::Submit( m_Shader, m_VertexBuffer, m_IndexBuffer);
@@ -253,6 +258,8 @@ private:
 	Seacrest::Ref<Seacrest::VertexBuffer> m_SquareVB;
 	Seacrest::Ref<Seacrest::IndexBuffer> m_SquareIB;
 	Seacrest::Ref<Seacrest::InputLayout> m_SquareInput;
+
+	Seacrest::Ref<Seacrest::Texture2D> m_Texture;
 
 	Seacrest::OrthographicCamera m_Camera;
 	DirectX::XMFLOAT3 m_CameraPosition;

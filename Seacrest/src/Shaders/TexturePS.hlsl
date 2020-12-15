@@ -1,4 +1,7 @@
-float4 main(float4 color : Color) : SV_Target
+Texture2D shaderTexture;
+SamplerState sampleType;
+
+float4 main(float4 color : Color, float2 tex : TexCoord) : SV_Target
 {
-    return color;
+    return shaderTexture.Sample(sampleType, tex);
 }

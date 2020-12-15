@@ -14,6 +14,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include directories relative to root folder (solution directory)
 IncludeDir = {}
 IncludeDir["ImGui"] = "Seacrest/vendor/imgui"
+IncludeDir["wic_image"] = "Seacrest/vendor/wic_image"
 
 group "Dependencies"
     include "Seacrest/vendor/imgui"
@@ -37,6 +38,8 @@ project "Seacrest"
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/wic_image/**.h",
+        "%{prj.name}/vendor/wic_image/**.cpp",
         "%{prj.name}/src/**.hlsl"
     }
 
@@ -49,7 +52,8 @@ project "Seacrest"
     {
         "%{prj.name}/src",
         "%{prj.name}/vendor/spdlog/include",
-        "%{IncludeDir.ImGui}"
+        "%{IncludeDir.ImGui}",
+        "%{IncludeDir.wic_image}"
     }
 
     links
