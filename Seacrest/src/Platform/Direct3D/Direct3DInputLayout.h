@@ -24,5 +24,8 @@ namespace Seacrest {
 		Ref<IndexBuffer> m_IndexBuffer;
 		Ref<Shader> m_Shader;
 		Microsoft::WRL::ComPtr<ID3D11InputLayout> m_InputLayout;
+	private:
+		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
 	};
 }

@@ -21,6 +21,9 @@ namespace Seacrest {
         Microsoft::WRL::ComPtr<ID3D11Resource> m_Resource;
         Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_TextureView;
         Microsoft::WRL::ComPtr<ID3D11SamplerState> m_SamplerState;
+    private:
+        Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
+        Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
     };
 
 

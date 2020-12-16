@@ -17,6 +17,8 @@ namespace Seacrest {
         virtual void DrawIndexed( const Ref<IndexBuffer>& indexBuffer ) override;
     private:
         const FLOAT* m_ClearColor;
-
+        Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
+        Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
+        Microsoft::WRL::ComPtr<ID3D11RenderTargetView> pRTV;
     };
 }

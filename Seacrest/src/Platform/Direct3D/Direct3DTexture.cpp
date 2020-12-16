@@ -11,8 +11,8 @@ namespace Seacrest {
         : m_Path( path )
     {
 		Application& app = Application::Get();
-		Microsoft::WRL::ComPtr<ID3D11Device> pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext> pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
+		m_Device = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
+		m_DeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
 
 		D3D11_SAMPLER_DESC samplerDesc = {};
 		SecureZeroMemory( &samplerDesc, sizeof( samplerDesc ) );
@@ -31,12 +31,12 @@ namespace Seacrest {
 		samplerDesc.MinLOD = 0;
 		samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
-		pDevice->CreateSamplerState( &samplerDesc, &m_SamplerState );
+		m_Device->CreateSamplerState( &samplerDesc, &m_SamplerState );
 
 		std::wstring stemp = std::wstring( m_Path.begin(), m_Path.end() );
 
 		HRESULT result;
-		result = CreateWICTextureFromFile( pDevice.Get(), pDeviceContext.Get(), stemp.c_str(), &m_Resource, &m_TextureView );
+		result = CreateWICTextureFromFile( m_Device.Get(), m_DeviceContext.Get(), stemp.c_str(), &m_Resource, &m_TextureView );
 		SEACREST_CORE_ASSERT( SUCCEEDED( result ), "Unable to load texture!" );
 
 		ID3D11Texture2D* textureInterface;
@@ -48,15 +48,13 @@ namespace Seacrest {
 		m_Width = desc.Width;
 		m_Height = desc.Height;
 		DXGI_FORMAT channels = desc.Format;
+
+		textureInterface->Release();
     }
 
     void Direct3DTexture2D::Bind( uint32_t slot ) const
     {
-		Application& app = Application::Get();
-		//Microsoft::WRL::ComPtr<ID3D11Device> pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext> pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
-
-		pDeviceContext->PSSetSamplers( slot, 1, m_SamplerState.GetAddressOf() );
-		pDeviceContext->PSSetShaderResources( slot, 1, m_TextureView.GetAddressOf() );
+		m_DeviceContext->PSSetSamplers( slot, 1, m_SamplerState.GetAddressOf() );
+		m_DeviceContext->PSSetShaderResources( slot, 1, m_TextureView.GetAddressOf() );
     }
 }

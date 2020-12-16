@@ -15,15 +15,7 @@ namespace Seacrest {
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 
-		// void UploadConstantInt( const std::string& name, int value );
-
-		//void UploadConstantFloat( const std::string& name, float value );
-		//void UploadConstantFloat2( const std::string& name, const DirectX::XMVECTOR& values );
-		//void UploadConstantFloat3( const std::string& name, const DirectX::XMVECTOR& values );
 		void UploadConstantFloat4( const std::string& name, const DirectX::XMVECTOR& value );
-		
-		//void UploadConstantMat3( const std::string& name, const DirectX::XMMATRIX& matrix );
-		//void UploadConstantMat4( const std::string& name, const DirectX::XMMATRIX& matrix );
 		void UploadConstantMat( const std::string& name, const DirectX::XMMATRIX& matrix );
 		void UploadConstantTransform( const std::string& name, const DirectX::XMMATRIX& matrix );
 
