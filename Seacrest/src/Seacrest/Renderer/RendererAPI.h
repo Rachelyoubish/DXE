@@ -14,6 +14,7 @@ namespace Seacrest
             None = 0, Direct3D = 1
         };
     public:
+        virtual void Init() = 0;
         virtual void SetRenderTargets() = 0;
         virtual void SetClearColor( const DirectX::XMFLOAT4& color ) = 0;
         virtual void Clear() = 0;

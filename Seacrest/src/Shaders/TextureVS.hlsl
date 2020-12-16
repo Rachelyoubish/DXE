@@ -11,7 +11,7 @@ cbuffer Transform : register(b2)
 struct VSOut
 {
     float4 color : Color;
-    float2 tex : TexCoord;
+    float4 tex : TexCoord;
     float4 pos : SV_Position;
 };
 
@@ -21,7 +21,7 @@ VSOut main(float2 pos : Position, float4 color : Color, float2 tex : TexCoord)
     vso.pos = mul(float4(pos.x, pos.y, 0.0f, 1.0f), transform);
     vso.pos = mul(vso.pos, viewProjectionMatrix);
     vso.color = color;
-    vso.tex = tex;
+    vso.tex = float4(tex.x, tex.y, 0.0f, 1.0f);
     //vso.color = vso.tex;
     return vso;
 }

@@ -143,6 +143,7 @@ public:
 		// Path seems to be relative to WIC's file location, 
 		// we have to jump out of nested vendor folder and into Sandbox. 
 		m_Texture = Seacrest::Texture2D::Create("../../../Sandbox/assets/textures/Checkerboard.png");
+		m_RomulusTexture = Seacrest::Texture2D::Create("../../../Sandbox/assets/textures/RIVBlack.png");
 	}
 
 	~ExampleLayer()
@@ -218,7 +219,9 @@ public:
 		
 		m_Texture->Bind();
 		Seacrest::Renderer::Submit( m_TextureShader, m_SquareVB, m_SquareIB, DirectX::XMMatrixScaling( 1.5f, 1.5f, 1.5f ) );
-		//Seacrest::Renderer::Submit( m_Shader, m_SquareVB, m_SquareIB );
+		m_RomulusTexture->Bind();
+		Seacrest::Renderer::Submit( m_TextureShader, m_SquareVB, m_SquareIB, DirectX::XMMatrixScaling( 1.5f, 1.5f, 1.5f ) );
+		//Seacrest::Renderer::Submit( m_Shader, m_SquareVB, m_SquareIB, DirectX::XMMatrixTranslation( -0.5f, -0.3f, 0.0f ) );
 		//Seacrest::Renderer::Submit( m_Shader, m_VertexBuffer, m_IndexBuffer);
 
 		Seacrest::Renderer::EndScene();
@@ -259,7 +262,7 @@ private:
 	Seacrest::Ref<Seacrest::IndexBuffer> m_SquareIB;
 	Seacrest::Ref<Seacrest::InputLayout> m_SquareInput;
 
-	Seacrest::Ref<Seacrest::Texture2D> m_Texture;
+	Seacrest::Ref<Seacrest::Texture2D> m_Texture, m_RomulusTexture;
 
 	Seacrest::OrthographicCamera m_Camera;
 	DirectX::XMFLOAT3 m_CameraPosition;

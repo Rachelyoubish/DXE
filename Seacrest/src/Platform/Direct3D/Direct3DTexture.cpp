@@ -14,7 +14,9 @@ namespace Seacrest {
 		Microsoft::WRL::ComPtr<ID3D11Device> pDevice = app.GetWindow().GetGraphicsContext()->GetD3D11Device();
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> pDeviceContext = app.GetWindow().GetGraphicsContext()->GetD3D11DeviceContext();
 
-		D3D11_SAMPLER_DESC samplerDesc;
+		D3D11_SAMPLER_DESC samplerDesc = {};
+		SecureZeroMemory( &samplerDesc, sizeof( samplerDesc ) );
+
 		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -33,12 +35,13 @@ namespace Seacrest {
 
 		std::wstring stemp = std::wstring( m_Path.begin(), m_Path.end() );
 
-		CreateWICTextureFromFile( pDevice.Get(), pDeviceContext.Get(), stemp.c_str(), &m_Resource, &m_TextureView );
-
-		// TOAST_CORE_ASSERT( SUCCEEDED( result ), "Unable to load texture!" );
+		HRESULT result;
+		result = CreateWICTextureFromFile( pDevice.Get(), pDeviceContext.Get(), stemp.c_str(), &m_Resource, &m_TextureView );
+		SEACREST_CORE_ASSERT( SUCCEEDED( result ), "Unable to load texture!" );
 
 		ID3D11Texture2D* textureInterface;
-		D3D11_TEXTURE2D_DESC desc;
+		D3D11_TEXTURE2D_DESC desc = { 0 };
+		SecureZeroMemory( &desc, sizeof( desc ) );
 		m_Resource->QueryInterface<ID3D11Texture2D>( &textureInterface );
 		textureInterface->GetDesc( &desc );
 

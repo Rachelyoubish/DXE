@@ -7,6 +7,10 @@ namespace Seacrest {
     class RenderCommand
     {
     public:
+        inline static void Init()
+        {
+            s_RendererAPI->Init();
+        }
         inline static void SetRenderTargets()
         {
             s_RendererAPI->SetRenderTargets();

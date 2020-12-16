@@ -8,6 +8,8 @@ namespace Seacrest {
     {
     public:
         ~Direct3DRendererAPI() = default;
+        virtual void Init() override;
+
         virtual void SetRenderTargets() override;
         virtual void SetClearColor( const DirectX::XMFLOAT4& color ) override;
         virtual void Clear() override;
@@ -15,5 +17,6 @@ namespace Seacrest {
         virtual void DrawIndexed( const Ref<IndexBuffer>& indexBuffer ) override;
     private:
         const FLOAT* m_ClearColor;
+
     };
 }
