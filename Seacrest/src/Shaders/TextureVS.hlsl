@@ -1,9 +1,9 @@
-cbuffer Camera : register(b1)
+cbuffer Camera
 {
     row_major matrix viewProjectionMatrix;
 };
 
-cbuffer Transform : register(b2)
+cbuffer Transform
 {
     row_major matrix transform;
 };

@@ -1,8 +1,3 @@
-cbuffer cbColor
-{
-    float4 cb_color;
-};
-
 cbuffer Camera
 {
     row_major matrix viewProjectionMatrix;
@@ -11,6 +6,11 @@ cbuffer Camera
 cbuffer Transform
 {
     row_major matrix transform;
+};
+
+cbuffer cbColor
+{
+    float4 cb_color;
 };
 
 struct VSOut

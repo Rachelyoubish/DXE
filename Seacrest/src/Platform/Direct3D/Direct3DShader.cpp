@@ -87,7 +87,7 @@ namespace Seacrest {
 		memcpy( ms.pData, &value, sizeof( DirectX::XMVECTOR ) );
 		m_DeviceContext->Unmap( m_ConstantBufferColor.Get(), NULL );
 
-		m_DeviceContext->VSSetConstantBuffers( 0, 1, m_ConstantBufferColor.GetAddressOf() );
+		m_DeviceContext->VSSetConstantBuffers( 2, 1, m_ConstantBufferColor.GetAddressOf() );
 	}
 
 	void Direct3DShader::UploadConstantMat( const std::string& name, const DirectX::XMMATRIX& matrix )
@@ -119,7 +119,7 @@ namespace Seacrest {
 		memcpy( ms.pData, &matrix, sizeof( DirectX::XMMATRIX ) );
 		m_DeviceContext->Unmap( m_ConstantBuffer.Get(), NULL );
 
-		m_DeviceContext->VSSetConstantBuffers( 1, 1, m_ConstantBuffer.GetAddressOf() );
+		m_DeviceContext->VSSetConstantBuffers( 0, 1, m_ConstantBuffer.GetAddressOf() );
 	}
 
 	void Direct3DShader::UploadConstantTransform( const std::string& name, const DirectX::XMMATRIX& matrix )
@@ -151,6 +151,6 @@ namespace Seacrest {
 		memcpy( ms.pData, &matrix, sizeof( DirectX::XMMATRIX ) );
 		m_DeviceContext->Unmap( m_ConstantBufferTransform.Get(), NULL );
 
-		m_DeviceContext->VSSetConstantBuffers( 2, 1, m_ConstantBufferTransform.GetAddressOf() );
+		m_DeviceContext->VSSetConstantBuffers( 1, 1, m_ConstantBufferTransform.GetAddressOf() );
 	}
 }
