@@ -240,6 +240,12 @@ public:
 
 	void OnEvent( Seacrest::Event& event ) override
 	{
+		if (event.GetEventType() == Seacrest::EventType::MouseButtonPressed)
+		{
+			Seacrest::MouseButtonPressedEvent& e = (Seacrest::MouseButtonPressedEvent&)event;
+			if (e.GetMouseButton() == SEACREST_MOUSE_LBUTTON)
+				SEACREST_TRACE( "Left Mouse Button pressed (event)!" );
+		}
 	}
 
 	void ReportLiveObjects()
